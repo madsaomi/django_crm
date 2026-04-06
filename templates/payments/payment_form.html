@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Добавить платёж{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Добавить платёж</h1>
+    <a href="{% url 'payments:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> Назад</a>
+</div>
+<div class="form-card glass-panel">
+    <form method="post">{% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors.0 }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn-success-custom"><i class="bi bi-check-lg"></i> Добавить платёж</button>
+            <a href="{% url 'payments:list' %}" class="btn-outline-custom">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

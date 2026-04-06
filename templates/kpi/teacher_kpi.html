@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}KPI Учителей{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title"><i class="bi bi-bar-chart-line"></i> KPI Учителей</h1>
+    <a href="{% url 'kpi:manager_kpi' %}" class="btn-outline-custom"><i class="bi bi-graph-up-arrow"></i> KPI Менеджеров</a>
+</div>
+
+{% if kpi_data %}
+<div class="row g-4">
+    {% for item in kpi_data %}
+    <div class="col-lg-6">
+        <div class="kpi-card">
+            <div class="kpi-card-name">
+                <i class="bi bi-person-workspace"></i> {{ item.teacher.name }}
+            </div>
+            <div class="kpi-metrics">
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value">{{ item.total_groups }}</div>
+                    <div class="kpi-metric-label">Групп</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value">{{ item.total_students }}</div>
+                    <div class="kpi-metric-label">Учеников</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value" style="color:var(--success)">{{ item.attendance_rate }}%</div>
+                    <div class="kpi-metric-label">Посещаемость</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value" style="color:var(--info)">{{ item.retention_rate }}%</div>
+                    <div class="kpi-metric-label">Удержание</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value" style="color:var(--danger)">{{ item.debt_percentage }}%</div>
+                    <div class="kpi-metric-label">% с долгом</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="content-card">
+    <div class="card-body-custom">
+        <div class="empty-state"><i class="bi bi-graph-up"></i><p>Нет данных для KPI. Добавьте учителей и группы.</p></div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

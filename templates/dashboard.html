@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block title %}Дашборд{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Дашборд</h1>
+</div>
+
+<!-- Stats Row -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4 col-lg">
+        <div class="stat-card primary">
+            <div class="stat-icon primary">
+                <i class="bi bi-people"></i>
+            </div>
+            <div class="stat-value">{{ total_students }}</div>
+            <div class="stat-label">Активных учеников</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg">
+        <div class="stat-card info">
+            <div class="stat-icon info">
+                <i class="bi bi-collection"></i>
+            </div>
+            <div class="stat-value">{{ total_groups }}</div>
+            <div class="stat-label">Активных групп</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg">
+        <div class="stat-card success">
+            <div class="stat-icon success">
+                <i class="bi bi-person-workspace"></i>
+            </div>
+            <div class="stat-value">{{ total_teachers }}</div>
+            <div class="stat-label">Учителей</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg">
+        <div class="stat-card warning">
+            <div class="stat-icon warning">
+                <i class="bi bi-person-badge"></i>
+            </div>
+            <div class="stat-value">{{ total_managers }}</div>
+            <div class="stat-label">Менеджеров</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg">
+        <div class="stat-card danger">
+            <div class="stat-icon danger">
+                <i class="bi bi-cash-stack"></i>
+            </div>
+            <div class="stat-value">{{ total_revenue|floatformat:0 }}</div>
+            <div class="stat-label">Общий доход (сум)</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Revenue Chart -->
+    <div class="col-lg-8">
+        <div class="content-card glass-panel h-100">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-graph-up text-primary"></i> Динамика доходов (6 мес)</h5>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="revenueChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    <!-- Courses Chart -->
+    <div class="col-lg-4">
+        <div class="content-card glass-panel h-100">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-pie-chart text-info"></i> Популярные курсы</h5>
+            </div>
+            <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                <canvas id="courseChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Recent Payments -->
+    <div class="col-lg-6">
+        <div class="content-card glass-panel">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-cash-stack"></i> Последние платежи</h5>
+                <a href="{% url 'payments:list' %}" class="btn-outline-custom btn-sm-custom">Все платежи</a>
+            </div>
+            <div class="card-body-custom">
+                {% if recent_payments %}
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>Ученик</th>
+                            <th>Сумма</th>
+                            <th>Дата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in recent_payments %}
+                        <tr>
+                            <td>{{ payment.student.name }}</td>
+                            <td><strong>{{ payment.amount|floatformat:0 }} сум</strong></td>
+                            <td>{{ payment.date|date:"d.m.Y H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <p>Платежей пока нет</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Groups Capacity -->
+    <div class="col-lg-6">
+        <div class="content-card glass-panel">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-collection"></i> Заполненность групп</h5>
+                <a href="{% url 'groups:list' %}" class="btn-outline-custom btn-sm-custom">Все группы</a>
+            </div>
+            <div class="card-body-custom">
+                {% if groups_with_capacity %}
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>Группа</th>
+                            <th>Учеников</th>
+                            <th>Заполненность</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in groups_with_capacity %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'groups:detail' item.group.pk %}" class="text-decoration-none">
+                                    {{ item.group.name }}
+                                </a>
+                            </td>
+                            <td>{{ item.students_count }} / {{ item.group.max_students }}</td>
+                            <td>
+                                {% widthratio item.students_count item.group.max_students 100 as percent %}
+                                <div class="capacity-bar">
+                                    <div class="capacity-fill" data-width="{{ percent }}%" data-level="{% if percent > 90 %}high{% elif percent > 60 %}medium{% else %}low{% endif %}"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <p>Групп пока нет</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{{ revenue_labels|json_script:"revenue-labels" }}
+{{ revenue_data|json_script:"revenue-data" }}
+{{ course_labels|json_script:"course-labels" }}
+{{ course_counts|json_script:"course-counts" }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Parse data from json_script
+        const revenueLabels = JSON.parse(document.getElementById('revenue-labels').textContent);
+        const revenueData = JSON.parse(document.getElementById('revenue-data').textContent);
+        const courseLabels = JSON.parse(document.getElementById('course-labels').textContent);
+        const courseCounts = JSON.parse(document.getElementById('course-counts').textContent);
+
+        // Apply capacity bars from data-attributes (to avoid template tags in style/class)
+        document.querySelectorAll('.capacity-fill').forEach(el => {
+            if (el.dataset.width) el.style.width = el.dataset.width;
+            if (el.dataset.level) el.classList.add(el.dataset.level);
+        });
+
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: revenueLabels,
+                datasets: [{
+                    label: 'Доход (сум)',
+                    data: revenueData,
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#4f46e5'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { borderDash: [5, 5] },
+                        ticks: {
+                            callback: function(value) {
+                                if (value >= 1000000) return (value / 1000000) + 'M';
+                                if (value >= 1000) return (value / 1000) + 'k';
+                                return value;
+                            }
+                        }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Course Chart
+        const courseCtx = document.getElementById('courseChart').getContext('2d');
+        new Chart(courseCtx, {
+            type: 'doughnut',
+            data: {
+                labels: courseLabels,
+                datasets: [{
+                    data: courseCounts,
+                    backgroundColor: [
+                        '#4f46e5', '#10b981', '#f59e0b', '#3b82f6', '#ef4444', '#8b5cf6'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, usePointStyle: true }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+    });
+</script>
+{% endblock %}

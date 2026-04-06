@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ student.name }}{% endblock %}
+
+{% block content %}
+<style>
+    .hero-card {
+        background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+        border-radius: 16px;
+        color: #fff;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+    }
+    .hero-card::before {
+        content: '';
+        position: absolute;
+        top: -50%; left: -50%; width: 200%; height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        pointer-events: none;
+    }
+    .hero-avatar {
+        width: 80px; height: 80px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 2rem; font-weight: bold;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border: 2px solid rgba(255,255,255,0.5);
+    }
+    
+    .pulse-danger {
+        animation: pulseDanger 2s infinite;
+    }
+    @keyframes pulseDanger {
+        0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+        70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+        margin: 0;
+    }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 11px; top: 0; bottom: 0;
+        width: 2px; background: #e2e8f0;
+    }
+    .timeline-item {
+        position: relative;
+        margin-bottom: 24px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+        position: absolute;
+        left: -25px; top: 3px;
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: #10b981;
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 3px #d1fae5;
+    }
+</style>
+
+<!-- Profile Hero -->
+<div class="hero-card mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div class="d-flex align-items-center gap-4" style="position: relative; z-index: 1;">
+        <div class="hero-avatar">
+            {{ student.name.0|default:"U" }}
+        </div>
+        <div>
+            <h1 class="m-0 fw-bold" style="font-size: 2rem; letter-spacing: -0.03em;">{{ student.name }}</h1>
+            <div class="mt-2 d-flex flex-wrap gap-3 text-white-50 small fw-medium">
+                <span><i class="bi bi-telephone-fill text-white"></i> {{ student.phone|default:"Нет номера" }}</span>
+                <span><i class="bi bi-person-badge text-white"></i> Менеджер: {{ student.manager.name|default:"—" }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex gap-2" style="position: relative; z-index: 1;">
+        <a href="{% url 'students:edit' student.pk %}" class="btn btn-light rounded-pill px-4 py-2 fw-bold shadow-sm text-primary transition-all">
+            <i class="bi bi-pencil me-1"></i> Изменить
+        </a>
+        <form action="{% url 'managers:toggle_status' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="entity_type" value="student">
+            <input type="hidden" name="entity_id" value="{{ student.id }}">
+            <input type="hidden" name="make_active" value="false">
+            <button type="submit" class="btn btn-danger rounded-pill px-4 py-2 fw-bold shadow-sm transition-all" onclick="return confirm('Отправить ученика в архив?')">
+                <i class="bi bi-archive-fill me-1"></i> В архив
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Info Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="stat-card {% if debt_info.debt > 0 %}danger pulse-danger border-danger border-opacity-50{% else %}success{% endif %} h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Текущий Долг</div>
+                    <div class="stat-value text-{% if debt_info.debt > 0 %}danger{% else %}success{% endif %}" style="font-size:1.8rem; margin-top:4px">
+                        {{ debt_info.debt|floatformat:0 }} сум
+                    </div>
+                </div>
+                <div class="stat-icon {% if debt_info.debt > 0 %}danger{% else %}success{% endif %}">
+                    <i class="bi bi-exclamation-octagon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="stat-card warning h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Оплачено всего</div>
+                    <div class="stat-value" style="font-size:1.8rem; margin-top:4px">{{ debt_info.paid|floatformat:0 }} сум</div>
+                </div>
+                <div class="stat-icon warning"><i class="bi bi-wallet2"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Layout: Left (Groups & Timeline) / Right (Attendance) -->
+<div class="row g-4">
+    <div class="col-lg-6 d-flex flex-column gap-4">
+        
+        <!-- Active Groups -->
+        <div class="content-card">
+            <div class="card-header-custom border-bottom bg-light bg-opacity-25">
+                <h5 class="fw-bold m-0"><i class="bi bi-collection text-primary me-2"></i> Активные группы</h5>
+            </div>
+            <div class="card-body-custom">
+                {% if enrollments %}
+                <table class="table-custom">
+                    <thead class="bg-transparent">
+                        <tr><th class="text-secondary">Группа</th><th class="text-secondary">Учитель</th><th class="text-end text-secondary">Оплата/мес</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for enrollment in enrollments %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'groups:detail' enrollment.group.pk %}" class="fw-bold text-dark text-decoration-none">
+                                    {{ enrollment.group.name }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border px-2 py-1 fw-bold"><i class="bi bi-person"></i> {{ enrollment.group.teacher.name|default:"—" }}</span>
+                            </td>
+                            <td class="text-end fw-bold text-primary">{{ enrollment.group.monthly_fee|floatformat:0 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state py-4"><i class="bi bi-folder-x fs-2 opacity-25"></i><p>Не записан в группы</p></div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Payments Timeline -->
+        <div class="content-card">
+            <div class="card-header-custom border-bottom bg-light bg-opacity-25 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold m-0"><i class="bi bi-cash-stack text-warning me-2"></i> История оплат</h5>
+            </div>
+            <div class="card-body p-4">
+                <a href="{% url 'payments:create' %}?student={{ student.id }}" class="btn btn-primary bg-gradient w-100 rounded-pill mb-4 fw-bold shadow-sm" style="font-size:0.95rem; padding: 12px;">
+                    <i class="bi bi-plus-circle me-1"></i> Добавить платеж
+                </a>
+                
+                {% if payments %}
+                <div class="timeline mt-2">
+                    {% for payment in payments %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="fw-bold fs-6 text-dark mb-1">{{ payment.amount|floatformat:0 }} сум</div>
+                        <div class="small fw-medium text-muted mb-1"><i class="bi bi-clock"></i> {{ payment.date|date:"d.m.Y H:i" }}</div>
+                        {% if payment.comment %}
+                        <div class="bg-light p-2 rounded small text-secondary mt-2 border">{{ payment.comment }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state py-3"><i class="bi bi-credit-card-2-back fs-2 opacity-25"></i><p>Платежей еще не было</p></div>
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Attendance -->
+    <div class="col-lg-6">
+        <div class="content-card h-100">
+            <div class="card-header-custom border-bottom bg-light bg-opacity-25">
+                <h5 class="fw-bold m-0"><i class="bi bi-calendar-check text-success me-2"></i> Последние посещения</h5>
+            </div>
+            <div class="card-body-custom">
+                {% if attendances %}
+                <table class="table-custom">
+                    <thead class="bg-transparent">
+                        <tr><th class="text-secondary">Дата</th><th class="text-secondary">Группа</th><th class="text-end text-secondary">Статус</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for att in attendances %}
+                        <tr>
+                            <td class="fw-bold text-dark">{{ att.date|date:"d.m.Y" }}</td>
+                            <td class="small fw-bold text-secondary">{{ att.group.name }}</td>
+                            <td class="text-end">
+                                {% if att.status == 'PRESENT' %}
+                                <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-50 px-3 py-2 fw-bold"><i class="bi bi-check-circle-fill"></i> Пришел</span>
+                                {% else %}
+                                <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger border-opacity-50 px-3 py-2 fw-bold"><i class="bi bi-x-circle-fill"></i> Пропуск</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state py-5"><i class="bi bi-clipboard-x fs-1 opacity-25"></i><p>Нет записей о посещаемости</p></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

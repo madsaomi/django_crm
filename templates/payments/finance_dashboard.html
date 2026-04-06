@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Финансовый реестр{% endblock %}
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center pt-3 pb-3 mb-3 border-bottom">
+    <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">
+        Финансовый реестр (Долги и Оплаты)
+    </h1>
+    <div class="d-flex gap-2">
+        <a href="{% url 'payments:create' %}" class="btn btn-success bg-gradient border-0 fw-medium shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Принять оплату
+        </a>
+    </div>
+</div>
+
+<div class="content-card shadow-sm border-0 bg-white">
+    <div class="card-body-custom">
+        <div class="table-responsive">
+            <table class="table table-hover table-custom align-middle mb-0" style="font-size: 0.85rem;">
+                <thead>
+                    <tr class="bg-light">
+                        <th class="ps-4" style="width: 250px;">Ученик</th>
+                        <th style="width: 300px;">Группы и Длительность</th>
+                        <th class="text-end">Ожидаемая сумма (Σ)</th>
+                        <th class="text-end">Оплачено всего</th>
+                        <th class="text-end">Баланс / Долг</th>
+                        <th class="text-center pe-4" style="width: 150px;">Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in reports %}
+                    <tr class="{% if item.debt > 0 %}table-danger-light{% elif item.debt < 0 %}table-success-light{% endif %}">
+                        <td class="ps-4 fw-bold">
+                            <a href="{% url 'students:detail' item.student.pk %}" class="text-decoration-none text-dark d-flex align-items-center gap-2">
+                                <div class="rounded-circle bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                                    <i class="bi bi-person text-secondary" style="font-size: 0.8rem;"></i>
+                                </div>
+                                {{ item.student.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% for g in item.groups_info %}
+                            <div class="mb-1 d-flex justify-content-between">
+                                <span class="text-muted small">{{ g.group.name }} ({{ g.months }} мес.)</span>
+                                <span class="fw-medium text-secondary small">{{ g.expected|floatformat:0 }} сум</span>
+                            </div>
+                            {% empty %}
+                            <span class="text-muted small">Нет активных групп</span>
+                            {% endfor %}
+                        </td>
+                        <td class="text-end fw-semibold text-secondary">{{ item.expected|floatformat:0 }} сум</td>
+                        <td class="text-end fw-semibold text-primary">{{ item.paid|floatformat:0 }} сум</td>
+                        <td class="text-end">
+                            {% if item.debt > 0 %}
+                            <span class="text-danger fw-bold fs-6">-{{ item.debt|floatformat:0 }} сум</span>
+                            {% elif item.debt < 0 %}
+                            <span class="text-success fw-bold fs-6">+{{ item.abs_debt|floatformat:0 }} сум</span>
+                            {% else %}
+                            <span class="text-muted">0</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center pe-4">
+                            {% if item.debt > 0 %}
+                            <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3">Долг</span>
+                            {% elif item.debt < 0 %}
+                            <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3">Переплата</span>
+                            {% else %}
+                            <span class="badge rounded-pill bg-light text-muted border px-3">Оплачено</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-danger-light {
+        background-color: rgba(239, 68, 68, 0.03);
+    }
+    .table-danger-light:hover {
+        background-color: rgba(239, 68, 68, 0.06) !important;
+    }
+    .table-success-light {
+        background-color: rgba(16, 185, 129, 0.03);
+    }
+    .table-success-light:hover {
+        background-color: rgba(16, 185, 129, 0.06) !important;
+    }
+    .badge-custom {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+    }
+</style>
+{% endblock %}

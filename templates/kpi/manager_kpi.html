@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}KPI Менеджеров{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title"><i class="bi bi-graph-up-arrow"></i> KPI Менеджеров</h1>
+    <a href="{% url 'kpi:teacher_kpi' %}" class="btn-outline-custom"><i class="bi bi-bar-chart-line"></i> KPI Учителей</a>
+</div>
+
+{% if kpi_data %}
+<div class="row g-4">
+    {% for item in kpi_data %}
+    <div class="col-lg-6">
+        <div class="kpi-card">
+            <div class="kpi-card-name">
+                <i class="bi bi-person-badge"></i> {{ item.manager.name }}
+            </div>
+            <div class="kpi-metrics">
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value">{{ item.total_students }}</div>
+                    <div class="kpi-metric-label">Всего учеников</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value">{{ item.active_students }}</div>
+                    <div class="kpi-metric-label">Активных</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value" style="color:var(--success)">{{ item.total_revenue|floatformat:0 }}</div>
+                    <div class="kpi-metric-label">Доход (сум)</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value" style="color:var(--danger)">{{ item.total_debt|floatformat:0 }}</div>
+                    <div class="kpi-metric-label">Долг (сум)</div>
+                </div>
+                <div class="kpi-metric">
+                    <div class="kpi-metric-value">{{ item.conversion_rate }}%</div>
+                    <div class="kpi-metric-label">Конверсия</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="content-card">
+    <div class="card-body-custom">
+        <div class="empty-state"><i class="bi bi-graph-up"></i><p>Нет данных для KPI. Добавьте менеджеров и учеников.</p></div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

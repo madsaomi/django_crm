@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% block title %}Архив CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+    <h1 class="h2 fw-bold text-dark"><i class="bi bi-archive-fill text-secondary me-2"></i> Архив CRM</h1>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white mb-4">
+    <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+        <ul class="nav nav-tabs card-header-tabs fs-6" id="archiveTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-medium" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="students" aria-selected="true">
+                    Ученики <span class="badge bg-secondary ms-1 rounded-pill">{{ archived_students.count }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-medium" id="teachers-tab" data-bs-toggle="tab" data-bs-target="#teachers" type="button" role="tab" aria-controls="teachers" aria-selected="false">
+                    Учителя <span class="badge bg-secondary ms-1 rounded-pill">{{ archived_teachers.count }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-medium" id="managers-tab" data-bs-toggle="tab" data-bs-target="#managers" type="button" role="tab" aria-controls="managers" aria-selected="false">
+                    Менеджеры <span class="badge bg-secondary ms-1 rounded-pill">{{ archived_managers.count }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-medium" id="groups-tab" data-bs-toggle="tab" data-bs-target="#groups" type="button" role="tab" aria-controls="groups" aria-selected="false">
+                    Группы <span class="badge bg-secondary ms-1 rounded-pill">{{ archived_groups.count }}</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body p-0">
+        <div class="tab-content" id="archiveTabsContent">
+            
+            <!-- Students Archive -->
+            <div class="tab-pane fade show active p-4" id="students" role="tabpanel" aria-labelledby="students-tab">
+                {% if archived_students %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="bg-light text-muted" style="font-size: 0.85rem; text-transform: uppercase;">
+                            <tr>
+                                <th>ФИО Ученика</th>
+                                <th>Телефон</th>
+                                <th>Дата создания</th>
+                                <th class="text-end">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in archived_students %}
+                            <tr>
+                                <td class="fw-medium text-dark">{{ student.name }}</td>
+                                <td>{{ student.phone|default:"—" }}</td>
+                                <td>{{ student.created_at|date:"d.m.Y" }}</td>
+                                <td class="text-end">
+                                    <form action="{% url 'managers:toggle_status' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="entity_type" value="student">
+                                        <input type="hidden" name="entity_id" value="{{ student.id }}">
+                                        <input type="hidden" name="make_active" value="true">
+                                        <button type="submit" class="btn btn-sm btn-outline-success rounded-pill fw-medium px-3"><i class="bi bi-arrow-counterclockwise me-1"></i> Восстановить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted p-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                    В архиве нет учеников
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Teachers Archive -->
+            <div class="tab-pane fade p-4" id="teachers" role="tabpanel" aria-labelledby="teachers-tab">
+                {% if archived_teachers %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="bg-light text-muted" style="font-size: 0.85rem; text-transform: uppercase;">
+                            <tr>
+                                <th>ФИО Учителя</th>
+                                <th>Специализация</th>
+                                <th>Телефон</th>
+                                <th class="text-end">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for teacher in archived_teachers %}
+                            <tr>
+                                <td class="fw-medium text-dark">{{ teacher.name }}</td>
+                                <td>{{ teacher.specialization|default:"—" }}</td>
+                                <td>{{ teacher.phone|default:"—" }}</td>
+                                <td class="text-end">
+                                    <form action="{% url 'managers:toggle_status' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="entity_type" value="teacher">
+                                        <input type="hidden" name="entity_id" value="{{ teacher.id }}">
+                                        <input type="hidden" name="make_active" value="true">
+                                        <button type="submit" class="btn btn-sm btn-outline-success rounded-pill fw-medium px-3"><i class="bi bi-arrow-counterclockwise me-1"></i> Восстановить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted p-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                    В архиве нет учителей
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Managers Archive -->
+            <div class="tab-pane fade p-4" id="managers" role="tabpanel" aria-labelledby="managers-tab">
+                {% if archived_managers %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="bg-light text-muted" style="font-size: 0.85rem; text-transform: uppercase;">
+                            <tr>
+                                <th>ФИО Менеджера</th>
+                                <th>Телефон</th>
+                                <th>Дата создания</th>
+                                <th class="text-end">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for manager in archived_managers %}
+                            <tr>
+                                <td class="fw-medium text-dark">{{ manager.name }}</td>
+                                <td>{{ manager.phone|default:"—" }}</td>
+                                <td>{{ manager.created_at|date:"d.m.Y" }}</td>
+                                <td class="text-end">
+                                    <form action="{% url 'managers:toggle_status' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="entity_type" value="manager">
+                                        <input type="hidden" name="entity_id" value="{{ manager.id }}">
+                                        <input type="hidden" name="make_active" value="true">
+                                        <button type="submit" class="btn btn-sm btn-outline-success rounded-pill fw-medium px-3"><i class="bi bi-arrow-counterclockwise me-1"></i> Восстановить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted p-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                    В архиве нет менеджеров
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Groups Archive -->
+            <div class="tab-pane fade p-4" id="groups" role="tabpanel" aria-labelledby="groups-tab">
+                {% if archived_groups %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="bg-light text-muted" style="font-size: 0.85rem; text-transform: uppercase;">
+                            <tr>
+                                <th>Название Группы</th>
+                                <th>Курс</th>
+                                <th>Учитель</th>
+                                <th class="text-end">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for group in archived_groups %}
+                            <tr>
+                                <td class="fw-medium text-dark">{{ group.name }}</td>
+                                <td>{{ group.get_course_type_display }}</td>
+                                <td>{{ group.teacher.name|default:"—" }}</td>
+                                <td class="text-end">
+                                    <form action="{% url 'managers:toggle_status' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="entity_type" value="group">
+                                        <input type="hidden" name="entity_id" value="{{ group.id }}">
+                                        <input type="hidden" name="make_active" value="true">
+                                        <button type="submit" class="btn btn-sm btn-outline-success rounded-pill fw-medium px-3"><i class="bi bi-arrow-counterclockwise me-1"></i> Восстановить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted p-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                    В архиве нет групп
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

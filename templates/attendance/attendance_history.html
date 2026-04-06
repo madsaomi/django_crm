@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}История посещаемости{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">История посещаемости</h1>
+    <a href="{% url 'attendance:mark' %}" class="btn-primary-custom"><i class="bi bi-clipboard-check"></i> Отметить</a>
+</div>
+
+<div class="filter-bar">
+    <form method="get" class="d-flex gap-2 flex-wrap align-items-center">
+        <select name="group" class="form-select" style="max-width:250px">
+            <option value="">Все группы</option>
+            {% for group in groups %}
+            <option value="{{ group.pk }}" {% if selected_group == group.pk|slugify %}selected{% endif %}>{{ group.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="date" name="date" class="form-control" style="max-width:180px" value="{{ selected_date }}">
+        <button type="submit" class="btn-outline-custom"><i class="bi bi-funnel"></i> Фильтр</button>
+    </form>
+</div>
+
+<div class="content-card">
+    <div class="card-body-custom">
+        {% if records %}
+        <table class="table-custom">
+            <thead><tr><th>Дата</th><th>Ученик</th><th>Группа</th><th>Статус</th></tr></thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.date|date:"d.m.Y" }}</td>
+                    <td>{{ record.student.name }}</td>
+                    <td>{{ record.group.name }}</td>
+                    <td>
+                        {% if record.status == 'PRESENT' %}
+                        <span class="badge-custom badge-present"><i class="bi bi-check-circle"></i> Присутствует</span>
+                        {% else %}
+                        <span class="badge-custom badge-absent"><i class="bi bi-x-circle"></i> Отсутствует</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if is_paginated %}
+        <nav class="pagination-custom">
+            {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}" class="page-link">← Назад</a>{% endif %}
+            <span class="page-link active">{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="page-link">Вперёд →</a>{% endif %}
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="empty-state"><i class="bi bi-clipboard"></i><p>Записей посещаемости пока нет</p></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

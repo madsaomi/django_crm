@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}{{ group.name }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">{{ group.name }}</h1>
+    <div class="d-flex gap-2">
+        <a href="{% url 'groups:edit' group.pk %}" class="btn-outline-custom"><i class="bi bi-pencil"></i> Изменить</a>
+        <form action="{% url 'managers:toggle_status' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="entity_type" value="group">
+            <input type="hidden" name="entity_id" value="{{ group.id }}">
+            <input type="hidden" name="make_active" value="false">
+            <button type="submit" class="btn-outline-custom text-danger border-danger" onclick="return confirm('Отправить группу в архив?')"><i class="bi bi-archive-fill"></i> В архив</button>
+        </form>
+        <a href="{% url 'groups:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> Назад</a>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card info">
+            <div class="stat-label">Тип курса</div>
+            <div class="stat-value" style="font-size:1rem;margin-top:4px">{{ group.get_course_type_display }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card primary">
+            <div class="stat-label">Учитель</div>
+            <div class="stat-value" style="font-size:1rem;margin-top:4px">{{ group.teacher.name|default:"Не назначен" }}</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="stat-card success">
+            <div class="stat-label">Учеников</div>
+            <div class="stat-value">{{ group.students_count }}/{{ group.max_students }}</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="stat-card warning">
+            <div class="stat-label">Оплата/мес</div>
+            <div class="stat-value" style="font-size:1.1rem;margin-top:4px">{{ group.monthly_fee|floatformat:0 }}</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="stat-card">
+            <div class="stat-label">Кабинет</div>
+            <div class="stat-value" style="font-size:1.3rem;margin-top:4px">{{ group.room|default:"—" }}</div>
+        </div>
+    </div>
+</div>
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-label">Расписание</div>
+            <div class="stat-value" style="font-size:1.1rem;margin-top:4px">
+                {{ group.get_schedule_type_display }} <br>
+                {{ group.time_slot|default:"Время не указано" }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="content-card">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-people"></i> Ученики группы</h5>
+            </div>
+            <div class="card-body-custom">
+                {% if enrollments %}
+                <table class="table-custom">
+                    <thead><tr><th>#</th><th>ФИО</th><th>Телефон</th><th>Дата записи</th><th></th></tr></thead>
+                    <tbody>
+                        {% for enrollment in enrollments %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'students:detail' enrollment.student.pk %}" class="text-decoration-none fw-semibold">{{ enrollment.student.name }}</a></td>
+                            <td>{{ enrollment.student.phone|default:"—" }}</td>
+                            <td>{{ enrollment.enrolled_date|date:"d.m.Y" }}</td>
+                            <td>
+                                <form method="post" action="{% url 'groups:remove_student' group.pk enrollment.pk %}" style="display:inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="action-btn danger" title="Удалить из группы" onclick="return confirm('Удалить ученика из группы?')">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state"><i class="bi bi-people"></i><p>В группе нет учеников</p></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="content-card">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-person-plus"></i> Добавить ученика</h5>
+            </div>
+            <div class="card-body-custom p-3">
+                {% if group.is_full %}
+                <div class="alert alert-warning m-0"><i class="bi bi-exclamation-triangle"></i> Группа заполнена!</div>
+                {% else %}
+                <form method="post" action="{% url 'groups:add_student' group.pk %}">
+                    {% csrf_token %}
+                    {{ add_student_form.student }}
+                    <button type="submit" class="btn-success-custom w-100 mt-2"><i class="bi bi-plus-lg"></i> Добавить</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

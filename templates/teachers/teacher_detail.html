@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Профиль учителя: {{ teacher.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="d-flex align-items-center gap-3">
+        <a href="{% url 'teachers:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> К списку</a>
+        <h1 class="page-title mb-0">Профиль учителя</h1>
+    </div>
+    <div class="action-buttons">
+        <a href="{% url 'teachers:edit' teacher.pk %}" class="btn-primary-custom"><i class="bi bi-pencil"></i> Редактировать</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Left Column: Profile Info -->
+    <div class="col-lg-4">
+        <div class="content-card glass-panel h-100 p-4 text-center">
+            <div class="mb-4">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white" style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), #818cf8); font-size: 2.5rem;">
+                    <i class="bi bi-person-workspace"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold mb-1">{{ teacher.name }}</h3>
+            <p class="text-secondary mb-3">{{ teacher.specialization|default:"Специализация не указана" }}</p>
+            
+            <div class="d-flex justify-content-center gap-2 mb-4">
+                {% if teacher.is_active %}
+                <span class="badge-custom badge-active"><i class="bi bi-check-circle"></i> Активен</span>
+                {% else %}
+                <span class="badge-custom badge-inactive"><i class="bi bi-x-circle"></i> Неактивен</span>
+                {% endif %}
+            </div>
+
+            <hr class="opacity-25">
+
+            <div class="text-start mt-4">
+                <div class="mb-3">
+                    <small class="text-secondary d-block">Телефон</small>
+                    <span class="fw-medium"><i class="bi bi-telephone text-primary me-2"></i>{{ teacher.phone|default:"Не указан" }}</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-secondary d-block">Зарегистрирован</small>
+                    <span class="fw-medium"><i class="bi bi-calendar3 text-primary me-2"></i>{{ teacher.created_at|date:"d.m.Y" }}</span>
+                </div>
+                {% if teacher.user %}
+                <div class="mb-3">
+                    <small class="text-secondary d-block">Пользователь системы</small>
+                    <span class="fw-medium"><i class="bi bi-person-check text-primary me-2"></i>Да ({{ teacher.user.username }})</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Stats & Data -->
+    <div class="col-lg-8">
+        <!-- Quick Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="bi bi-collection"></i>
+                    </div>
+                    <div class="stat-value">{{ groups.count }}</div>
+                    <div class="stat-label">Активных групп</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-card success">
+                    <div class="stat-icon success">
+                        <i class="bi bi-journal-check"></i>
+                    </div>
+                    <div class="stat-value">{{ recent_attendance.count }}</div>
+                    <div class="stat-label">Недавних записей журнала</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Groups List -->
+        <div class="content-card glass-panel mb-4">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-collection text-primary"></i> Группы учителя</h5>
+            </div>
+            <div class="card-body-custom">
+                {% if groups %}
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Тип</th>
+                            <th>Учеников</th>
+                            <th>Дни</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for group in groups %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'groups:detail' group.pk %}" class="fw-medium text-decoration-none">{{ group.name }}</a>
+                            </td>
+                            <td>{{ group.get_course_type_display }}</td>
+                            <td><span class="badge-custom badge-course">{{ group.students_count }}</span></td>
+                            <td>{{ group.get_schedule_type_display }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state p-5">
+                    <i class="bi bi-inbox text-secondary"></i>
+                    <p class="mt-2 text-secondary">Учитель пока не ведет группы</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

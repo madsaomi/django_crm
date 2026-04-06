@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load group_tags %}
+{% block title %}Загрузка кабинетов{% endblock %}
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center pt-3 pb-3 mb-3 border-bottom">
+    <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">
+        Карта загрузки кабинетов
+    </h1>
+    <div class="d-flex gap-2">
+        <a href="{% url 'groups:schedule' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-calendar3 me-1"></i> Вернуться к расписанию
+        </a>
+    </div>
+</div>
+
+<div class="content-card shadow-sm border-0 bg-white">
+    <div class="card-body-custom overflow-auto">
+        <table class="table table-bordered align-middle mb-0 text-center" style="min-width: 800px;">
+            <thead class="bg-light">
+                <tr>
+                    <th style="width: 150px; background: #f8f9fa; position: sticky; left: 0; z-index: 10;">Время \ Кабинет</th>
+                    {% for room in rooms %}
+                    <th class="fw-bold text-primary">{{ room }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for slot in slots %}
+                <tr>
+                    <td class="fw-bold bg-light" style="position: sticky; left: 0; z-index: 5;">{{ slot }}</td>
+                    {% for room in rooms %}
+                        {% with cell=occupancy|get_item:room|get_item:slot %}
+                        <td class="p-2 {% if cell.is_occupied %}bg-primary bg-opacity-10{% else %}bg-success bg-opacity-5{% endif %}" style="height: 100px; vertical-align: top;">
+                            {% if cell.is_occupied %}
+                                {% for g in cell.groups %}
+                                <div class="badge bg-primary text-wrap mb-1 d-block p-2 text-start shadow-sm border-0" style="font-size: 0.7rem; font-weight: 500;">
+                                    <i class="bi bi-people-fill me-1"></i> {{ g.name }}
+                                    <div class="mt-1 opacity-75" style="font-size: 0.6rem;">{{ g.teacher.name|default:"-" }}</div>
+                                </div>
+                                {% endfor %}
+                                {% for e in cell.events %}
+                                <div class="badge bg-danger text-wrap mb-1 d-block p-2 text-start shadow-sm border-0" style="font-size: 0.7rem; font-weight: 500;">
+                                    <i class="bi bi-star-fill me-1"></i> {{ e.title }} (вс)
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-success opacity-50 small fw-medium">Свободно</span>
+                            {% endif %}
+                        </td>
+                        {% endwith %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .table-bordered td, .table-bordered th {
+        border-color: #eee !important;
+    }
+</style>
+{% endblock %}

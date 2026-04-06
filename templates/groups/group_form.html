@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.pk %}Редактировать группу{% else %}Создать группу{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">{% if form.instance.pk %}Редактировать группу{% else %}Создать группу{% endif %}</h1>
+    <a href="{% url 'groups:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> Назад</a>
+</div>
+<div class="form-card">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<small class="text-muted">{{ field.help_text }}</small>{% endif %}
+            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors.0 }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn-primary-custom"><i class="bi bi-check-lg"></i> Сохранить</button>
+            <a href="{% url 'groups:list' %}" class="btn-outline-custom">Отмена</a>
+        </div>
+    </form>
+</div>
+
+{% block extra_js %}
+<script id="course-prices-data" type="application/json">
+    {{ course_prices|default:'{"KIDS_ENGLISH":400000,"GENERAL_ENGLISH":450000,"IELTS":600000,"MATH":400000,"SAT":400000}'|safe }}
+</script>
+<script>
+const pricesData = document.getElementById('course-prices-data').textContent;
+const prices = JSON.parse(pricesData || '{}');
+const courseType = document.getElementById('id_course_type');
+const fee = document.getElementById('id_monthly_fee');
+if (courseType && fee) {
+    courseType.addEventListener('change', function() {
+        if (prices[this.value]) fee.value = prices[this.value];
+    });
+}
+</script>
+{% endblock %}
+{% endblock %}

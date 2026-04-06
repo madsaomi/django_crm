@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}Профиль менеджера: {{ manager_obj.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="d-flex align-items-center gap-3">
+        <a href="{% url 'managers:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> К списку</a>
+        <h1 class="page-title mb-0">Профиль менеджера</h1>
+    </div>
+    <div class="action-buttons">
+        <a href="{% url 'managers:edit' manager_obj.pk %}" class="btn-primary-custom"><i class="bi bi-pencil"></i> Редактировать</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Left Column: Profile Info -->
+    <div class="col-lg-4">
+        <div class="content-card glass-panel h-100 p-4 text-center">
+            <div class="mb-4">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white" style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--warning), #fbbf24); font-size: 2.5rem;">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold mb-1">{{ manager_obj.name }}</h3>
+            <p class="text-secondary mb-3">Менеджер</p>
+            
+            <div class="d-flex justify-content-center gap-2 mb-4">
+                {% if manager_obj.is_active %}
+                <span class="badge-custom badge-active"><i class="bi bi-check-circle"></i> Активен</span>
+                {% else %}
+                <span class="badge-custom badge-inactive"><i class="bi bi-x-circle"></i> Неактивен</span>
+                {% endif %}
+            </div>
+
+            <hr class="opacity-25">
+
+            <div class="text-start mt-4">
+                <div class="mb-3">
+                    <small class="text-secondary d-block">Телефон</small>
+                    <span class="fw-medium"><i class="bi bi-telephone text-warning me-2"></i>{{ manager_obj.phone|default:"Не указан" }}</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-secondary d-block">Зарегистрирован</small>
+                    <span class="fw-medium"><i class="bi bi-calendar3 text-warning me-2"></i>{{ manager_obj.created_at|date:"d.m.Y" }}</span>
+                </div>
+                {% if manager_obj.user %}
+                <div class="mb-3">
+                    <small class="text-secondary d-block">Пользователь системы</small>
+                    <span class="fw-medium"><i class="bi bi-person-check text-warning me-2"></i>Да ({{ manager_obj.user.username }})</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Stats & Data -->
+    <div class="col-lg-8">
+        <!-- Quick Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="stat-value">{{ students.count }}</div>
+                    <div class="stat-label">Привлеченных учеников</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-card success">
+                    <div class="stat-icon success">
+                        <i class="bi bi-check2-circle"></i>
+                    </div>
+                    <div class="stat-value">{% if manager_obj.user %}Доступен{% else %}Нет доступа{% endif %}</div>
+                    <div class="stat-label">Доступ к системе</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students List -->
+        <div class="content-card glass-panel mb-4">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-people text-primary"></i> Привлеченные ученики</h5>
+            </div>
+            <div class="card-body-custom">
+                {% if students %}
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>ФИО</th>
+                            <th>Телефон</th>
+                            <th>Статус</th>
+                            <th>Дата добавления</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students|slice:":15" %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'students:detail' student.pk %}" class="fw-medium text-decoration-none">{{ student.name }}</a>
+                            </td>
+                            <td>{{ student.phone|default:"—" }}</td>
+                            <td>
+                                {% if student.is_active %}
+                                <span class="badge-custom badge-active">Активен</span>
+                                {% else %}
+                                <span class="badge-custom badge-inactive">В архиве</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ student.created_at|date:"d.m.Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% if students.count > 15 %}
+                <div class="text-center p-3 border-top">
+                    <small class="text-secondary">Показаны последние 15 учеников.</small>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="empty-state p-5">
+                    <i class="bi bi-inbox text-secondary"></i>
+                    <p class="mt-2 text-secondary">Менеджер пока не привлек учеников</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

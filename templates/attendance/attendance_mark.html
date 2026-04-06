@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Посещаемость{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Отметка посещаемости</h1>
+    <a href="{% url 'attendance:history' %}" class="btn-outline-custom"><i class="bi bi-clock-history"></i> История</a>
+</div>
+
+<div class="content-card mb-4">
+    <div class="card-header-custom">
+        <h5><i class="bi bi-funnel"></i> Выберите группу и дату</h5>
+    </div>
+    <div class="card-body-custom p-3">
+        <form method="get" class="d-flex gap-2 flex-wrap align-items-end">
+            <div>
+                <label class="form-label fw-semibold" style="font-size:.8rem">Группа</label>
+                <select name="group" class="form-select" style="min-width:250px">
+                    <option value="">— Выберите группу —</option>
+                    {% for group in groups %}
+                    <option value="{{ group.pk }}" {% if selected_group and selected_group.pk == group.pk %}selected{% endif %}>
+                        {{ group.name }} ({{ group.get_course_type_display }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="form-label fw-semibold" style="font-size:.8rem">Дата</label>
+                <input type="date" name="date" class="form-control" value="{{ date }}">
+            </div>
+            <button type="submit" class="btn-primary-custom"><i class="bi bi-search"></i> Показать</button>
+        </form>
+    </div>
+</div>
+
+{% if selected_group and students %}
+<div class="content-card">
+    <div class="card-header-custom">
+        <h5>
+            <i class="bi bi-clipboard-check"></i> {{ selected_group.name }} — {{ date }}
+            {% if not is_valid_day %}
+            <span class="badge bg-warning text-dark ms-2"><i class="bi bi-exclamation-triangle"></i> В этот день нет урока по расписанию! (График: {{ selected_group.get_schedule_type_display }})</span>
+            {% endif %}
+        </h5>
+    </div>
+    <div class="card-body-custom">
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="group_id" value="{{ selected_group.pk }}">
+            <input type="hidden" name="date" value="{{ date }}">
+            <table class="table-custom text-center">
+                <thead><tr><th style="width: 5%">#</th><th style="width: 25%">Ученик</th><th style="width: 35%">Статус</th><th style="width: 35%">Комментарий</th></tr></thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td class="fw-semibold">{{ student.name }}</td>
+                        <td>
+                            <div class="d-flex gap-2 attendance-toggle justify-content-center">
+                                <input class="btn-check" type="radio" name="status_{{ student.id }}" value="PRESENT" id="present_{{ student.id }}" autocomplete="off"
+                                    {% if existing_attendance %}
+                                        {% for sid, status in existing_attendance.items %}{% if sid == student.id and status == 'PRESENT' %}checked{% endif %}{% endfor %}
+                                        {% if student.id not in existing_attendance.keys %}checked{% endif %}
+                                    {% else %}checked{% endif %}
+                                >
+                                <label class="btn btn-outline-success btn-sm btn-present fw-semibold d-flex align-items-center gap-1 rounded-pill px-3 shadow-sm border-2" for="present_{{ student.id }}">
+                                    <i class="bi bi-check-circle-fill mb-0"></i> Присутствует
+                                </label>
+
+                                <input class="btn-check" type="radio" name="status_{{ student.id }}" value="ABSENT" id="absent_{{ student.id }}" autocomplete="off"
+                                    {% for sid, status in existing_attendance.items %}
+                                        {% if sid == student.id and status == 'ABSENT' %}checked{% endif %}
+                                    {% endfor %}
+                                >
+                                <label class="btn btn-outline-danger btn-sm btn-absent fw-semibold d-flex align-items-center gap-1 rounded-pill px-3 shadow-sm border-2" for="absent_{{ student.id }}">
+                                    <i class="bi bi-x-circle-fill mb-0"></i> Отсутствует
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" name="comment_{{ student.id }}" class="form-control form-control-sm border-0 bg-light rounded-pill px-3 py-2 shadow-sm" placeholder="Укажите причину или комментарий"
+                                   value="{% for sid, c in comments.items %}{% if sid == student.id %}{{ c|default:'' }}{% endif %}{% endfor %}">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="p-3">
+                <button type="submit" class="btn btn-success bg-gradient fw-bold shadow-sm rounded-pill px-4 py-2" style="font-size:1.05rem;">
+                    <i class="bi bi-check-all me-1"></i> Сохранить посещаемость
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% elif selected_group %}
+<div class="content-card">
+    <div class="card-body-custom">
+        <div class="empty-state"><i class="bi bi-people"></i><p>В группе нет учеников</p></div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
