@@ -59,11 +59,12 @@ class GroupDetailView(LoginRequiredMixin, DetailView):
             if d not in dates:
                 dates.append(d)
         
+        atts_qs = Attendance.objects.filter(group=self.object, date__in=dates)
+        atts_list = list(atts_qs)
         recent_log = []
         for d in dates:
-            atts = Attendance.objects.filter(group=self.object, date=d)
-            present = sum(1 for a in atts if a.status == 'PRESENT')
-            absent = sum(1 for a in atts if a.status == 'ABSENT')
+            present = sum(1 for a in atts_list if a.date == d and a.status == 'PRESENT')
+            absent = sum(1 for a in atts_list if a.date == d and a.status == 'ABSENT')
             recent_log.append({'date': d, 'present': present, 'absent': absent})
         context['recent_attendance'] = recent_log
         

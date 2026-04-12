@@ -2,11 +2,10 @@
 {% block title %}Платежи{% endblock %}
 {% block content %}
 <div class="page-header">
-    <h1 class="page-title">Платежи</h1>
-    <div class="d-flex gap-2">
-        <a href="{% url 'payments:debts' %}" class="btn-danger-custom"><i class="bi bi-exclamation-circle"></i> Должники</a>
-        <a href="{% url 'payments:create' %}" class="btn-primary-custom"><i class="bi bi-plus-lg"></i> Добавить платёж</a>
-    </div>
+    <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">История платежей</h1>
+    <button hx-get="{% url 'payments:create' %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary bg-gradient border-0 fw-medium shadow-sm">
+        <i class="bi bi-plus-lg me-1"></i> Принять оплату
+    </button>
 </div>
 
 <div class="filter-bar">

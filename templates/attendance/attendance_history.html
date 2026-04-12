@@ -1,56 +1,268 @@
 {% extends 'base.html' %}
-{% block title %}История посещаемости{% endblock %}
+{% block title %}Журнал посещаемости и успеваемости{% endblock %}
 {% block content %}
-<div class="page-header">
-    <h1 class="page-title">История посещаемости</h1>
-    <a href="{% url 'attendance:mark' %}" class="btn-primary-custom"><i class="bi bi-clipboard-check"></i> Отметить</a>
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <h1 class="page-title m-0"><i class="bi bi-journal-bookmark-fill me-2 text-primary"></i> Журнал группы</h1>
+    <a href="{% url 'attendance:mark' %}{% if selected_group %}?group={{ selected_group.pk }}{% endif %}" class="btn btn-success bg-gradient shadow-sm rounded-pill px-4 fw-medium">
+        <i class="bi bi-clipboard-check me-1"></i> Отметить посещаемость
+    </a>
 </div>
 
-<div class="filter-bar">
-    <form method="get" class="d-flex gap-2 flex-wrap align-items-center">
-        <select name="group" class="form-select" style="max-width:250px">
-            <option value="">Все группы</option>
-            {% for group in groups %}
-            <option value="{{ group.pk }}" {% if selected_group == group.pk|slugify %}selected{% endif %}>{{ group.name }}</option>
-            {% endfor %}
-        </select>
-        <input type="date" name="date" class="form-control" style="max-width:180px" value="{{ selected_date }}">
-        <button type="submit" class="btn-outline-custom"><i class="bi bi-funnel"></i> Фильтр</button>
-    </form>
+<div class="content-card mb-4 border-0 shadow-sm mt-3">
+    <div class="card-body-custom p-3" style="background-color: #f8f9fa; border-radius: 12px;">
+        <form method="get" class="d-flex gap-3 flex-wrap align-items-end">
+            <div>
+                <label class="form-label fw-bold text-secondary mb-1" style="font-size:.8rem; text-transform: uppercase;">Группа</label>
+                <select name="group" class="form-select border-0 shadow-sm" style="min-width:250px; font-weight: 500;">
+                    <option value="">— Выберите группу —</option>
+                    {% for group in groups %}
+                    <option value="{{ group.pk }}" {% if selected_group_id == group.pk %}selected{% endif %}>{{ group.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="form-label fw-bold text-secondary mb-1" style="font-size:.8rem; text-transform: uppercase;">Месяц</label>
+                <input type="month" name="month" class="form-control border-0 shadow-sm fw-medium" value="{{ selected_month }}">
+            </div>
+            <button type="submit" class="btn btn-primary shadow-sm px-4 fw-bold"><i class="bi bi-search me-1"></i> Показать журнал</button>
+        </form>
+    </div>
 </div>
 
-<div class="content-card">
-    <div class="card-body-custom">
-        {% if records %}
-        <table class="table-custom">
-            <thead><tr><th>Дата</th><th>Ученик</th><th>Группа</th><th>Статус</th></tr></thead>
-            <tbody>
-                {% for record in records %}
+{% if selected_group %}
+<div class="content-card border-0 shadow-sm overflow-hidden" style="border-radius: 12px;">
+    <div class="card-header-custom bg-white border-bottom p-4">
+        <h4 class="mb-0 fw-bold" style="color: #2b3452;">
+            {{ selected_group.name }} 
+            <span class="badge bg-light text-secondary border ms-2 fw-normal" style="font-size: 0.9rem;">
+                {{ dates|length }} занятий
+            </span>
+        </h4>
+        {% if selected_group.teacher %}
+        <p class="text-muted small mb-0 mt-1"><i class="bi bi-person me-1"></i> Преподаватель: {{ selected_group.teacher.name }}</p>
+        {% endif %}
+    </div>
+    
+    <div class="card-body-custom p-0" style="overflow-x: auto;">
+        {% if matrix %}
+        <table class="table table-bordered table-hover mb-0 align-middle text-center" style="min-width: 800px; font-size: 0.95rem;">
+            <thead class="bg-light">
                 <tr>
-                    <td>{{ record.date|date:"d.m.Y" }}</td>
-                    <td>{{ record.student.name }}</td>
-                    <td>{{ record.group.name }}</td>
-                    <td>
-                        {% if record.status == 'PRESENT' %}
-                        <span class="badge-custom badge-present"><i class="bi bi-check-circle"></i> Присутствует</span>
-                        {% else %}
-                        <span class="badge-custom badge-absent"><i class="bi bi-x-circle"></i> Отсутствует</span>
-                        {% endif %}
+                    <th class="text-start px-4" style="width: 250px; position: sticky; left: 0; background: #f8f9fa; z-index: 1;">Ученик</th>
+                    {% for d in dates %}
+                    <th style="width: 50px; padding: 12px 5px;">
+                        <a href="{% url 'attendance:mark' %}?group={{ selected_group.pk }}&date={{ d|date:'Y-m-d' }}" class="text-decoration-none text-dark d-block custom-header-link" title="Отметить всю группу">
+                            <div class="small fw-normal text-muted" style="font-size:0.75rem;">{{ d|date:"D" }}</div>
+                            <div class="fw-bold">{{ d|date:"d.m" }}</div>
+                        </a>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in matrix %}
+                <tr>
+                    <td class="text-start px-4 fw-medium text-dark" style="position: sticky; left: 0; background: #fff; z-index: 1;">
+                        {{ row.student.name }}
                     </td>
+                    {% for item in row.attendances %}
+                    <td style="padding: 10px 5px; cursor: pointer; transition: background 0.2s;" 
+                        class="attendance-cell toggle-cell"
+                        onclick="openAttendanceModal('{{ row.student.id }}', '{{ row.student.name }}', '{{ item.date|date:'Y-m-d' }}', '{% if item.record %}{{ item.record.status }}{% endif %}', '{% if item.record %}{{ item.record.comment|escapejs }}{% endif %}')"
+                        id="cell-{{ row.student.id }}-{{ item.date|date:'Y-m-d' }}">
+                        
+                        <div class="cell-content">
+                            {% if item.record %}
+                                {% if item.record.status == 'PRESENT' %}
+                                    <span class="badge bg-light text-success p-2 fw-bold border border-success border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;"><i class="bi bi-check2"></i></span>
+                                    {% if item.record.comment %}
+                                        <div class="small text-muted mt-1" style="font-size: 0.7rem;" title="{{ item.record.comment }}"><i class="bi bi-chat-text"></i></div>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold p-2 border border-danger border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;">Н</span>
+                                    {% if item.record.comment %}
+                                        <div class="small text-muted mt-1" style="font-size: 0.7rem;" title="{{ item.record.comment }}"><i class="bi bi-chat-text"></i></div>
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                <span class="text-black-50 small" style="opacity: 0.4;">—</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                    {% endfor %}
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        {% if is_paginated %}
-        <nav class="pagination-custom">
-            {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}" class="page-link">← Назад</a>{% endif %}
-            <span class="page-link active">{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
-            {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="page-link">Вперёд →</a>{% endif %}
-        </nav>
-        {% endif %}
         {% else %}
-        <div class="empty-state"><i class="bi bi-clipboard"></i><p>Записей посещаемости пока нет</p></div>
+        <div class="text-center py-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-person-x text-secondary" style="font-size: 2rem;"></i>
+            </div>
+            <h5 class="text-secondary fw-semibold">В этой группе пока нет учеников</h5>
+        </div>
         {% endif %}
     </div>
 </div>
+{% elif not selected_group_id %}
+<div class="text-center py-5 mt-4">
+    <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3" style="width: 80px; height: 80px;">
+        <i class="bi bi-journal-album text-secondary" style="font-size: 2rem;"></i>
+    </div>
+    <h4 class="text-secondary fw-bold">Выберите группу</h4>
+    <p class="text-muted">Укажите группу и расчётный месяц, чтобы увидеть успеваемость и посещаемость учеников в формате журнала.</p>
+</div>
+{% endif %}
+
+<style>
+    /* Styling to make sticky column shadow distinct */
+    .table td:first-child, .table th:first-child {
+        border-right: 2px solid #eaeaea;
+    }
+    .toggle-cell:hover {
+        background-color: #f1f3f5 !important;
+    }
+    .custom-header-link:hover {
+        text-decoration: underline !important;
+        color: #0d6efd !important;
+    }
+</style>
+
+<!-- Modal for updating attendance -->
+<div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="attendanceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold" id="attendanceModalLabel">Отметка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-3 text-muted small" id="modalStudentInfo"></p>
+        
+        <input type="hidden" id="modalStudentId">
+        <input type="hidden" id="modalDate">
+        
+        <div class="d-flex justify-content-center gap-2 mb-3">
+            <input type="radio" class="btn-check" name="modalStatus" id="modalStatusPresent" value="PRESENT" autocomplete="off">
+            <label class="btn btn-outline-success rounded-pill px-3 py-2 fw-semibold w-50" for="modalStatusPresent">
+                <i class="bi bi-check-circle-fill me-1"></i> Был
+            </label>
+            
+            <input type="radio" class="btn-check" name="modalStatus" id="modalStatusAbsent" value="ABSENT" autocomplete="off">
+            <label class="btn btn-outline-danger rounded-pill px-3 py-2 fw-semibold w-50" for="modalStatusAbsent">
+                <i class="bi bi-x-circle-fill me-1"></i> Не был
+            </label>
+        </div>
+
+        <div id="modalCommentWrapper" style="display: none;">
+            <label class="form-label small fw-semibold text-muted mb-1">Причина / Комментарий</label>
+            <input type="text" class="form-control rounded-3 bg-light border-0 py-2" id="modalComment" placeholder="Заболел, забыл и т.д.">
+        </div>
+        
+      </div>
+      <div class="modal-footer border-top-0 pt-0">
+        <button type="button" class="btn btn-primary w-100 rounded-pill fw-bold" onclick="saveAttendance()">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    const groupId = "{{ selected_group.pk|default:'' }}";
+    
+    document.querySelectorAll('input[name="modalStatus"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'ABSENT') {
+                document.getElementById('modalCommentWrapper').style.display = 'block';
+                document.getElementById('modalComment').focus();
+            } else {
+                document.getElementById('modalCommentWrapper').style.display = 'none';
+            }
+        });
+    });
+
+    function openAttendanceModal(studentId, studentName, dateStr, currentStatus, currentComment) {
+        document.getElementById('modalStudentId').value = studentId;
+        document.getElementById('modalDate').value = dateStr;
+        
+        const dateParts = dateStr.split('-');
+        const formattedDate = `${dateParts[2]}.${dateParts[1]}`;
+        document.getElementById('modalStudentInfo').innerHTML = `<b>${studentName}</b> &bull; ${formattedDate}`;
+        
+        document.getElementById('modalComment').value = currentComment || '';
+        
+        if (currentStatus === 'PRESENT') {
+            document.getElementById('modalStatusPresent').checked = true;
+            document.getElementById('modalCommentWrapper').style.display = 'none';
+        } else if (currentStatus === 'ABSENT') {
+            document.getElementById('modalStatusAbsent').checked = true;
+            document.getElementById('modalCommentWrapper').style.display = 'block';
+        } else {
+            // Uncheck both
+            document.getElementById('modalStatusPresent').checked = false;
+            document.getElementById('modalStatusAbsent').checked = false;
+            document.getElementById('modalCommentWrapper').style.display = 'none';
+        }
+        
+        const modal = new bootstrap.Modal(document.getElementById('attendanceModal'));
+        modal.show();
+    }
+    
+    function saveAttendance() {
+        const studentId = document.getElementById('modalStudentId').value;
+        const date = document.getElementById('modalDate').value;
+        const comment = document.getElementById('modalComment').value;
+        
+        const statusEl = document.querySelector('input[name="modalStatus"]:checked');
+        if (!statusEl) {
+            alert('Пожалуйста, выберите статус!');
+            return;
+        }
+        const status = statusEl.value;
+        
+        fetch("{% url 'attendance:toggle_api' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                student_id: studentId,
+                group_id: groupId,
+                date: date,
+                status: status,
+                comment: comment
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('attendanceModal'));
+                modal.hide();
+                
+                // Update cell UI
+                const cell = document.getElementById(`cell-${studentId}-${date}`);
+                let commentIcon = data.comment ? `<div class="small text-muted mt-1" style="font-size: 0.7rem;" title="${data.comment}"><i class="bi bi-chat-text"></i></div>` : '';
+                
+                if (data.attendance_status === 'PRESENT') {
+                    cell.querySelector('.cell-content').innerHTML = `
+                        <span class="badge bg-light text-success p-2 fw-bold border border-success border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;"><i class="bi bi-check2"></i></span>
+                        ${commentIcon}
+                    `;
+                } else {
+                    cell.querySelector('.cell-content').innerHTML = `
+                        <span class="badge bg-danger bg-opacity-10 text-danger fw-bold p-2 border border-danger border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;">Н</span>
+                        ${commentIcon}
+                    `;
+                }
+                
+                // update onClick params
+                cell.setAttribute('onclick', `openAttendanceModal('${studentId}', '${cell.closest('tr').children[0].innerText.trim()}', '${date}', '${data.attendance_status}', '${data.comment.replace(/'/g, "\\'")}')`);
+                
+            } else {
+                alert('Ошибка: ' + data.message);
+            }
+        });
+    }
+</script>
 {% endblock %}

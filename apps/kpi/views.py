@@ -1,9 +1,10 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from apps.managers.mixins import ManagerRequiredMixin
 from .services import get_manager_kpi, get_teacher_kpi
 
 
-class ManagerKPIView(LoginRequiredMixin, TemplateView):
+class ManagerKPIView(ManagerRequiredMixin, TemplateView):
     template_name = 'kpi/manager_kpi.html'
 
     def get_context_data(self, **kwargs):

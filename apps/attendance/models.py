@@ -26,6 +26,7 @@ class Attendance(models.Model):
         choices=AttendanceStatus.choices,
         default=AttendanceStatus.PRESENT
     )
+    grade = models.CharField('Оценка', max_length=5, blank=True, null=True)
     comment = models.CharField('Комментарий', max_length=255, blank=True)
 
     class Meta:

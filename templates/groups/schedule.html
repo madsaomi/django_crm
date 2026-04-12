@@ -146,9 +146,8 @@
                 {% for group in even_groups %}
                 <div data-group-id="{{ group.pk }}" data-time="{{ group.time_slot }}" class="event-card {{ group.color }}">
                     <!-- Action Link overlay so the whole card looks clickable but drag still works -->
-                    <a href="{% url 'groups:detail' group.pk %}" class="stretched-link d-none"></a>
                     <div class="event-time">{{ group.time_slot }}</div>
-                    <div class="event-title">{{ group.name }}</div>
+                    <div class="event-title"><a href="{% url 'groups:detail' group.pk %}" class="text-white text-decoration-none">{{ group.name }}</a></div>
                     <div class="event-room">зал {{ group.room|default:"-" }}</div>
                     {% if group.teacher %}
                     <div class="event-details"><i class="bi bi-person"></i> {{ group.teacher.name }}</div>
@@ -164,9 +163,8 @@
             <div class="day-body sortable-list" data-schedule-type="ODD">
                 {% for group in odd_groups %}
                 <div data-group-id="{{ group.pk }}" data-time="{{ group.time_slot }}" class="event-card {{ group.color }}">
-                    <a href="{% url 'groups:detail' group.pk %}" class="stretched-link d-none"></a>
                     <div class="event-time">{{ group.time_slot }}</div>
-                    <div class="event-title">{{ group.name }}</div>
+                    <div class="event-title"><a href="{% url 'groups:detail' group.pk %}" class="text-white text-decoration-none">{{ group.name }}</a></div>
                     <div class="event-room">зал {{ group.room|default:"-" }}</div>
                     {% if group.teacher %}
                     <div class="event-details"><i class="bi bi-person"></i> {{ group.teacher.name }}</div>
@@ -182,9 +180,8 @@
             <div class="day-body sortable-list" data-schedule-type="EVEN">
                 {% for group in even_groups %}
                 <div data-group-id="{{ group.pk }}" data-time="{{ group.time_slot }}" class="event-card {{ group.color }}">
-                    <a href="{% url 'groups:detail' group.pk %}" class="stretched-link d-none"></a>
                     <div class="event-time">{{ group.time_slot }}</div>
-                    <div class="event-title">{{ group.name }}</div>
+                    <div class="event-title"><a href="{% url 'groups:detail' group.pk %}" class="text-white text-decoration-none">{{ group.name }}</a></div>
                     <div class="event-room">зал {{ group.room|default:"-" }}</div>
                     {% if group.teacher %}
                     <div class="event-details"><i class="bi bi-person"></i> {{ group.teacher.name }}</div>
@@ -200,9 +197,8 @@
             <div class="day-body sortable-list" data-schedule-type="ODD">
                 {% for group in odd_groups %}
                 <div data-group-id="{{ group.pk }}" data-time="{{ group.time_slot }}" class="event-card {{ group.color }}">
-                    <a href="{% url 'groups:detail' group.pk %}" class="stretched-link d-none"></a>
                     <div class="event-time">{{ group.time_slot }}</div>
-                    <div class="event-title">{{ group.name }}</div>
+                    <div class="event-title"><a href="{% url 'groups:detail' group.pk %}" class="text-white text-decoration-none">{{ group.name }}</a></div>
                     <div class="event-room">зал {{ group.room|default:"-" }}</div>
                     {% if group.teacher %}
                     <div class="event-details"><i class="bi bi-person"></i> {{ group.teacher.name }}</div>
@@ -218,9 +214,8 @@
             <div class="day-body sortable-list" data-schedule-type="EVEN">
                 {% for group in even_groups %}
                 <div data-group-id="{{ group.pk }}" data-time="{{ group.time_slot }}" class="event-card {{ group.color }}">
-                    <a href="{% url 'groups:detail' group.pk %}" class="stretched-link d-none"></a>
                     <div class="event-time">{{ group.time_slot }}</div>
-                    <div class="event-title">{{ group.name }}</div>
+                    <div class="event-title"><a href="{% url 'groups:detail' group.pk %}" class="text-white text-decoration-none">{{ group.name }}</a></div>
                     <div class="event-room">зал {{ group.room|default:"-" }}</div>
                     {% if group.teacher %}
                     <div class="event-details"><i class="bi bi-person"></i> {{ group.teacher.name }}</div>
@@ -236,9 +231,8 @@
             <div class="day-body sortable-list" data-schedule-type="ODD">
                 {% for group in odd_groups %}
                 <div data-group-id="{{ group.pk }}" data-time="{{ group.time_slot }}" class="event-card {{ group.color }}">
-                    <a href="{% url 'groups:detail' group.pk %}" class="stretched-link d-none"></a>
                     <div class="event-time">{{ group.time_slot }}</div>
-                    <div class="event-title">{{ group.name }}</div>
+                    <div class="event-title"><a href="{% url 'groups:detail' group.pk %}" class="text-white text-decoration-none">{{ group.name }}</a></div>
                     <div class="event-room">зал {{ group.room|default:"-" }}</div>
                     {% if group.teacher %}
                     <div class="event-details"><i class="bi bi-person"></i> {{ group.teacher.name }}</div>
