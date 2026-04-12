@@ -81,6 +81,13 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
+def custom_logout(request):
+    if request.method == 'POST':
+        from django.contrib.auth import logout
+        logout(request)
+        return redirect('login')
+    return render(request, 'auth/logout.html')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', dashboard, name='dashboard'),
@@ -93,5 +100,5 @@ urlpatterns = [
     path('kpi/', include('apps.kpi.urls')),
     # Auth
     path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', custom_logout, name='logout'),
 ]
