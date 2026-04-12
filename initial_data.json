@@ -1,0 +1,1950 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Euprkcpzzi2soEeHwMyqU4$FUuAO26zuKe6wj0ibF1Ub+ncOsXeE3PLe1xvV+wfmgw=",
+    "last_login": "2026-04-09T17:05:08.864Z",
+    "is_superuser": true,
+    "username": "madsaomi",
+    "first_name": "",
+    "last_name": "",
+    "email": "madsaomi56@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-09T17:04:57.050Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$OjzKUH13I0wlwlJaC7cZQY$yYouczYyAF9U0MmAQjOBcNyp0wdnyNKJZFCfxX7qLSQ=",
+    "last_login": "2026-04-12T11:25:24.408Z",
+    "is_superuser": false,
+    "username": "manager1",
+    "first_name": "Малика",
+    "last_name": "Каримова",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:23:01.220Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Q4Kwon8gx2Wb6d8xpZ7NgB$yBCEqub3lcQrKzphQC1ElzmLJyej7kFyaflia4yrZUA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "manager2",
+    "first_name": "Азиз",
+    "last_name": "Нишанов",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:23:01.892Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$jKhhIRJbjN82yb94CzOAhw$aYus21y6hk/Vd82QG9VduT5qNu19aGQi75RBxQp7Nqk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher1",
+    "first_name": "Джон",
+    "last_name": "Смит",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:23:02.468Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$bNeW6doeF6dWJWqJYoQX1H$sg/tCgDAkxam+IDXCVKbUzKHV9O9rXrBIzKFt910YcI=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher2",
+    "first_name": "Елена",
+    "last_name": "Волкова",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:23:02.999Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$1n4Fo1J7TDfZPzfPAguDxu$JhGNOu1pDebCz6VootHis2tUyO40aai0VlxHW4D2vfs=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher3",
+    "first_name": "Рустам",
+    "last_name": "Валиев",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:23:05.545Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$hLHwD7AEtG8fr4jd1kvOS4$nnjw/xcmrxwlyqxJHyly6DJuDG3itipgiFFvRvj4MBI=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher4",
+    "first_name": "Севара",
+    "last_name": "Алиева",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:23:08.022Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$RGlYcQP21PYgmCZonIOEJk$7mP2l8ocHWUyGLRusvdbbXBREVH9BI2lO+yfHGr3JQ8=",
+    "last_login": "2026-04-12T11:27:51.381Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-12T11:27:06.934Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "managers.manager",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "manager1"
+    ],
+    "name": "Малика Каримова",
+    "phone": "+998905797956",
+    "created_at": "2026-04-12T11:23:01.871Z",
+    "is_active": true
+  }
+},
+{
+  "model": "managers.manager",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "manager2"
+    ],
+    "name": "Азиз Нишанов",
+    "phone": "+998905039317",
+    "created_at": "2026-04-12T11:23:02.455Z",
+    "is_active": true
+  }
+},
+{
+  "model": "teachers.teacher",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "teacher1"
+    ],
+    "name": "Джон Смит",
+    "phone": "+998933668051",
+    "specialization": "English",
+    "created_at": "2026-04-12T11:23:02.988Z",
+    "is_active": true
+  }
+},
+{
+  "model": "teachers.teacher",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "teacher2"
+    ],
+    "name": "Елена Волкова",
+    "phone": "+998939967506",
+    "specialization": "English",
+    "created_at": "2026-04-12T11:23:05.524Z",
+    "is_active": true
+  }
+},
+{
+  "model": "teachers.teacher",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "teacher3"
+    ],
+    "name": "Рустам Валиев",
+    "phone": "+998935230985",
+    "specialization": "IELTS",
+    "created_at": "2026-04-12T11:23:07.988Z",
+    "is_active": true
+  }
+},
+{
+  "model": "teachers.teacher",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "teacher4"
+    ],
+    "name": "Севара Алиева",
+    "phone": "+998936591814",
+    "specialization": "Math",
+    "created_at": "2026-04-12T11:23:11.887Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 1,
+  "fields": {
+    "name": "Ученик 1",
+    "phone": "+998993939896",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.034Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 2,
+  "fields": {
+    "name": "Ученик 2",
+    "phone": "+998992649613",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.068Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 3,
+  "fields": {
+    "name": "Ученик 3",
+    "phone": "+998996767274",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.103Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 4,
+  "fields": {
+    "name": "Ученик 4",
+    "phone": "+998999434094",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.147Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 5,
+  "fields": {
+    "name": "Ученик 5",
+    "phone": "+998995426624",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.164Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 6,
+  "fields": {
+    "name": "Ученик 6",
+    "phone": "+998993940396",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.179Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 7,
+  "fields": {
+    "name": "Ученик 7",
+    "phone": "+998995074082",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.198Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 8,
+  "fields": {
+    "name": "Ученик 8",
+    "phone": "+998993476125",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.222Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 9,
+  "fields": {
+    "name": "Ученик 9",
+    "phone": "+998991936263",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.262Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 10,
+  "fields": {
+    "name": "Ученик 10",
+    "phone": "+998994532274",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.292Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 11,
+  "fields": {
+    "name": "Ученик 11",
+    "phone": "+998998861720",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.314Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 12,
+  "fields": {
+    "name": "Ученик 12",
+    "phone": "+998997785946",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.335Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 13,
+  "fields": {
+    "name": "Ученик 13",
+    "phone": "+998994804147",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.356Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 14,
+  "fields": {
+    "name": "Ученик 14",
+    "phone": "+998998689023",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.376Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 15,
+  "fields": {
+    "name": "Ученик 15",
+    "phone": "+998998025896",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.413Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 16,
+  "fields": {
+    "name": "Ученик 16",
+    "phone": "+998992618920",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.441Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 17,
+  "fields": {
+    "name": "Ученик 17",
+    "phone": "+998992180912",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.468Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 18,
+  "fields": {
+    "name": "Ученик 18",
+    "phone": "+998997223257",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.493Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 19,
+  "fields": {
+    "name": "Ученик 19",
+    "phone": "+998993044522",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.512Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 20,
+  "fields": {
+    "name": "Ученик 20",
+    "phone": "+998998937162",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.527Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 21,
+  "fields": {
+    "name": "Ученик 21",
+    "phone": "+998995032675",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.540Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 22,
+  "fields": {
+    "name": "Ученик 22",
+    "phone": "+998995586167",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.554Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 23,
+  "fields": {
+    "name": "Ученик 23",
+    "phone": "+998998753023",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.571Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 24,
+  "fields": {
+    "name": "Ученик 24",
+    "phone": "+998992614592",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.586Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 25,
+  "fields": {
+    "name": "Ученик 25",
+    "phone": "+998995924974",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.598Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 26,
+  "fields": {
+    "name": "Ученик 26",
+    "phone": "+998998391509",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.616Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 27,
+  "fields": {
+    "name": "Ученик 27",
+    "phone": "+998995485376",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.631Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 28,
+  "fields": {
+    "name": "Ученик 28",
+    "phone": "+998994211740",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.644Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 29,
+  "fields": {
+    "name": "Ученик 29",
+    "phone": "+998997386238",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.659Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 30,
+  "fields": {
+    "name": "Ученик 30",
+    "phone": "+998991220131",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.676Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 31,
+  "fields": {
+    "name": "Ученик 31",
+    "phone": "+998996687829",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.691Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 32,
+  "fields": {
+    "name": "Ученик 32",
+    "phone": "+998998577299",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.707Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 33,
+  "fields": {
+    "name": "Ученик 33",
+    "phone": "+998992017188",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.720Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 34,
+  "fields": {
+    "name": "Ученик 34",
+    "phone": "+998992811122",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.735Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 35,
+  "fields": {
+    "name": "Ученик 35",
+    "phone": "+998995991297",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.749Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 36,
+  "fields": {
+    "name": "Ученик 36",
+    "phone": "+998994371943",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.764Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 37,
+  "fields": {
+    "name": "Ученик 37",
+    "phone": "+998991660137",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.778Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 38,
+  "fields": {
+    "name": "Ученик 38",
+    "phone": "+998994770933",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.794Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 39,
+  "fields": {
+    "name": "Ученик 39",
+    "phone": "+998996744837",
+    "manager": 1,
+    "created_at": "2026-04-12T11:23:12.813Z",
+    "is_active": true
+  }
+},
+{
+  "model": "students.student",
+  "pk": 40,
+  "fields": {
+    "name": "Ученик 40",
+    "phone": "+998996196899",
+    "manager": 2,
+    "created_at": "2026-04-12T11:23:12.832Z",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.group",
+  "pk": 1,
+  "fields": {
+    "name": "Kids English Starter",
+    "course_type": "KIDS_ENGLISH",
+    "level": "",
+    "teacher": 1,
+    "schedule_type": "EVEN",
+    "time_slot": "14:00 - 15:30",
+    "room": "К-1",
+    "monthly_fee": "400000",
+    "max_students": 12,
+    "duration_months": 3,
+    "color": "bg-t-1",
+    "is_active": true,
+    "created_at": "2026-04-12T11:23:11.902Z"
+  }
+},
+{
+  "model": "groups.group",
+  "pk": 2,
+  "fields": {
+    "name": "General English Pre-Int",
+    "course_type": "GENERAL_ENGLISH",
+    "level": "",
+    "teacher": 2,
+    "schedule_type": "EVEN",
+    "time_slot": "16:00 - 17:30",
+    "room": "К-2",
+    "monthly_fee": "450000",
+    "max_students": 12,
+    "duration_months": 3,
+    "color": "bg-t-1",
+    "is_active": true,
+    "created_at": "2026-04-12T11:23:11.916Z"
+  }
+},
+{
+  "model": "groups.group",
+  "pk": 3,
+  "fields": {
+    "name": "IELTS Reading",
+    "course_type": "IELTS",
+    "level": "",
+    "teacher": 3,
+    "schedule_type": "EVEN",
+    "time_slot": "18:00 - 19:30",
+    "room": "К-3",
+    "monthly_fee": "600000",
+    "max_students": 12,
+    "duration_months": 3,
+    "color": "bg-t-1",
+    "is_active": true,
+    "created_at": "2026-04-12T11:23:11.934Z"
+  }
+},
+{
+  "model": "groups.group",
+  "pk": 4,
+  "fields": {
+    "name": "Kids English Level 1",
+    "course_type": "KIDS_ENGLISH",
+    "level": "",
+    "teacher": 1,
+    "schedule_type": "ODD",
+    "time_slot": "15:00 - 16:30",
+    "room": "К-1",
+    "monthly_fee": "400000",
+    "max_students": 12,
+    "duration_months": 3,
+    "color": "bg-t-1",
+    "is_active": true,
+    "created_at": "2026-04-12T11:23:11.952Z"
+  }
+},
+{
+  "model": "groups.group",
+  "pk": 5,
+  "fields": {
+    "name": "General English Int",
+    "course_type": "GENERAL_ENGLISH",
+    "level": "",
+    "teacher": 2,
+    "schedule_type": "ODD",
+    "time_slot": "17:00 - 18:30",
+    "room": "К-2",
+    "monthly_fee": "450000",
+    "max_students": 12,
+    "duration_months": 3,
+    "color": "bg-t-1",
+    "is_active": true,
+    "created_at": "2026-04-12T11:23:11.975Z"
+  }
+},
+{
+  "model": "groups.group",
+  "pk": 6,
+  "fields": {
+    "name": "SAT Prep",
+    "course_type": "SAT",
+    "level": "",
+    "teacher": 4,
+    "schedule_type": "ODD",
+    "time_slot": "16:00 - 18:00",
+    "room": "К-4",
+    "monthly_fee": "400000",
+    "max_students": 12,
+    "duration_months": 3,
+    "color": "bg-t-1",
+    "is_active": true,
+    "created_at": "2026-04-12T11:23:11.999Z"
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 1,
+  "fields": {
+    "student": 1,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 2,
+  "fields": {
+    "student": 2,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 3,
+  "fields": {
+    "student": 3,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 4,
+  "fields": {
+    "student": 3,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 5,
+  "fields": {
+    "student": 4,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 6,
+  "fields": {
+    "student": 5,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 7,
+  "fields": {
+    "student": 6,
+    "group": 3,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 8,
+  "fields": {
+    "student": 6,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 9,
+  "fields": {
+    "student": 7,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 10,
+  "fields": {
+    "student": 7,
+    "group": 3,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 11,
+  "fields": {
+    "student": 8,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 12,
+  "fields": {
+    "student": 9,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 13,
+  "fields": {
+    "student": 9,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 14,
+  "fields": {
+    "student": 10,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 15,
+  "fields": {
+    "student": 11,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 16,
+  "fields": {
+    "student": 11,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 17,
+  "fields": {
+    "student": 12,
+    "group": 3,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 18,
+  "fields": {
+    "student": 12,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 19,
+  "fields": {
+    "student": 13,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 20,
+  "fields": {
+    "student": 13,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 21,
+  "fields": {
+    "student": 14,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 22,
+  "fields": {
+    "student": 14,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 23,
+  "fields": {
+    "student": 15,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 24,
+  "fields": {
+    "student": 16,
+    "group": 3,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 25,
+  "fields": {
+    "student": 17,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 26,
+  "fields": {
+    "student": 17,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 27,
+  "fields": {
+    "student": 18,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 28,
+  "fields": {
+    "student": 18,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 29,
+  "fields": {
+    "student": 19,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 30,
+  "fields": {
+    "student": 19,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 31,
+  "fields": {
+    "student": 20,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 32,
+  "fields": {
+    "student": 21,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 33,
+  "fields": {
+    "student": 22,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 34,
+  "fields": {
+    "student": 23,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 35,
+  "fields": {
+    "student": 23,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 36,
+  "fields": {
+    "student": 24,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 37,
+  "fields": {
+    "student": 25,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 38,
+  "fields": {
+    "student": 26,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 39,
+  "fields": {
+    "student": 26,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 40,
+  "fields": {
+    "student": 27,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 41,
+  "fields": {
+    "student": 27,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 42,
+  "fields": {
+    "student": 28,
+    "group": 3,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 43,
+  "fields": {
+    "student": 28,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 44,
+  "fields": {
+    "student": 29,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 45,
+  "fields": {
+    "student": 30,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 46,
+  "fields": {
+    "student": 31,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 47,
+  "fields": {
+    "student": 31,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 48,
+  "fields": {
+    "student": 32,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 49,
+  "fields": {
+    "student": 33,
+    "group": 5,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 50,
+  "fields": {
+    "student": 34,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 51,
+  "fields": {
+    "student": 34,
+    "group": 3,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 52,
+  "fields": {
+    "student": 35,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 53,
+  "fields": {
+    "student": 36,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 54,
+  "fields": {
+    "student": 36,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 55,
+  "fields": {
+    "student": 37,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 56,
+  "fields": {
+    "student": 38,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 57,
+  "fields": {
+    "student": 38,
+    "group": 1,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 58,
+  "fields": {
+    "student": 39,
+    "group": 4,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 59,
+  "fields": {
+    "student": 40,
+    "group": 6,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.enrollment",
+  "pk": 60,
+  "fields": {
+    "student": 40,
+    "group": 2,
+    "enrolled_date": "2026-04-12",
+    "is_active": true
+  }
+},
+{
+  "model": "groups.sundayevent",
+  "pk": 1,
+  "fields": {
+    "title": "Speaking Club B1-B2",
+    "date": "2026-04-12",
+    "time_slot": "11:00 - 13:00",
+    "room": "К-1",
+    "teacher": 2,
+    "description": "Дискуссии на разные темы для средних уровней.",
+    "created_at": "2026-04-12T11:23:15.489Z"
+  }
+},
+{
+  "model": "groups.sundayevent",
+  "pk": 2,
+  "fields": {
+    "title": "Mock IELTS Test",
+    "date": "2026-04-12",
+    "time_slot": "09:00 - 12:00",
+    "room": "Большой зал",
+    "teacher": 3,
+    "description": "Пробный экзамен.",
+    "created_at": "2026-04-12T11:23:15.509Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 1,
+  "fields": {
+    "student": 1,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:12.871Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:12.872Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 2,
+  "fields": {
+    "student": 3,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:12.922Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:12.923Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 3,
+  "fields": {
+    "student": 3,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:12.950Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:12.951Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 4,
+  "fields": {
+    "student": 4,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:13.008Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:13.009Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 5,
+  "fields": {
+    "student": 5,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.039Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:13.039Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 6,
+  "fields": {
+    "student": 7,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.105Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:13.106Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 7,
+  "fields": {
+    "student": 7,
+    "amount": "600000",
+    "date": "2026-04-12T11:23:13.141Z",
+    "comment": "Оплата за IELTS Reading",
+    "created_at": "2026-04-12T11:23:13.141Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 8,
+  "fields": {
+    "student": 8,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.174Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:13.174Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 9,
+  "fields": {
+    "student": 9,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.204Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:13.205Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 10,
+  "fields": {
+    "student": 9,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:13.236Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:13.237Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 11,
+  "fields": {
+    "student": 10,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.275Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:13.275Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 12,
+  "fields": {
+    "student": 11,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:13.313Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:13.313Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 13,
+  "fields": {
+    "student": 11,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.350Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:13.350Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 14,
+  "fields": {
+    "student": 12,
+    "amount": "600000",
+    "date": "2026-04-12T11:23:13.388Z",
+    "comment": "Оплата за IELTS Reading",
+    "created_at": "2026-04-12T11:23:13.389Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 15,
+  "fields": {
+    "student": 12,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.425Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:13.425Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 16,
+  "fields": {
+    "student": 13,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.461Z",
+    "comment": "Оплата за Kids English Level 1",
+    "created_at": "2026-04-12T11:23:13.462Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 17,
+  "fields": {
+    "student": 13,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:13.503Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:13.504Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 18,
+  "fields": {
+    "student": 14,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:13.896Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:13.897Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 19,
+  "fields": {
+    "student": 14,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:13.942Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:13.942Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 20,
+  "fields": {
+    "student": 15,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:13.981Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:13.981Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 21,
+  "fields": {
+    "student": 17,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.034Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:14.034Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 22,
+  "fields": {
+    "student": 17,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.069Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:14.069Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 23,
+  "fields": {
+    "student": 18,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.103Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:14.104Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 24,
+  "fields": {
+    "student": 19,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.168Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:14.169Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 25,
+  "fields": {
+    "student": 20,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.257Z",
+    "comment": "Оплата за Kids English Level 1",
+    "created_at": "2026-04-12T11:23:14.259Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 26,
+  "fields": {
+    "student": 22,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.348Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:14.349Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 27,
+  "fields": {
+    "student": 23,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.390Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:14.391Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 28,
+  "fields": {
+    "student": 23,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.423Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:14.423Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 29,
+  "fields": {
+    "student": 24,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.457Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:14.458Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 30,
+  "fields": {
+    "student": 25,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.497Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:14.498Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 31,
+  "fields": {
+    "student": 26,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.539Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:14.540Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 32,
+  "fields": {
+    "student": 26,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.578Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:14.580Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 33,
+  "fields": {
+    "student": 27,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.621Z",
+    "comment": "Оплата за Kids English Level 1",
+    "created_at": "2026-04-12T11:23:14.623Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 34,
+  "fields": {
+    "student": 27,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.667Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:14.669Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 35,
+  "fields": {
+    "student": 28,
+    "amount": "600000",
+    "date": "2026-04-12T11:23:14.733Z",
+    "comment": "Оплата за IELTS Reading",
+    "created_at": "2026-04-12T11:23:14.735Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 36,
+  "fields": {
+    "student": 28,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.786Z",
+    "comment": "Оплата за Kids English Level 1",
+    "created_at": "2026-04-12T11:23:14.787Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 37,
+  "fields": {
+    "student": 29,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.836Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:14.836Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 38,
+  "fields": {
+    "student": 30,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:14.878Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:14.879Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 39,
+  "fields": {
+    "student": 31,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:14.958Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:14.959Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 40,
+  "fields": {
+    "student": 33,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:15.020Z",
+    "comment": "Оплата за General English Int",
+    "created_at": "2026-04-12T11:23:15.021Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 41,
+  "fields": {
+    "student": 34,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:15.062Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:15.062Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 42,
+  "fields": {
+    "student": 34,
+    "amount": "600000",
+    "date": "2026-04-12T11:23:15.096Z",
+    "comment": "Оплата за IELTS Reading",
+    "created_at": "2026-04-12T11:23:15.096Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 43,
+  "fields": {
+    "student": 35,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:15.126Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:15.126Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 44,
+  "fields": {
+    "student": 36,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:15.157Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:15.157Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 45,
+  "fields": {
+    "student": 37,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:15.203Z",
+    "comment": "Оплата за Kids English Level 1",
+    "created_at": "2026-04-12T11:23:15.204Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 46,
+  "fields": {
+    "student": 38,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:15.231Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:15.231Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 47,
+  "fields": {
+    "student": 38,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:15.260Z",
+    "comment": "Оплата за Kids English Starter",
+    "created_at": "2026-04-12T11:23:15.261Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 48,
+  "fields": {
+    "student": 39,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:15.299Z",
+    "comment": "Оплата за Kids English Level 1",
+    "created_at": "2026-04-12T11:23:15.300Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 49,
+  "fields": {
+    "student": 40,
+    "amount": "400000",
+    "date": "2026-04-12T11:23:15.346Z",
+    "comment": "Оплата за SAT Prep",
+    "created_at": "2026-04-12T11:23:15.347Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 50,
+  "fields": {
+    "student": 40,
+    "amount": "450000",
+    "date": "2026-04-12T11:23:15.388Z",
+    "comment": "Оплата за General English Pre-Int",
+    "created_at": "2026-04-12T11:23:15.389Z"
+  }
+}
+]
