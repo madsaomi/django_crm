@@ -16,7 +16,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&xvir=((p8d4=-x6vtv56
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app', 'https://djangocrm-production.up.railway.app']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
