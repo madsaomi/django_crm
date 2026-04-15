@@ -34,11 +34,23 @@ class StudentDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['debt_info'] = get_student_debt_info(self.object)
-        context['payments'] = self.object.payments.all().order_by('-date')[:10]
-        context['attendances'] = self.object.attendances.all().select_related('group').order_by('-date')[:15]
-        context['enrollments'] = self.object.enrollments.filter(
-            is_active=True
-        ).select_related('group', 'group__teacher')
+        
+        payments = list(self.object.payments.all().order_by('-date')[:15])
+        attendances = list(self.object.attendances.all().select_related('group').order_by('-date')[:15])
+        enrollments = list(self.object.enrollments.all().select_related('group'))
+        
+        activities = []
+        for p in payments:
+            activities.append({'type': 'payment', 'date': p.date, 'obj': p})
+        for a in attendances:
+            activities.append({'type': 'attendance', 'date': a.date, 'obj': a})
+        for e in enrollments:
+            activities.append({'type': 'enrollment', 'date': e.enrolled_date, 'obj': e})
+            
+        activities.sort(key=lambda x: x['date'].date() if hasattr(x['date'], 'date') else x['date'], reverse=True)
+        context['activities'] = activities[:30]
+        
+        context['active_enrollments'] = [e for e in enrollments if e.is_active]
         return context
 
 

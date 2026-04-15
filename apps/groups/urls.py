@@ -9,6 +9,7 @@ urlpatterns = [
     path('schedule/event/add/', views.SundayEventCreateView.as_view(), name='event_create'),
     path('schedule/event/<int:pk>/delete/', views.SundayEventDeleteView.as_view(), name='delete_event'),
     path('schedule/update/', views.UpdateGroupScheduleView.as_view(), name='update_schedule'),
+    path('schedule/update-color/', views.UpdateGroupColorView.as_view(), name='update_color'),
     path('create/', views.GroupCreateView.as_view(), name='create'),
     path('<int:pk>/', views.GroupDetailView.as_view(), name='detail'),
     path('<int:pk>/edit/', views.GroupUpdateView.as_view(), name='edit'),

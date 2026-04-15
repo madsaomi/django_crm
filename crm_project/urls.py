@@ -10,7 +10,7 @@ from apps.groups.models import Group, Enrollment
 from apps.payments.models import Payment
 from apps.teachers.models import Teacher
 from apps.managers.models import Manager
-
+from .views import global_search
 
 @login_required
 def dashboard(request):
@@ -91,6 +91,7 @@ def custom_logout(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', dashboard, name='dashboard'),
+    path('search/', global_search, name='search'),
     path('students/', include('apps.students.urls')),
     path('groups/', include('apps.groups.urls')),
     path('teachers/', include('apps.teachers.urls')),

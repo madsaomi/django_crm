@@ -10,36 +10,100 @@
 <div class="row g-4">
     {% for item in kpi_data %}
     <div class="col-lg-6">
-        <div class="kpi-card">
-            <div class="kpi-card-name">
-                <i class="bi bi-person-badge"></i> {{ item.manager.name }}
+        <div class="content-card h-100">
+            <div class="card-header-custom border-bottom bg-light bg-opacity-25 d-flex justify-content-between align-items-center p-4">
+                <h5 class="fw-bold m-0"><i class="bi bi-person-badge text-primary me-2"></i> {{ item.manager.name }}</h5>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fs-6">{{ item.conversion_rate }}% Конверсия</span>
             </div>
-            <div class="kpi-metrics">
-                <div class="kpi-metric">
-                    <div class="kpi-metric-value">{{ item.total_students }}</div>
-                    <div class="kpi-metric-label">Всего учеников</div>
+            <div class="card-body p-4">
+                
+                <h6 class="fw-bold text-secondary mb-3 mt-2 small text-uppercase">Воронка учеников</h6>
+                <!-- Pure CSS Funnel -->
+                <div class="funnel-container mb-4">
+                    <div class="d-flex align-items-start mb-2">
+                        <div class="bg-primary text-white text-center rounded-start p-2 shadow-sm d-flex align-items-center justify-content-center" style="width: 100%; height: 40px;">
+                            <span class="fw-bold me-2">{{ item.total_students }}</span> <small class="opacity-75">Всего закреплено</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start px-4">
+                        <div class="bg-success text-white text-center rounded-bottom p-2 shadow-sm d-flex align-items-center justify-content-center" style="width: {{ item.conversion_rate }}%; height: 35px; min-width: 40px; transition: width 1s ease-out;">
+                            <span class="fw-bold me-2">{{ item.active_students }}</span> <small class="opacity-75">Активных</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="kpi-metric">
-                    <div class="kpi-metric-value">{{ item.active_students }}</div>
-                    <div class="kpi-metric-label">Активных</div>
+
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded text-center border">
+                            <div class="text-muted small fw-bold mb-1">ОЖИДАЕМЫЙ ДОХОД</div>
+                            <div class="fw-bold fs-5 text-success">{{ item.total_revenue|floatformat:0 }} <small>сум</small></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded text-center border">
+                            <div class="text-muted small fw-bold mb-1">ТЕКУЩИЙ ДОЛГ</div>
+                            <div class="fw-bold fs-5 text-danger">{{ item.total_debt|floatformat:0 }} <small>сум</small></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="kpi-metric">
-                    <div class="kpi-metric-value" style="color:var(--success)">{{ item.total_revenue|floatformat:0 }}</div>
-                    <div class="kpi-metric-label">Доход (сум)</div>
+                
+                <div class="mt-4" style="height: 160px; position: relative;">
+                    <canvas id="chart-{{ forloop.counter }}" data-rev="{{ item.total_revenue|stringformat:'f' }}" data-debt="{{ item.total_debt|stringformat:'f' }}"></canvas>
                 </div>
-                <div class="kpi-metric">
-                    <div class="kpi-metric-value" style="color:var(--danger)">{{ item.total_debt|floatformat:0 }}</div>
-                    <div class="kpi-metric-label">Долг (сум)</div>
-                </div>
-                <div class="kpi-metric">
-                    <div class="kpi-metric-value">{{ item.conversion_rate }}%</div>
-                    <div class="kpi-metric-label">Конверсия</div>
-                </div>
+                
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvases = document.querySelectorAll('canvas[id^="chart-"]');
+        canvases.forEach(canvas => {
+            const revStr = canvas.getAttribute('data-rev');
+            const debtStr = canvas.getAttribute('data-debt');
+            // Safely parse ignoring spaces
+            const rev = parseFloat(revStr.replace(/\s+/g, '')) || 0;
+            const debt = parseFloat(debtStr.replace(/\s+/g, '')) || 0;
+            
+            new Chart(canvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Ожидаемый Доход', 'Текущий Долг'],
+                    datasets: [{
+                        data: [rev, debt],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(244, 63, 94, 0.8)'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: { 
+                        legend: { 
+                            position: 'right',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: {
+                                    family: "'Plus Jakarta Sans', sans-serif",
+                                    size: 11
+                                }
+                            }
+                        } 
+                    }
+                }
+            });
+        });
+    });
+</script>
 {% else %}
 <div class="content-card">
     <div class="card-body-custom">

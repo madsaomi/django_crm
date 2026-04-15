@@ -2,11 +2,14 @@ from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from django.contrib import messages
 from django.utils import timezone
+import json
+import calendar
+from datetime import timedelta
 from .models import Attendance, AttendanceStatus
 from apps.groups.models import Group, Enrollment
-import calendar
 
 
 class AttendanceMarkView(LoginRequiredMixin, View):
@@ -99,8 +102,14 @@ class AttendanceHistoryView(LoginRequiredMixin, View):
         dates = []
 
         if group_id:
-            selected_group = get_object_or_404(Group, pk=group_id)
-            
+            # Handle invalid integer gracefully
+            try:
+                selected_group = get_object_or_404(Group, pk=group_id)
+            except (ValueError, TypeError):
+                selected_group = None
+                group_id = None
+
+        if selected_group:
             num_days = calendar.monthrange(year, month)[1]
             all_dates_in_month = [timezone.datetime(year, month, d).date() for d in range(1, num_days + 1)]
             
@@ -132,8 +141,21 @@ class AttendanceHistoryView(LoginRequiredMixin, View):
             
             for enrollment in enrollments:
                 student = enrollment.student
+                
+                # Protect against None enrolled_date
+                if not enrollment.enrolled_date:
+                    days_left = 0
+                else:
+                    try:
+                        end_date = enrollment.enrolled_date + timedelta(days=(selected_group.duration_months or 3) * 30)
+                        days_left = (end_date - timezone.now().date()).days
+                    except Exception:
+                        days_left = 0
+                
                 student_data = {
                     'student': student,
+                    'enrolled_date': enrollment.enrolled_date,
+                    'days_left': days_left,
                     'attendances': []
                 }
                 for d in dates:
@@ -145,15 +167,12 @@ class AttendanceHistoryView(LoginRequiredMixin, View):
                 
         return render(request, 'attendance/attendance_history.html', {
             'groups': groups,
-            'selected_group_id': int(group_id) if group_id else None,
+            'selected_group_id': int(group_id) if (group_id and str(group_id).isdigit()) else None,
             'selected_group': selected_group,
             'selected_month': month_str,
             'matrix': matrix,
             'dates': dates,
         })
-
-import json
-from django.http import JsonResponse
 
 class AttendanceToggleAPIView(LoginRequiredMixin, View):
     """API для интерактивного переключения посещаемости (для AJAX из матрицы)."""

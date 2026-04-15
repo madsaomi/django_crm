@@ -160,6 +160,25 @@ class UpdateGroupScheduleView(LoginRequiredMixin, View):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 
+class UpdateGroupColorView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        if not (request.user.is_superuser or getattr(request.user, 'manager', None)):
+            return JsonResponse({'status': 'error', 'message': 'Permission denied'}, status=403)
+            
+        try:
+            data = json.loads(request.body)
+            group_id = data.get('group_id')
+            new_color = data.get('color')
+            
+            group = get_object_or_404(Group, pk=group_id)
+            if new_color:
+                group.color = new_color
+                group.save()
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+
 class ScheduleView(LoginRequiredMixin, ListView):
     template_name = 'groups/schedule.html'
     context_object_name = 'even_groups'
@@ -189,7 +208,6 @@ class ScheduleView(LoginRequiredMixin, ListView):
             context['current_schedule_type'] = 'ODD'
             
         # Calculate dates for the current week
-        from datetime import timedelta
         monday = today - timedelta(days=weekday)
         context['week_dates'] = {
             'mon': monday,

@@ -49,6 +49,8 @@
             <thead class="bg-light">
                 <tr>
                     <th class="text-start px-4" style="width: 250px; position: sticky; left: 0; background: #f8f9fa; z-index: 1;">Ученик</th>
+                    <th style="min-width: 120px; background: #f8f9fa; border-right: 2px solid #eaeaea;"><i class="bi bi-calendar-event me-1 text-muted"></i>Начало</th>
+                    <th style="min-width: 130px; background: #f8f9fa; border-right: 2px solid #eaeaea;"><i class="bi bi-hourglass-split me-1 text-muted"></i>Остаток</th>
                     {% for d in dates %}
                     <th style="width: 50px; padding: 12px 5px;">
                         <a href="{% url 'attendance:mark' %}?group={{ selected_group.pk }}&date={{ d|date:'Y-m-d' }}" class="text-decoration-none text-dark d-block custom-header-link" title="Отметить всю группу">
@@ -63,7 +65,19 @@
                 {% for row in matrix %}
                 <tr>
                     <td class="text-start px-4 fw-medium text-dark" style="position: sticky; left: 0; background: #fff; z-index: 1;">
-                        {{ row.student.name }}
+                        <a href="{% url 'students:detail' row.student.pk %}" class="text-decoration-none text-dark">{{ row.student.name }}</a>
+                    </td>
+                    <td class="text-muted small align-middle fw-medium" style="background: #fafafa; border-right: 2px solid #eaeaea;">
+                        {{ row.enrolled_date|date:"d.m.Y" }}
+                    </td>
+                    <td class="align-middle" style="background: #fafafa; border-right: 2px solid #eaeaea;">
+                        {% if row.days_left > 14 %}
+                            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1" style="font-size:0.75rem;"><i class="bi bi-calendar-check me-1"></i>{{ row.days_left }} дн.</span>
+                        {% elif row.days_left > 0 %}
+                            <span class="badge bg-warning bg-opacity-10 text-warning fw-bold px-2 py-1" style="font-size:0.75rem;"><i class="bi bi-exclamation-triangle me-1"></i>{{ row.days_left }} дн.</span>
+                        {% else %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary fw-bold px-2 py-1" style="font-size:0.75rem;"><i class="bi bi-check-all me-1"></i>Окончил</span>
+                        {% endif %}
                     </td>
                     {% for item in row.attendances %}
                     <td style="padding: 10px 5px; cursor: pointer; transition: background 0.2s;" 

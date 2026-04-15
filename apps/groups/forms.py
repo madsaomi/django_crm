@@ -8,17 +8,17 @@ class GroupForm(forms.ModelForm):
         fields = ['name', 'course_type', 'level', 'teacher', 'schedule_type', 'time_slot',
                   'room', 'color', 'monthly_fee', 'max_students', 'duration_months', 'is_active']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название группы'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: IELTS Foundation', 'list': 'teacher_spec_list'}),
             'course_type': forms.Select(attrs={'class': 'form-select', 'id': 'id_course_type'}),
-            'level': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Beginner, Elementary...'}),
+            'level': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Beginner, Elementary...', 'list': 'level_list'}),
             'teacher': forms.Select(attrs={'class': 'form-select'}),
             'schedule_type': forms.Select(attrs={'class': 'form-select'}),
-            'time_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: 14:00 - 15:30'}),
-            'room': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Номер кабинета'}),
+            'time_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: 14:00 - 15:30', 'list': 'time_slot_list'}),
+            'room': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Номер кабинета', 'list': 'room_list'}),
             'color': forms.Select(attrs={'class': 'form-select'}),
-            'monthly_fee': forms.NumberInput(attrs={'class': 'form-control'}),
-            'max_students': forms.NumberInput(attrs={'class': 'form-control'}),
-            'duration_months': forms.NumberInput(attrs={'class': 'form-control'}),
+            'monthly_fee': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например: 500000'}),
+            'max_students': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например: 12'}),
+            'duration_months': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например: 6'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
@@ -57,10 +57,10 @@ class SundayEventForm(forms.ModelForm):
         model = SundayEvent
         fields = ['title', 'date', 'time_slot', 'room', 'teacher', 'description']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название ивента'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название ивента', 'list': 'teacher_spec_list'}),
             'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'time_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: 10:00 - 12:00'}),
-            'room': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Номер кабинета'}),
+            'time_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: 10:00 - 12:00', 'list': 'time_slot_list'}),
+            'room': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Номер кабинета', 'list': 'room_list'}),
             'teacher': forms.Select(attrs={'class': 'form-select'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Описание'}),
         }

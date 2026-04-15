@@ -65,15 +65,11 @@
                         </td>
                         <td class="text-secondary fw-medium">{{ group.room|default:"—" }}</td>
                         <td>
-                            <div class="d-flex flex-column" style="width: 100px;">
-                                <div class="d-flex justify-content-between mb-1">
-                                    <span class="small fw-semibold">{{ group.students_count }}</span>
-                                    <span class="small text-muted">{{ group.max_students }}</span>
-                                </div>
-                                <div class="progress" style="height: 6px;">
-                                    {% widthratio group.students_count group.max_students 100 as pct %}
-                                    <div class="progress-bar {% if pct|add:0 > 90 %}bg-danger{% elif pct|add:0 > 60 %}bg-warning{% else %}bg-success{% endif %}" role="progressbar" style="width: {{ pct }}%;" aria-valuenow="{{ pct }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                            {% widthratio group.students_count group.max_students 100 as pct %}
+                            <div class="circular-progress shadow-sm mx-auto" 
+                                 style="--progress: {{ pct }}; 
+                                        --progress-color: {% if pct|add:0 > 90 %}var(--danger){% elif pct|add:0 > 60 %}var(--warning){% else %}var(--success){% endif %};">
+                                <span class="progress-value">{{ group.students_count }}<span class="text-muted fw-normal" style="font-size:0.6rem">/{{ group.max_students }}</span></span>
                             </div>
                         </td>
                         <td class="text-end">

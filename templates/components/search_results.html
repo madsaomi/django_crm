@@ -1,0 +1,27 @@
+{% if results %}
+<div class="list-group list-group-flush border-0" id="searchListGroup">
+    {% for item in results %}
+    <a href="{{ item.url }}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center gap-3 search-result-item" style="transition: background 0.2s;">
+        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+            <i class="bi {{ item.icon }} fs-5"></i>
+        </div>
+        <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <h6 class="mb-0 fw-bold text-dark">{{ item.title|safe }}</h6>
+                {% if item.is_active is not None %}
+                <span style="width: 8px; height: 8px; border-radius: 50%;" class="{% if item.is_active %}bg-success{% else %}bg-danger{% endif %}" title="{% if item.is_active %}Активен{% else %}Неактивен{% endif %}"></span>
+                {% endif %}
+            </div>
+            <small class="text-secondary fw-medium">{{ item.subtitle|safe }}</small>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+{% if q %}
+<div class="p-5 text-center text-muted">
+    <i class="bi bi-search fs-1 opacity-25 mb-3 d-block"></i>
+    <p class="mb-0 fw-medium">По запросу «{{ q }}» ничего не найдено</p>
+</div>
+{% endif %}
+{% endif %}

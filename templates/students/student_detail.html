@@ -127,104 +127,104 @@
     </div>
 </div>
 
-<!-- Layout: Left (Groups & Timeline) / Right (Attendance) -->
+<!-- Layout: Left (Groups) / Right (Unified Timeline) -->
 <div class="row g-4">
-    <div class="col-lg-6 d-flex flex-column gap-4">
+    <div class="col-lg-5 d-flex flex-column gap-4">
         
         <!-- Active Groups -->
         <div class="content-card">
-            <div class="card-header-custom border-bottom bg-light bg-opacity-25">
+            <div class="card-header-custom border-bottom bg-light bg-opacity-25 d-flex justify-content-between align-items-center p-4">
                 <h5 class="fw-bold m-0"><i class="bi bi-collection text-primary me-2"></i> Активные группы</h5>
             </div>
-            <div class="card-body-custom">
-                {% if enrollments %}
-                <table class="table-custom">
-                    <thead class="bg-transparent">
-                        <tr><th class="text-secondary">Группа</th><th class="text-secondary">Учитель</th><th class="text-end text-secondary">Оплата/мес</th></tr>
-                    </thead>
-                    <tbody>
-                        {% for enrollment in enrollments %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'groups:detail' enrollment.group.pk %}" class="fw-bold text-dark text-decoration-none">
-                                    {{ enrollment.group.name }}
-                                </a>
-                            </td>
-                            <td>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary border px-2 py-1 fw-bold"><i class="bi bi-person"></i> {{ enrollment.group.teacher.name|default:"—" }}</span>
-                            </td>
-                            <td class="text-end fw-bold text-primary">{{ enrollment.group.monthly_fee|floatformat:0 }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="card-body-custom p-0">
+                {% if active_enrollments %}
+                <div class="list-group list-group-flush border-0">
+                    {% for enrollment in active_enrollments %}
+                    <div class="list-group-item border-0 border-bottom p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <a href="{% url 'groups:detail' enrollment.group.pk %}" class="fw-bold text-dark text-decoration-none fs-5">
+                                {{ enrollment.group.name }}
+                            </a>
+                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold">{{ enrollment.group.monthly_fee|floatformat:0 }}</span>
+                        </div>
+                        <div class="text-secondary small fw-medium mt-1 mb-2"><i class="bi bi-person"></i> Учитель: {{ enrollment.group.teacher.name|default:"—" }}</div>
+                        <div class="d-flex justify-content-between align-items-end mt-3">
+                            <span class="small text-muted"><i class="bi bi-calendar3"></i> С {{ enrollment.enrolled_date|date:"d M Y" }}</span>
+                            <div class="circular-progress shadow-sm" style="width:36px; height:36px; --progress: 40; --progress-color: var(--warning);">
+                                <span class="progress-value" style="font-size: 0.6rem;"><i class="bi bi-fire"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
                 {% else %}
-                <div class="empty-state py-4"><i class="bi bi-folder-x fs-2 opacity-25"></i><p>Не записан в группы</p></div>
+                <div class="empty-state py-5"><i class="bi bi-folder-x fs-2 opacity-25"></i><p>Не записан в группы</p></div>
                 {% endif %}
             </div>
         </div>
+    </div>
 
-        <!-- Payments Timeline -->
-        <div class="content-card">
-            <div class="card-header-custom border-bottom bg-light bg-opacity-25 d-flex justify-content-between align-items-center">
-                <h5 class="fw-bold m-0"><i class="bi bi-cash-stack text-warning me-2"></i> История оплат</h5>
+    <!-- Unified Activity Timeline -->
+    <div class="col-lg-7">
+        <div class="content-card h-100">
+            <div class="card-header-custom border-bottom bg-light bg-opacity-25 p-4 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold m-0"><i class="bi bi-activity text-success me-2"></i> История активности</h5>
+                <a href="{% url 'payments:create' %}?student={{ student.id }}" class="btn btn-primary btn-sm rounded-pill fw-medium px-3 shadow-sm">
+                    <i class="bi bi-plus-lg me-1"></i> Оплата
+                </a>
             </div>
             <div class="card-body p-4">
-                <a href="{% url 'payments:create' %}?student={{ student.id }}" class="btn btn-primary bg-gradient w-100 rounded-pill mb-4 fw-bold shadow-sm" style="font-size:0.95rem; padding: 12px;">
-                    <i class="bi bi-plus-circle me-1"></i> Добавить платеж
-                </a>
-                
-                {% if payments %}
-                <div class="timeline mt-2">
-                    {% for payment in payments %}
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="fw-bold fs-6 text-dark mb-1">{{ payment.amount|floatformat:0 }} сум</div>
-                        <div class="small fw-medium text-muted mb-1"><i class="bi bi-clock"></i> {{ payment.date|date:"d.m.Y H:i" }}</div>
-                        {% if payment.comment %}
-                        <div class="bg-light p-2 rounded small text-secondary mt-2 border">{{ payment.comment }}</div>
+                {% if activities %}
+                <div class="timeline mt-2 ms-2">
+                    {% for act in activities %}
+                    <div class="timeline-item mb-4 pb-2">
+                        {% if act.type == 'payment' %}
+                            <div class="timeline-dot" style="background: var(--warning); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div class="fw-bold fs-6 text-dark d-flex align-items-center gap-2">
+                                    <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 border border-warning border-opacity-25"><i class="bi bi-cash"></i> Оплата</span>
+                                    <span>+{{ act.obj.amount|floatformat:0 }} сум</span>
+                                </div>
+                                <span class="small text-muted fw-medium">{{ act.date|date:"d.m.Y H:i" }}</span>
+                            </div>
+                            <p class="small text-secondary mb-0">Принял: {{ act.obj.manager.name }}</p>
+                            {% if act.obj.comment %}
+                            <div class="bg-light p-2 rounded small text-secondary mt-2 border bg-opacity-50"><i class="bi bi-chat-left-text text-muted me-1"></i> {{ act.obj.comment }}</div>
+                            {% endif %}
+                            
+                        {% elif act.type == 'attendance' %}
+                            <div class="timeline-dot" style="background: {% if act.obj.status == 'PRESENT' %}var(--success){% else %}var(--danger){% endif %}; box-shadow: 0 0 0 3px {% if act.obj.status == 'PRESENT' %}rgba(16, 185, 129, 0.2){% else %}rgba(244, 63, 94, 0.2){% endif %};"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div class="fw-bold fs-6 text-dark d-flex align-items-center gap-2">
+                                    {% if act.obj.status == 'PRESENT' %}
+                                        <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 border border-success border-opacity-25"><i class="bi bi-check2-circle"></i> Был</span>
+                                    {% else %}
+                                        <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1 border border-danger border-opacity-25"><i class="bi bi-x-circle"></i> Пропуск</span>
+                                    {% endif %}
+                                    <span class="small fw-semibold text-secondary">{{ act.obj.group.name }}</span>
+                                </div>
+                                <span class="small text-muted fw-medium">{{ act.date|date:"d M" }}</span>
+                            </div>
+                            {% if act.obj.comment %}
+                            <div class="bg-light p-2 rounded small text-danger mt-2 border border-danger border-opacity-10"><i class="bi bi-quote text-danger ms-1"></i> {{ act.obj.comment }}</div>
+                            {% endif %}
+                            
+                        {% elif act.type == 'enrollment' %}
+                            <div class="timeline-dot" style="background: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div class="fw-bold fs-6 text-dark d-flex align-items-center gap-2">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 border border-primary border-opacity-25"><i class="bi bi-bookmark-plus"></i> Зачисление</span>
+                                    <span>{{ act.obj.group.name }}</span>
+                                </div>
+                                <span class="small text-muted fw-medium">{{ act.date|date:"d.m.Y" }}</span>
+                            </div>
+                            <p class="small text-secondary mb-0">Курс: {{ act.obj.group.get_course_type_display }}</p>
                         {% endif %}
                     </div>
                     {% endfor %}
                 </div>
                 {% else %}
-                <div class="empty-state py-3"><i class="bi bi-credit-card-2-back fs-2 opacity-25"></i><p>Платежей еще не было</p></div>
-                {% endif %}
-            </div>
-        </div>
-        
-    </div>
-
-    <!-- Attendance -->
-    <div class="col-lg-6">
-        <div class="content-card h-100">
-            <div class="card-header-custom border-bottom bg-light bg-opacity-25">
-                <h5 class="fw-bold m-0"><i class="bi bi-calendar-check text-success me-2"></i> Последние посещения</h5>
-            </div>
-            <div class="card-body-custom">
-                {% if attendances %}
-                <table class="table-custom">
-                    <thead class="bg-transparent">
-                        <tr><th class="text-secondary">Дата</th><th class="text-secondary">Группа</th><th class="text-end text-secondary">Статус</th></tr>
-                    </thead>
-                    <tbody>
-                        {% for att in attendances %}
-                        <tr>
-                            <td class="fw-bold text-dark">{{ att.date|date:"d.m.Y" }}</td>
-                            <td class="small fw-bold text-secondary">{{ att.group.name }}</td>
-                            <td class="text-end">
-                                {% if att.status == 'PRESENT' %}
-                                <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-50 px-3 py-2 fw-bold"><i class="bi bi-check-circle-fill"></i> Пришел</span>
-                                {% else %}
-                                <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger border-opacity-50 px-3 py-2 fw-bold"><i class="bi bi-x-circle-fill"></i> Пропуск</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <div class="empty-state py-5"><i class="bi bi-clipboard-x fs-1 opacity-25"></i><p>Нет записей о посещаемости</p></div>
+                <div class="empty-state py-5"><i class="bi bi-inbox fs-1 opacity-25"></i><p>Активности еще нет</p></div>
                 {% endif %}
             </div>
         </div>

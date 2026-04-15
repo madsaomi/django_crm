@@ -2,6 +2,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
 from apps.groups.models import Group
 from apps.students.models import Student
 from apps.payments.models import Payment
@@ -78,9 +80,6 @@ class ArchiveDashboardView(LoginRequiredMixin, TemplateView):
         context['archived_managers'] = Manager.objects.filter(is_active=False)
         context['archived_groups'] = Group.objects.filter(is_active=False)
         return context
-
-from django.shortcuts import get_object_or_404, redirect
-from django.views import View
 
 class ToggleActiveStatusView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):

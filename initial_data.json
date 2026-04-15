@@ -1,6 +1,7 @@
 [
 {
   "model": "auth.user",
+  "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$1200000$Euprkcpzzi2soEeHwMyqU4$FUuAO26zuKe6wj0ibF1Ub+ncOsXeE3PLe1xvV+wfmgw=",
     "last_login": "2026-04-09T17:05:08.864Z",
@@ -18,108 +19,7 @@
 },
 {
   "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$OjzKUH13I0wlwlJaC7cZQY$yYouczYyAF9U0MmAQjOBcNyp0wdnyNKJZFCfxX7qLSQ=",
-    "last_login": "2026-04-12T11:25:24.408Z",
-    "is_superuser": false,
-    "username": "manager1",
-    "first_name": "Малика",
-    "last_name": "Каримова",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-04-12T11:23:01.220Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$Q4Kwon8gx2Wb6d8xpZ7NgB$yBCEqub3lcQrKzphQC1ElzmLJyej7kFyaflia4yrZUA=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "manager2",
-    "first_name": "Азиз",
-    "last_name": "Нишанов",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-04-12T11:23:01.892Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$jKhhIRJbjN82yb94CzOAhw$aYus21y6hk/Vd82QG9VduT5qNu19aGQi75RBxQp7Nqk=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "teacher1",
-    "first_name": "Джон",
-    "last_name": "Смит",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-04-12T11:23:02.468Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$bNeW6doeF6dWJWqJYoQX1H$sg/tCgDAkxam+IDXCVKbUzKHV9O9rXrBIzKFt910YcI=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "teacher2",
-    "first_name": "Елена",
-    "last_name": "Волкова",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-04-12T11:23:02.999Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$1n4Fo1J7TDfZPzfPAguDxu$JhGNOu1pDebCz6VootHis2tUyO40aai0VlxHW4D2vfs=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "teacher3",
-    "first_name": "Рустам",
-    "last_name": "Валиев",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-04-12T11:23:05.545Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$hLHwD7AEtG8fr4jd1kvOS4$nnjw/xcmrxwlyqxJHyly6DJuDG3itipgiFFvRvj4MBI=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "teacher4",
-    "first_name": "Севара",
-    "last_name": "Алиева",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-04-12T11:23:08.022Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
+  "pk": 9,
   "fields": {
     "password": "pbkdf2_sha256$1200000$RGlYcQP21PYgmCZonIOEJk$7mP2l8ocHWUyGLRusvdbbXBREVH9BI2lO+yfHGr3JQ8=",
     "last_login": "2026-04-12T11:27:51.381Z",
@@ -136,535 +36,643 @@
   }
 },
 {
+  "model": "auth.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$DA8K7pGtdliadmLKYUSnxG$4TnM7IebHr7nO46AdyfdkL5wK1jyqVgihBEG3AVOV/8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "manager1",
+    "first_name": "Малика",
+    "last_name": "Каримова",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T13:59:00.584Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$ZkGdHRuRLmEbNP23AByK15$7kLoE5VBC+I2Bx8mFoTxB+xYQtEH1UE3fpOiNl5cq4U=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "manager2",
+    "first_name": "Азиз",
+    "last_name": "Нишанов",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T13:59:01.057Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$8ndvLH07jiXitmozngVMl8$Lo2uYvO6jR8SaSL0xyf7mToLKJAMEhs1Th6UTBZMDuQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher1",
+    "first_name": "Диёра",
+    "last_name": "Рашидова",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T13:59:01.559Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$u7wt0UBXbwgJ16ESDBfTNf$2pfCt6ZMRNQe2K58ORgUgLXcnzEJRwzxUfkS8RIonxg=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher2",
+    "first_name": "Камолиддин",
+    "last_name": "Хошимов",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T13:59:02.104Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$aq6oBCVCYUVAhf5Tc9Y2J7$iiNj70MEXQbQiaVU6WfFHSBTv+kbofMrDrhV5gbUtpI=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher3",
+    "first_name": "Шахзод",
+    "last_name": "Абдуллаев",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T13:59:02.601Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$68PZPscYBFDSD9mj5AkRae$sK8dcnEnI0miSaVNtO2aWCRkDba5cWRuPQvYs9zDzkA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher4",
+    "first_name": "Нодира",
+    "last_name": "Усманова",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-15T13:59:03.170Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
   "model": "managers.manager",
-  "pk": 1,
+  "pk": 3,
   "fields": {
     "user": [
       "manager1"
     ],
     "name": "Малика Каримова",
     "phone": "+998905797956",
-    "created_at": "2026-04-12T11:23:01.871Z",
+    "created_at": "2026-04-15T13:59:01.048Z",
     "is_active": true
   }
 },
 {
   "model": "managers.manager",
-  "pk": 2,
+  "pk": 4,
   "fields": {
     "user": [
       "manager2"
     ],
     "name": "Азиз Нишанов",
     "phone": "+998905039317",
-    "created_at": "2026-04-12T11:23:02.455Z",
+    "created_at": "2026-04-15T13:59:01.546Z",
     "is_active": true
   }
 },
 {
   "model": "teachers.teacher",
-  "pk": 1,
+  "pk": 5,
   "fields": {
     "user": [
       "teacher1"
     ],
-    "name": "Джон Смит",
+    "name": "Диёра Рашидова",
     "phone": "+998933668051",
     "specialization": "English",
-    "created_at": "2026-04-12T11:23:02.988Z",
+    "created_at": "2026-04-15T13:59:02.094Z",
     "is_active": true
   }
 },
 {
   "model": "teachers.teacher",
-  "pk": 2,
+  "pk": 6,
   "fields": {
     "user": [
       "teacher2"
     ],
-    "name": "Елена Волкова",
+    "name": "Камолиддин Хошимов",
     "phone": "+998939967506",
     "specialization": "English",
-    "created_at": "2026-04-12T11:23:05.524Z",
+    "created_at": "2026-04-15T13:59:02.590Z",
     "is_active": true
   }
 },
 {
   "model": "teachers.teacher",
-  "pk": 3,
+  "pk": 7,
   "fields": {
     "user": [
       "teacher3"
     ],
-    "name": "Рустам Валиев",
+    "name": "Шахзод Абдуллаев",
     "phone": "+998935230985",
     "specialization": "IELTS",
-    "created_at": "2026-04-12T11:23:07.988Z",
+    "created_at": "2026-04-15T13:59:03.156Z",
     "is_active": true
   }
 },
 {
   "model": "teachers.teacher",
-  "pk": 4,
+  "pk": 8,
   "fields": {
     "user": [
       "teacher4"
     ],
-    "name": "Севара Алиева",
+    "name": "Нодира Усманова",
     "phone": "+998936591814",
     "specialization": "Math",
-    "created_at": "2026-04-12T11:23:11.887Z",
+    "created_at": "2026-04-15T13:59:03.651Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 1,
+  "pk": 41,
   "fields": {
-    "name": "Ученик 1",
-    "phone": "+998993939896",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.034Z",
+    "name": "Ситора Рахимова",
+    "phone": "+998996950411",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.714Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 2,
+  "pk": 42,
   "fields": {
-    "name": "Ученик 2",
-    "phone": "+998992649613",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.068Z",
+    "name": "Бехруз Юсупов",
+    "phone": "+998991873755",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.723Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 3,
+  "pk": 43,
   "fields": {
-    "name": "Ученик 3",
-    "phone": "+998996767274",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.103Z",
+    "name": "Дильноза Мирзаева",
+    "phone": "+998992361821",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.733Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 4,
+  "pk": 44,
   "fields": {
-    "name": "Ученик 4",
-    "phone": "+998999434094",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.147Z",
+    "name": "Жасур Каримов",
+    "phone": "+998999707500",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.743Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 5,
+  "pk": 45,
   "fields": {
-    "name": "Ученик 5",
-    "phone": "+998995426624",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.164Z",
+    "name": "Мадина Хасанова",
+    "phone": "+998999258191",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.753Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 6,
+  "pk": 46,
   "fields": {
-    "name": "Ученик 6",
-    "phone": "+998993940396",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.179Z",
+    "name": "Шерзод Турсунов",
+    "phone": "+998995468697",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.764Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 7,
+  "pk": 47,
   "fields": {
-    "name": "Ученик 7",
-    "phone": "+998995074082",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.198Z",
+    "name": "Гулноза Абдуллаева",
+    "phone": "+998994413291",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.783Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 8,
+  "pk": 48,
   "fields": {
-    "name": "Ученик 8",
-    "phone": "+998993476125",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.222Z",
+    "name": "Азизбек Норматов",
+    "phone": "+998999772381",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.797Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 9,
+  "pk": 49,
   "fields": {
-    "name": "Ученик 9",
-    "phone": "+998991936263",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.262Z",
+    "name": "Нигора Султанова",
+    "phone": "+998997110176",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.819Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 10,
+  "pk": 50,
   "fields": {
-    "name": "Ученик 10",
-    "phone": "+998994532274",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.292Z",
+    "name": "Отабек Рашидов",
+    "phone": "+998993245168",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.840Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 11,
+  "pk": 51,
   "fields": {
-    "name": "Ученик 11",
-    "phone": "+998998861720",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.314Z",
+    "name": "Фарангиз Усманова",
+    "phone": "+998991836212",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.862Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 12,
+  "pk": 52,
   "fields": {
-    "name": "Ученик 12",
-    "phone": "+998997785946",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.335Z",
+    "name": "Сардор Ахмедов",
+    "phone": "+998993067116",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.885Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 13,
+  "pk": 53,
   "fields": {
-    "name": "Ученик 13",
-    "phone": "+998994804147",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.356Z",
+    "name": "Зарина Бабаева",
+    "phone": "+998999028071",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.902Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 14,
+  "pk": 54,
   "fields": {
-    "name": "Ученик 14",
-    "phone": "+998998689023",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.376Z",
+    "name": "Достон Мирзакаримов",
+    "phone": "+998991459184",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.924Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 15,
+  "pk": 55,
   "fields": {
-    "name": "Ученик 15",
-    "phone": "+998998025896",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.413Z",
+    "name": "Шахло Назарова",
+    "phone": "+998999328932",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:03.951Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 16,
+  "pk": 56,
   "fields": {
-    "name": "Ученик 16",
-    "phone": "+998992618920",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.441Z",
+    "name": "Ислом Тошпулатов",
+    "phone": "+998992203898",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:03.980Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 17,
+  "pk": 57,
   "fields": {
-    "name": "Ученик 17",
-    "phone": "+998992180912",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.468Z",
+    "name": "Камола Файзуллаева",
+    "phone": "+998996563984",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.009Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 18,
+  "pk": 58,
   "fields": {
-    "name": "Ученик 18",
-    "phone": "+998997223257",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.493Z",
+    "name": "Абдулла Холматов",
+    "phone": "+998992428398",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.039Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 19,
+  "pk": 59,
   "fields": {
-    "name": "Ученик 19",
-    "phone": "+998993044522",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.512Z",
+    "name": "Лола Эргашева",
+    "phone": "+998996919748",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.072Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 20,
+  "pk": 60,
   "fields": {
-    "name": "Ученик 20",
-    "phone": "+998998937162",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.527Z",
+    "name": "Умид Джалилов",
+    "phone": "+998993382590",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.106Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 21,
+  "pk": 61,
   "fields": {
-    "name": "Ученик 21",
-    "phone": "+998995032675",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.540Z",
+    "name": "Севара Исмаилова",
+    "phone": "+998997108945",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.138Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 22,
+  "pk": 62,
   "fields": {
-    "name": "Ученик 22",
-    "phone": "+998995586167",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.554Z",
+    "name": "Бобур Маматкулов",
+    "phone": "+998999132845",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.167Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 23,
+  "pk": 63,
   "fields": {
-    "name": "Ученик 23",
-    "phone": "+998998753023",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.571Z",
+    "name": "Навруза Олимова",
+    "phone": "+998993058107",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.195Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 24,
+  "pk": 64,
   "fields": {
-    "name": "Ученик 24",
-    "phone": "+998992614592",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.586Z",
+    "name": "Элдор Содиков",
+    "phone": "+998997075781",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.224Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 25,
+  "pk": 65,
   "fields": {
-    "name": "Ученик 25",
-    "phone": "+998995924974",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.598Z",
+    "name": "Дилором Тургунова",
+    "phone": "+998992797817",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.252Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 26,
+  "pk": 66,
   "fields": {
-    "name": "Ученик 26",
-    "phone": "+998998391509",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.616Z",
+    "name": "Феруз Хамидов",
+    "phone": "+998991970679",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.286Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 27,
+  "pk": 67,
   "fields": {
-    "name": "Ученик 27",
-    "phone": "+998995485376",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.631Z",
+    "name": "Нилуфар Мухамедова",
+    "phone": "+998992115260",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.315Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 28,
+  "pk": 68,
   "fields": {
-    "name": "Ученик 28",
-    "phone": "+998994211740",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.644Z",
+    "name": "Акмал Валиев",
+    "phone": "+998993186079",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.345Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 29,
+  "pk": 69,
   "fields": {
-    "name": "Ученик 29",
-    "phone": "+998997386238",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.659Z",
+    "name": "Саида Жураева",
+    "phone": "+998995443097",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.374Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 30,
+  "pk": 70,
   "fields": {
-    "name": "Ученик 30",
-    "phone": "+998991220131",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.676Z",
+    "name": "Тимур Набиев",
+    "phone": "+998991135822",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.402Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 31,
+  "pk": 71,
   "fields": {
-    "name": "Ученик 31",
-    "phone": "+998996687829",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.691Z",
+    "name": "Хуршида Кадырова",
+    "phone": "+998996442638",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.432Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 32,
+  "pk": 72,
   "fields": {
-    "name": "Ученик 32",
-    "phone": "+998998577299",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.707Z",
+    "name": "Алишер Эшматов",
+    "phone": "+998993169339",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.463Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 33,
+  "pk": 73,
   "fields": {
-    "name": "Ученик 33",
-    "phone": "+998992017188",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.720Z",
+    "name": "Муниса Ибрагимова",
+    "phone": "+998998761943",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.487Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 34,
+  "pk": 74,
   "fields": {
-    "name": "Ученик 34",
-    "phone": "+998992811122",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.735Z",
+    "name": "Равшан Рузиев",
+    "phone": "+998995932856",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.513Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 35,
+  "pk": 75,
   "fields": {
-    "name": "Ученик 35",
-    "phone": "+998995991297",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.749Z",
+    "name": "Озода Шарипова",
+    "phone": "+998991514598",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.542Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 36,
+  "pk": 76,
   "fields": {
-    "name": "Ученик 36",
-    "phone": "+998994371943",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.764Z",
+    "name": "Нодирбек Пулатов",
+    "phone": "+998992405060",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.573Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 37,
+  "pk": 77,
   "fields": {
-    "name": "Ученик 37",
-    "phone": "+998991660137",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.778Z",
+    "name": "Малика Мирсаидова",
+    "phone": "+998998279730",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.601Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 38,
+  "pk": 78,
   "fields": {
-    "name": "Ученик 38",
-    "phone": "+998994770933",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.794Z",
+    "name": "Собир Мамадалиев",
+    "phone": "+998996216588",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.635Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 39,
+  "pk": 79,
   "fields": {
-    "name": "Ученик 39",
-    "phone": "+998996744837",
-    "manager": 1,
-    "created_at": "2026-04-12T11:23:12.813Z",
+    "name": "Гулрух Тошматова",
+    "phone": "+998999560314",
+    "manager": 3,
+    "created_at": "2026-04-15T13:59:04.665Z",
     "is_active": true
   }
 },
 {
   "model": "students.student",
-  "pk": 40,
+  "pk": 80,
   "fields": {
-    "name": "Ученик 40",
-    "phone": "+998996196899",
-    "manager": 2,
-    "created_at": "2026-04-12T11:23:12.832Z",
+    "name": "Санжар Усаров",
+    "phone": "+998993210073",
+    "manager": 4,
+    "created_at": "2026-04-15T13:59:04.691Z",
     "is_active": true
   }
 },
 {
   "model": "groups.group",
-  "pk": 1,
+  "pk": 7,
   "fields": {
     "name": "Kids English Starter",
     "course_type": "KIDS_ENGLISH",
     "level": "",
-    "teacher": 1,
+    "teacher": 5,
     "schedule_type": "EVEN",
     "time_slot": "14:00 - 15:30",
     "room": "К-1",
@@ -673,1278 +681,1529 @@
     "duration_months": 3,
     "color": "bg-t-1",
     "is_active": true,
-    "created_at": "2026-04-12T11:23:11.902Z"
+    "created_at": "2026-04-15T13:59:03.660Z"
   }
 },
 {
   "model": "groups.group",
-  "pk": 2,
+  "pk": 8,
   "fields": {
     "name": "General English Pre-Int",
     "course_type": "GENERAL_ENGLISH",
     "level": "",
-    "teacher": 2,
+    "teacher": 6,
     "schedule_type": "EVEN",
     "time_slot": "16:00 - 17:30",
     "room": "К-2",
     "monthly_fee": "450000",
     "max_students": 12,
     "duration_months": 3,
-    "color": "bg-t-1",
+    "color": "bg-t-2",
     "is_active": true,
-    "created_at": "2026-04-12T11:23:11.916Z"
+    "created_at": "2026-04-15T13:59:03.668Z"
   }
 },
 {
   "model": "groups.group",
-  "pk": 3,
+  "pk": 9,
   "fields": {
-    "name": "IELTS Reading",
+    "name": "IELTS Reading & Writing",
     "course_type": "IELTS",
     "level": "",
-    "teacher": 3,
+    "teacher": 7,
     "schedule_type": "EVEN",
     "time_slot": "18:00 - 19:30",
     "room": "К-3",
     "monthly_fee": "600000",
     "max_students": 12,
     "duration_months": 3,
-    "color": "bg-t-1",
+    "color": "bg-t-3",
     "is_active": true,
-    "created_at": "2026-04-12T11:23:11.934Z"
+    "created_at": "2026-04-15T13:59:03.677Z"
   }
 },
 {
   "model": "groups.group",
-  "pk": 4,
+  "pk": 10,
   "fields": {
     "name": "Kids English Level 1",
     "course_type": "KIDS_ENGLISH",
     "level": "",
-    "teacher": 1,
+    "teacher": 5,
     "schedule_type": "ODD",
     "time_slot": "15:00 - 16:30",
     "room": "К-1",
     "monthly_fee": "400000",
     "max_students": 12,
     "duration_months": 3,
-    "color": "bg-t-1",
+    "color": "bg-t-4",
     "is_active": true,
-    "created_at": "2026-04-12T11:23:11.952Z"
+    "created_at": "2026-04-15T13:59:03.686Z"
   }
 },
 {
   "model": "groups.group",
-  "pk": 5,
+  "pk": 11,
   "fields": {
-    "name": "General English Int",
+    "name": "General English Intermediate",
     "course_type": "GENERAL_ENGLISH",
     "level": "",
-    "teacher": 2,
+    "teacher": 6,
     "schedule_type": "ODD",
     "time_slot": "17:00 - 18:30",
     "room": "К-2",
     "monthly_fee": "450000",
     "max_students": 12,
     "duration_months": 3,
-    "color": "bg-t-1",
+    "color": "bg-t-5",
     "is_active": true,
-    "created_at": "2026-04-12T11:23:11.975Z"
+    "created_at": "2026-04-15T13:59:03.695Z"
   }
 },
 {
   "model": "groups.group",
-  "pk": 6,
+  "pk": 12,
   "fields": {
-    "name": "SAT Prep",
+    "name": "SAT Math Prep",
     "course_type": "SAT",
     "level": "",
-    "teacher": 4,
+    "teacher": 8,
     "schedule_type": "ODD",
     "time_slot": "16:00 - 18:00",
     "room": "К-4",
     "monthly_fee": "400000",
     "max_students": 12,
     "duration_months": 3,
-    "color": "bg-t-1",
+    "color": "bg-t-6",
     "is_active": true,
-    "created_at": "2026-04-12T11:23:11.999Z"
+    "created_at": "2026-04-15T13:59:03.704Z"
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 1,
+  "pk": 61,
   "fields": {
-    "student": 1,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 41,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 2,
+  "pk": 62,
   "fields": {
-    "student": 2,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 41,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 3,
+  "pk": 63,
   "fields": {
-    "student": 3,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 42,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 4,
+  "pk": 64,
   "fields": {
-    "student": 3,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 43,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 5,
+  "pk": 65,
   "fields": {
-    "student": 4,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 43,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 6,
+  "pk": 66,
   "fields": {
-    "student": 5,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 44,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 7,
+  "pk": 67,
   "fields": {
-    "student": 6,
-    "group": 3,
-    "enrolled_date": "2026-04-12",
+    "student": 45,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 8,
+  "pk": 68,
   "fields": {
-    "student": 6,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 45,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 9,
+  "pk": 69,
   "fields": {
-    "student": 7,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 46,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 10,
+  "pk": 70,
   "fields": {
-    "student": 7,
-    "group": 3,
-    "enrolled_date": "2026-04-12",
+    "student": 47,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 11,
+  "pk": 71,
   "fields": {
-    "student": 8,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 47,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 12,
+  "pk": 72,
   "fields": {
-    "student": 9,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 48,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 13,
+  "pk": 73,
   "fields": {
-    "student": 9,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 49,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 14,
+  "pk": 74,
   "fields": {
-    "student": 10,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 50,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 15,
+  "pk": 75,
   "fields": {
-    "student": 11,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 51,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 16,
+  "pk": 76,
   "fields": {
-    "student": 11,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 52,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 17,
+  "pk": 77,
   "fields": {
-    "student": 12,
-    "group": 3,
-    "enrolled_date": "2026-04-12",
+    "student": 53,
+    "group": 9,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 18,
+  "pk": 78,
   "fields": {
-    "student": 12,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 53,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 19,
+  "pk": 79,
   "fields": {
-    "student": 13,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 54,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 20,
+  "pk": 80,
   "fields": {
-    "student": 13,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 55,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 21,
+  "pk": 81,
   "fields": {
-    "student": 14,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 55,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 22,
+  "pk": 82,
   "fields": {
-    "student": 14,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 56,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 23,
+  "pk": 83,
   "fields": {
-    "student": 15,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 57,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 24,
+  "pk": 84,
   "fields": {
-    "student": 16,
-    "group": 3,
-    "enrolled_date": "2026-04-12",
+    "student": 57,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 25,
+  "pk": 85,
   "fields": {
-    "student": 17,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 58,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 26,
+  "pk": 86,
   "fields": {
-    "student": 17,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 59,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 27,
+  "pk": 87,
   "fields": {
-    "student": 18,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 59,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 28,
+  "pk": 88,
   "fields": {
-    "student": 18,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
+    "student": 60,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 29,
+  "pk": 89,
   "fields": {
-    "student": 19,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 61,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 30,
+  "pk": 90,
   "fields": {
-    "student": 19,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 62,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 31,
+  "pk": 91,
   "fields": {
-    "student": 20,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 63,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 32,
+  "pk": 92,
   "fields": {
-    "student": 21,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 64,
+    "group": 9,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 33,
+  "pk": 93,
   "fields": {
-    "student": 22,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 65,
+    "group": 9,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 34,
+  "pk": 94,
   "fields": {
-    "student": 23,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 66,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 35,
+  "pk": 95,
   "fields": {
-    "student": 23,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 67,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 36,
+  "pk": 96,
   "fields": {
-    "student": 24,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 67,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 37,
+  "pk": 97,
   "fields": {
-    "student": 25,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 68,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 38,
+  "pk": 98,
   "fields": {
-    "student": 26,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 69,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 39,
+  "pk": 99,
   "fields": {
-    "student": 26,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 70,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 40,
+  "pk": 100,
   "fields": {
-    "student": 27,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 71,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 41,
+  "pk": 101,
   "fields": {
-    "student": 27,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 72,
+    "group": 7,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 42,
+  "pk": 102,
   "fields": {
-    "student": 28,
-    "group": 3,
-    "enrolled_date": "2026-04-12",
+    "student": 72,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 43,
+  "pk": 103,
   "fields": {
-    "student": 28,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 73,
+    "group": 9,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 44,
+  "pk": 104,
   "fields": {
-    "student": 29,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 73,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 45,
+  "pk": 105,
   "fields": {
-    "student": 30,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 74,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 46,
+  "pk": 106,
   "fields": {
-    "student": 31,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 75,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 47,
+  "pk": 107,
   "fields": {
-    "student": 31,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
+    "student": 76,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 48,
+  "pk": 108,
   "fields": {
-    "student": 32,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
+    "student": 77,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 49,
+  "pk": 109,
   "fields": {
-    "student": 33,
-    "group": 5,
-    "enrolled_date": "2026-04-12",
+    "student": 78,
+    "group": 11,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 50,
+  "pk": 110,
   "fields": {
-    "student": 34,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 78,
+    "group": 12,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 51,
+  "pk": 111,
   "fields": {
-    "student": 34,
-    "group": 3,
-    "enrolled_date": "2026-04-12",
+    "student": 79,
+    "group": 8,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.enrollment",
-  "pk": 52,
+  "pk": 112,
   "fields": {
-    "student": 35,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 53,
-  "fields": {
-    "student": 36,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 54,
-  "fields": {
-    "student": 36,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 55,
-  "fields": {
-    "student": 37,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 56,
-  "fields": {
-    "student": 38,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 57,
-  "fields": {
-    "student": 38,
-    "group": 1,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 58,
-  "fields": {
-    "student": 39,
-    "group": 4,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 59,
-  "fields": {
-    "student": 40,
-    "group": 6,
-    "enrolled_date": "2026-04-12",
-    "is_active": true
-  }
-},
-{
-  "model": "groups.enrollment",
-  "pk": 60,
-  "fields": {
-    "student": 40,
-    "group": 2,
-    "enrolled_date": "2026-04-12",
+    "student": 80,
+    "group": 10,
+    "enrolled_date": "2026-04-15",
     "is_active": true
   }
 },
 {
   "model": "groups.sundayevent",
-  "pk": 1,
+  "pk": 3,
   "fields": {
     "title": "Speaking Club B1-B2",
-    "date": "2026-04-12",
+    "date": "2026-04-19",
     "time_slot": "11:00 - 13:00",
     "room": "К-1",
-    "teacher": 2,
-    "description": "Дискуссии на разные темы для средних уровней.",
-    "created_at": "2026-04-12T11:23:15.489Z"
+    "teacher": 6,
+    "description": "Дискуссии на актуальные темы для уровней Pre-Intermediate и Intermediate.",
+    "created_at": "2026-04-15T13:59:05.213Z"
   }
 },
 {
   "model": "groups.sundayevent",
-  "pk": 2,
-  "fields": {
-    "title": "Mock IELTS Test",
-    "date": "2026-04-12",
-    "time_slot": "09:00 - 12:00",
-    "room": "Большой зал",
-    "teacher": 3,
-    "description": "Пробный экзамен.",
-    "created_at": "2026-04-12T11:23:15.509Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 1,
-  "fields": {
-    "student": 1,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:12.871Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:12.872Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 2,
-  "fields": {
-    "student": 3,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:12.922Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:12.923Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 3,
-  "fields": {
-    "student": 3,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:12.950Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:12.951Z"
-  }
-},
-{
-  "model": "payments.payment",
   "pk": 4,
   "fields": {
-    "student": 4,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:13.008Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:13.009Z"
+    "title": "Mock IELTS Exam",
+    "date": "2026-04-19",
+    "time_slot": "09:00 - 12:00",
+    "room": "Большой зал",
+    "teacher": 7,
+    "description": "Полная симуляция экзамена IELTS (Listening, Reading, Writing).",
+    "created_at": "2026-04-15T13:59:05.233Z"
   }
 },
 {
-  "model": "payments.payment",
+  "model": "groups.sundayevent",
   "pk": 5,
   "fields": {
-    "student": 5,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.039Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:13.039Z"
+    "title": "SAT Practice Test",
+    "date": "2026-04-26",
+    "time_slot": "10:00 - 13:00",
+    "room": "К-4",
+    "teacher": 8,
+    "description": "Пробный SAT тест с разбором ошибок.",
+    "created_at": "2026-04-15T13:59:05.257Z"
   }
 },
 {
   "model": "payments.payment",
+  "pk": 51,
+  "fields": {
+    "student": 41,
+    "amount": "450000",
+    "date": "2026-04-19T13:13:00Z",
+    "comment": "Ежемесячная оплата",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 52,
+  "fields": {
+    "student": 41,
+    "amount": "400000",
+    "date": "2026-04-15T05:04:00Z",
+    "comment": "Оплата через Click",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 53,
+  "fields": {
+    "student": 42,
+    "amount": "400000",
+    "date": "2026-04-19T10:30:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 54,
+  "fields": {
+    "student": 43,
+    "amount": "400000",
+    "date": "2026-04-15T06:27:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 55,
+  "fields": {
+    "student": 44,
+    "amount": "400000",
+    "date": "2026-04-16T11:24:00Z",
+    "comment": "Оплата за месяц",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 56,
+  "fields": {
+    "student": 45,
+    "amount": "400000",
+    "date": "2026-04-19T09:40:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 57,
+  "fields": {
+    "student": 45,
+    "amount": "450000",
+    "date": "2026-04-19T05:04:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 58,
+  "fields": {
+    "student": 46,
+    "amount": "400000",
+    "date": "2026-04-18T12:50:00Z",
+    "comment": "Ежемесячная оплата",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 59,
+  "fields": {
+    "student": 47,
+    "amount": "450000",
+    "date": "2026-04-16T09:18:00Z",
+    "comment": "Ежемесячная оплата",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 60,
+  "fields": {
+    "student": 48,
+    "amount": "450000",
+    "date": "2026-04-19T13:22:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 61,
+  "fields": {
+    "student": 49,
+    "amount": "400000",
+    "date": "2026-04-18T11:28:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 62,
+  "fields": {
+    "student": 50,
+    "amount": "400000",
+    "date": "2026-04-17T06:53:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 63,
+  "fields": {
+    "student": 51,
+    "amount": "400000",
+    "date": "2026-04-15T13:45:00Z",
+    "comment": "Оплата через Payme",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 64,
+  "fields": {
+    "student": 52,
+    "amount": "450000",
+    "date": "2026-04-20T08:40:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 65,
+  "fields": {
+    "student": 53,
+    "amount": "600000",
+    "date": "2026-04-17T06:17:00Z",
+    "comment": "Ежемесячная оплата",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 66,
+  "fields": {
+    "student": 53,
+    "amount": "450000",
+    "date": "2026-04-17T07:10:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.883Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 67,
+  "fields": {
+    "student": 55,
+    "amount": "400000",
+    "date": "2026-04-18T08:04:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 68,
+  "fields": {
+    "student": 55,
+    "amount": "400000",
+    "date": "2026-04-18T12:10:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 69,
+  "fields": {
+    "student": 57,
+    "amount": "400000",
+    "date": "2026-04-17T06:33:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 70,
+  "fields": {
+    "student": 58,
+    "amount": "450000",
+    "date": "2026-04-19T07:22:00Z",
+    "comment": "Ежемесячная оплата",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 71,
+  "fields": {
+    "student": 59,
+    "amount": "450000",
+    "date": "2026-04-17T09:32:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 72,
+  "fields": {
+    "student": 59,
+    "amount": "400000",
+    "date": "2026-04-20T09:50:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 73,
+  "fields": {
+    "student": 60,
+    "amount": "400000",
+    "date": "2026-04-20T10:32:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 74,
+  "fields": {
+    "student": 61,
+    "amount": "450000",
+    "date": "2026-04-17T08:38:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 75,
+  "fields": {
+    "student": 62,
+    "amount": "400000",
+    "date": "2026-04-16T11:11:00Z",
+    "comment": "Оплата через Click",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 76,
+  "fields": {
+    "student": 63,
+    "amount": "400000",
+    "date": "2026-04-17T04:53:00Z",
+    "comment": "Оплата через Payme",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 77,
+  "fields": {
+    "student": 64,
+    "amount": "600000",
+    "date": "2026-04-16T09:58:00Z",
+    "comment": "Оплата за месяц",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 78,
+  "fields": {
+    "student": 65,
+    "amount": "600000",
+    "date": "2026-04-15T05:45:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 79,
+  "fields": {
+    "student": 66,
+    "amount": "450000",
+    "date": "2026-04-16T06:19:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 80,
+  "fields": {
+    "student": 67,
+    "amount": "400000",
+    "date": "2026-04-17T06:43:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 81,
+  "fields": {
+    "student": 67,
+    "amount": "400000",
+    "date": "2026-04-20T06:07:00Z",
+    "comment": "Оплата за месяц",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 82,
+  "fields": {
+    "student": 68,
+    "amount": "400000",
+    "date": "2026-04-19T08:51:00Z",
+    "comment": "Оплата через Click",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 83,
+  "fields": {
+    "student": 69,
+    "amount": "400000",
+    "date": "2026-04-15T12:11:00Z",
+    "comment": "Оплата за месяц",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 84,
+  "fields": {
+    "student": 71,
+    "amount": "400000",
+    "date": "2026-04-19T07:18:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 85,
+  "fields": {
+    "student": 72,
+    "amount": "400000",
+    "date": "2026-04-18T07:35:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 86,
+  "fields": {
+    "student": 72,
+    "amount": "450000",
+    "date": "2026-04-15T12:56:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 87,
+  "fields": {
+    "student": 73,
+    "amount": "600000",
+    "date": "2026-04-15T06:09:00Z",
+    "comment": "Ежемесячная оплата",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 88,
+  "fields": {
+    "student": 74,
+    "amount": "400000",
+    "date": "2026-04-16T11:29:00Z",
+    "comment": "Наличные",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 89,
+  "fields": {
+    "student": 76,
+    "amount": "450000",
+    "date": "2026-04-20T10:18:00Z",
+    "comment": "Оплата через Click",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 90,
+  "fields": {
+    "student": 77,
+    "amount": "450000",
+    "date": "2026-04-17T12:27:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 91,
+  "fields": {
+    "student": 78,
+    "amount": "450000",
+    "date": "2026-04-18T09:48:00Z",
+    "comment": "Перевод",
+    "created_at": "2026-04-15T13:59:04.884Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 92,
+  "fields": {
+    "student": 78,
+    "amount": "400000",
+    "date": "2026-04-18T12:38:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.885Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 93,
+  "fields": {
+    "student": 79,
+    "amount": "450000",
+    "date": "2026-04-16T13:29:00Z",
+    "comment": "Оплата за месяц",
+    "created_at": "2026-04-15T13:59:04.885Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 94,
+  "fields": {
+    "student": 80,
+    "amount": "400000",
+    "date": "2026-04-17T10:31:00Z",
+    "comment": "Оплата за обучение",
+    "created_at": "2026-04-15T13:59:04.885Z"
+  }
+},
+{
+  "model": "attendance.attendance",
+  "pk": 1,
+  "fields": {
+    "student": 41,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
+  }
+},
+{
+  "model": "attendance.attendance",
+  "pk": 2,
+  "fields": {
+    "student": 42,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
+  }
+},
+{
+  "model": "attendance.attendance",
+  "pk": 3,
+  "fields": {
+    "student": 44,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
+  }
+},
+{
+  "model": "attendance.attendance",
+  "pk": 4,
+  "fields": {
+    "student": 50,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
+  }
+},
+{
+  "model": "attendance.attendance",
+  "pk": 5,
+  "fields": {
+    "student": 51,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
+  }
+},
+{
+  "model": "attendance.attendance",
   "pk": 6,
   "fields": {
-    "student": 7,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.105Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:13.106Z"
+    "student": 54,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 7,
   "fields": {
-    "student": 7,
-    "amount": "600000",
-    "date": "2026-04-12T11:23:13.141Z",
-    "comment": "Оплата за IELTS Reading",
-    "created_at": "2026-04-12T11:23:13.141Z"
+    "student": 55,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 8,
   "fields": {
-    "student": 8,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.174Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:13.174Z"
+    "student": 59,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 9,
   "fields": {
-    "student": 9,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.204Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:13.205Z"
+    "student": 60,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 10,
   "fields": {
-    "student": 9,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:13.236Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:13.237Z"
+    "student": 71,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "ABSENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 11,
   "fields": {
-    "student": 10,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.275Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:13.275Z"
+    "student": 74,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 12,
   "fields": {
-    "student": 11,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:13.313Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:13.313Z"
+    "student": 80,
+    "group": 10,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 13,
   "fields": {
-    "student": 11,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.350Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:13.350Z"
+    "student": 41,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 14,
   "fields": {
-    "student": 12,
-    "amount": "600000",
-    "date": "2026-04-12T11:23:13.388Z",
-    "comment": "Оплата за IELTS Reading",
-    "created_at": "2026-04-12T11:23:13.389Z"
+    "student": 45,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 15,
   "fields": {
-    "student": 12,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.425Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:13.425Z"
+    "student": 47,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 16,
   "fields": {
-    "student": 13,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.461Z",
-    "comment": "Оплата за Kids English Level 1",
-    "created_at": "2026-04-12T11:23:13.462Z"
+    "student": 53,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 17,
   "fields": {
-    "student": 13,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:13.503Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:13.504Z"
+    "student": 57,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 18,
   "fields": {
-    "student": 14,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:13.896Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:13.897Z"
+    "student": 58,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 19,
   "fields": {
-    "student": 14,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:13.942Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:13.942Z"
+    "student": 61,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 20,
   "fields": {
-    "student": 15,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:13.981Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:13.981Z"
+    "student": 66,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 21,
   "fields": {
-    "student": 17,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.034Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:14.034Z"
+    "student": 72,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 22,
   "fields": {
-    "student": 17,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.069Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:14.069Z"
+    "student": 75,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 23,
   "fields": {
-    "student": 18,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.103Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:14.104Z"
+    "student": 77,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 24,
   "fields": {
-    "student": 19,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.168Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:14.169Z"
+    "student": 78,
+    "group": 11,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 25,
   "fields": {
-    "student": 20,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.257Z",
-    "comment": "Оплата за Kids English Level 1",
-    "created_at": "2026-04-12T11:23:14.259Z"
+    "student": 43,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 26,
   "fields": {
-    "student": 22,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.348Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:14.349Z"
+    "student": 46,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 27,
   "fields": {
-    "student": 23,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.390Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:14.391Z"
+    "student": 47,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 28,
   "fields": {
-    "student": 23,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.423Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:14.423Z"
+    "student": 49,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 29,
   "fields": {
-    "student": 24,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.457Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:14.458Z"
+    "student": 63,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 30,
   "fields": {
-    "student": 25,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.497Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:14.498Z"
+    "student": 67,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 31,
   "fields": {
-    "student": 26,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.539Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:14.540Z"
+    "student": 69,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 },
 {
-  "model": "payments.payment",
+  "model": "attendance.attendance",
   "pk": 32,
   "fields": {
-    "student": 26,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.578Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:14.580Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 33,
-  "fields": {
-    "student": 27,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.621Z",
-    "comment": "Оплата за Kids English Level 1",
-    "created_at": "2026-04-12T11:23:14.623Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 34,
-  "fields": {
-    "student": 27,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.667Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:14.669Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 35,
-  "fields": {
-    "student": 28,
-    "amount": "600000",
-    "date": "2026-04-12T11:23:14.733Z",
-    "comment": "Оплата за IELTS Reading",
-    "created_at": "2026-04-12T11:23:14.735Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 36,
-  "fields": {
-    "student": 28,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.786Z",
-    "comment": "Оплата за Kids English Level 1",
-    "created_at": "2026-04-12T11:23:14.787Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 37,
-  "fields": {
-    "student": 29,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.836Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:14.836Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 38,
-  "fields": {
-    "student": 30,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:14.878Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:14.879Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 39,
-  "fields": {
-    "student": 31,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:14.958Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:14.959Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 40,
-  "fields": {
-    "student": 33,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:15.020Z",
-    "comment": "Оплата за General English Int",
-    "created_at": "2026-04-12T11:23:15.021Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 41,
-  "fields": {
-    "student": 34,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:15.062Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:15.062Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 42,
-  "fields": {
-    "student": 34,
-    "amount": "600000",
-    "date": "2026-04-12T11:23:15.096Z",
-    "comment": "Оплата за IELTS Reading",
-    "created_at": "2026-04-12T11:23:15.096Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 43,
-  "fields": {
-    "student": 35,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:15.126Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:15.126Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 44,
-  "fields": {
-    "student": 36,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:15.157Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:15.157Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 45,
-  "fields": {
-    "student": 37,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:15.203Z",
-    "comment": "Оплата за Kids English Level 1",
-    "created_at": "2026-04-12T11:23:15.204Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 46,
-  "fields": {
-    "student": 38,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:15.231Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:15.231Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 47,
-  "fields": {
-    "student": 38,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:15.260Z",
-    "comment": "Оплата за Kids English Starter",
-    "created_at": "2026-04-12T11:23:15.261Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 48,
-  "fields": {
-    "student": 39,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:15.299Z",
-    "comment": "Оплата за Kids English Level 1",
-    "created_at": "2026-04-12T11:23:15.300Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 49,
-  "fields": {
-    "student": 40,
-    "amount": "400000",
-    "date": "2026-04-12T11:23:15.346Z",
-    "comment": "Оплата за SAT Prep",
-    "created_at": "2026-04-12T11:23:15.347Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 50,
-  "fields": {
-    "student": 40,
-    "amount": "450000",
-    "date": "2026-04-12T11:23:15.388Z",
-    "comment": "Оплата за General English Pre-Int",
-    "created_at": "2026-04-12T11:23:15.389Z"
+    "student": 78,
+    "group": 12,
+    "date": "2026-04-15",
+    "status": "PRESENT",
+    "grade": null,
+    "comment": ""
   }
 }
 ]
