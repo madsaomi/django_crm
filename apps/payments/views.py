@@ -5,7 +5,7 @@ from django.http import HttpResponse
 import openpyxl
 from .models import Payment
 from .forms import PaymentForm
-from .services import get_all_students_debts
+from .services import get_all_students_debts, get_financial_summary, get_overdue_students
 from apps.managers.mixins import ManagerRequiredMixin
 
 
@@ -42,7 +42,7 @@ class PaymentCreateView(ManagerRequiredMixin, CreateView):
 
     def get_template_names(self):
         if 'HX-Request' in self.request.headers:
-            return ['components/modal_form.html']
+            return ['includes/modal_form.html']
         return [self.template_name]
 
     def form_valid(self, form):
@@ -60,8 +60,16 @@ class DebtListView(ManagerRequiredMixin, ListView):
     context_object_name = 'debts'
 
     def get_queryset(self):
-        # Только те, у кого долг > 0
         return [d for d in get_all_students_debts() if d['debt'] > 0]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        debts = context['debts']
+        context['total_debt'] = sum(d['debt'] for d in debts)
+        context['debtors_count'] = len(debts)
+        context['avg_debt'] = (context['total_debt'] / context['debtors_count']) if context['debtors_count'] > 0 else 0
+        context['overdue'] = get_overdue_students(days_threshold=30)
+        return context
 
 
 class FinanceDashboardView(ManagerRequiredMixin, ListView):
@@ -74,6 +82,11 @@ class FinanceDashboardView(ManagerRequiredMixin, ListView):
         for r in reports:
             r['abs_debt'] = abs(r['debt'])
         return reports
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['summary'] = get_financial_summary()
+        return context
 
 
 class FinanceExportView(ManagerRequiredMixin, ListView):

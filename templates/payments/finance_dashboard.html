@@ -1,62 +1,180 @@
 {% extends 'base.html' %}
 {% block title %}Финансовый реестр{% endblock %}
 {% block content %}
-<div class="page-header d-flex justify-content-between align-items-center pt-3 pb-3 mb-3 border-bottom">
-    <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">
-        Финансовый реестр (Долги и Оплаты)
-    </h1>
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <div class="icon-pill-colored pill-amber">
+            <i data-lucide="database"></i>
+        </div>
+        <div>
+            <h1 class="page-title fw-bold m-0" style="font-size: 1.5rem;">Финансовый реестр</h1>
+            <p class="text-muted small mb-0">Полная финансовая аналитика по ученикам</p>
+        </div>
+    </div>
     <div class="d-flex gap-2">
-        <a href="{% url 'payments:finance_export' %}" class="btn btn-outline-secondary border-0 fw-medium shadow-sm bg-white" target="_blank">
-            <i class="bi bi-file-earmark-excel text-success me-1"></i> Скачать Excel
+        <a href="{% url 'payments:finance_export' %}" class="btn btn-outline-secondary rounded-pill px-3 fw-bold d-flex align-items-center gap-2" target="_blank" style="font-size: 0.85rem;">
+            <i data-lucide="file-spreadsheet" style="width: 16px; height: 16px;"></i> Excel
         </a>
-        <a href="{% url 'payments:create' %}" class="btn btn-success bg-gradient border-0 fw-medium shadow-sm">
-            <i class="bi bi-plus-lg me-1"></i> Принять оплату
-        </a>
+        <button hx-get="{% url 'payments:create' %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary bg-gradient border-0 fw-bold shadow-sm rounded-pill px-4 d-flex align-items-center gap-2">
+            <i data-lucide="plus" style="width: 18px; height: 18px;"></i> Принять оплату
+        </button>
     </div>
 </div>
 
-<div class="content-card shadow-sm border-0 bg-white">
+<!-- Financial Summary Cards -->
+{% if summary %}
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card primary">
+            <div class="icon-pill-colored pill-indigo mb-3">
+                <i data-lucide="calculator"></i>
+            </div>
+            <div class="stat-value" style="font-size: 1.5rem;">{{ summary.total_expected|floatformat:0 }}</div>
+            <div class="stat-label">Ожидаемый доход</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card success">
+            <div class="icon-pill-colored pill-emerald mb-3">
+                <i data-lucide="trending-up"></i>
+            </div>
+            <div class="stat-value text-success" style="font-size: 1.5rem;">{{ summary.total_paid|floatformat:0 }}</div>
+            <div class="stat-label">Фактически оплачено</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card danger">
+            <div class="icon-pill-colored pill-rose mb-3">
+                <i data-lucide="alert-circle"></i>
+            </div>
+            <div class="stat-value text-danger" style="font-size: 1.5rem;">{{ summary.total_debt|floatformat:0 }}</div>
+            <div class="stat-label">Общий долг</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card info">
+            <div class="icon-pill-colored pill-blue mb-3">
+                <i data-lucide="percent"></i>
+            </div>
+            <div class="stat-value" style="font-size: 1.5rem;">{{ summary.collection_rate }}%</div>
+            <div class="stat-label">Собираемость</div>
+        </div>
+    </div>
+</div>
+
+<!-- Debt Distribution Chart -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-4">
+        <div class="finance-chart-card h-100">
+            <h6 class="fw-bold d-flex align-items-center gap-2 mb-3">
+                <div class="icon-pill-colored sm pill-amber">
+                    <i data-lucide="pie-chart"></i>
+                </div>
+                Распределение баланса
+            </h6>
+            <div style="height: 200px;">
+                <canvas id="debtChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="finance-chart-card h-100">
+            <h6 class="fw-bold d-flex align-items-center gap-2 mb-3">
+                <div class="icon-pill-colored sm pill-indigo">
+                    <i data-lucide="bar-chart-2"></i>
+                </div>
+                Статус учеников ({{ summary.total_students }})
+            </h6>
+            <div class="row h-100 align-items-center pb-3">
+                <div class="col-4 text-center">
+                    <div class="circular-progress mx-auto" style="--progress: {{ summary.collection_rate }}; --progress-color: var(--success); width: 80px; height: 80px;">
+                        <span class="progress-value fs-5">{{ summary.collection_rate }}%</span>
+                    </div>
+                    <div class="text-muted small fw-bold mt-2">Собираемость</div>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="status-indicator active"></div>
+                                <span class="fw-medium">Оплачено</span>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">{{ summary.paid_count }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="status-indicator inactive"></div>
+                                <span class="fw-medium">Должники</span>
+                            </div>
+                            <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3">{{ summary.debtors_count }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="status-indicator" style="background: var(--info);"></div>
+                                <span class="fw-medium">Переплата</span>
+                            </div>
+                            <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3">{{ summary.overpaid_count }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Main Table -->
+<div class="content-card glass-panel no-hover shadow-sm border-0" style="border-radius: 20px;">
+    <div class="card-header-custom border-bottom p-4">
+        <h5 class="m-0 fw-bold d-flex align-items-center gap-2">
+            <div class="icon-pill-colored sm pill-slate">
+                <i data-lucide="table"></i>
+            </div>
+            Детальный реестр
+        </h5>
+        <span class="badge bg-light text-secondary border rounded-pill px-3 py-2">{{ reports|length }} учеников</span>
+    </div>
     <div class="card-body-custom">
         <div class="table-responsive">
-            <table class="table table-hover table-custom align-middle mb-0" style="font-size: 0.85rem;">
-                <thead>
-                    <tr class="bg-light">
-                        <th class="ps-4" style="width: 250px;">Ученик</th>
-                        <th style="width: 300px;">Группы и Длительность</th>
-                        <th class="text-end">Ожидаемая сумма (Σ)</th>
-                        <th class="text-end">Оплачено всего</th>
-                        <th class="text-end">Баланс / Долг</th>
-                        <th class="text-center pe-4" style="width: 150px;">Статус</th>
+            <table class="table table-hover align-middle mb-0" style="font-size: 0.85rem;">
+                <thead class="sticky-top" style="background: var(--bg-card); z-index: 5;">
+                    <tr>
+                        <th class="ps-4 text-muted small text-uppercase fw-bold border-0" style="font-size: 0.7rem;">Ученик</th>
+                        <th class="text-muted small text-uppercase fw-bold border-0" style="font-size: 0.7rem;">Группы и Длительность</th>
+                        <th class="text-end text-muted small text-uppercase fw-bold border-0" style="font-size: 0.7rem;">Ожидаемая Σ</th>
+                        <th class="text-end text-muted small text-uppercase fw-bold border-0" style="font-size: 0.7rem;">Оплачено</th>
+                        <th class="text-end text-muted small text-uppercase fw-bold border-0" style="font-size: 0.7rem;">Баланс</th>
+                        <th class="text-center pe-4 text-muted small text-uppercase fw-bold border-0" style="font-size: 0.7rem;">Статус</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in reports %}
                     <tr class="{% if item.debt > 0 %}table-danger-light{% elif item.debt < 0 %}table-success-light{% endif %}">
                         <td class="ps-4 fw-bold">
-                            <a href="{% url 'students:detail' item.student.pk %}" class="text-decoration-none text-dark d-flex align-items-center gap-2">
-                                <div class="rounded-circle bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                                    <i class="bi bi-person text-secondary" style="font-size: 0.8rem;"></i>
+                            <a href="{% url 'students:detail' item.student.pk %}" class="text-decoration-none d-flex align-items-center gap-2">
+                                <div class="icon-pill-colored sm {% if item.debt > 0 %}pill-rose{% elif item.debt < 0 %}pill-emerald{% else %}pill-slate{% endif %}">
+                                    <span class="fw-bold" style="font-size: 0.65rem;">{{ item.student.name|slice:":1" }}</span>
                                 </div>
-                                {{ item.student.name }}
+                                <span class="text-dark">{{ item.student.name }}</span>
                             </a>
                         </td>
                         <td>
                             {% for g in item.groups_info %}
                             <div class="mb-1 d-flex justify-content-between">
                                 <span class="text-muted small">{{ g.group.name }} ({{ g.months }} мес.)</span>
-                                <span class="fw-medium text-secondary small">{{ g.expected|floatformat:0 }} сум</span>
+                                <span class="fw-medium text-secondary small">{{ g.expected|floatformat:0 }}</span>
                             </div>
                             {% empty %}
                             <span class="text-muted small">Нет активных групп</span>
                             {% endfor %}
                         </td>
-                        <td class="text-end fw-semibold text-secondary">{{ item.expected|floatformat:0 }} сум</td>
-                        <td class="text-end fw-semibold text-primary">{{ item.paid|floatformat:0 }} сум</td>
+                        <td class="text-end fw-semibold text-secondary">{{ item.expected|floatformat:0 }}</td>
+                        <td class="text-end fw-semibold text-success">{{ item.paid|floatformat:0 }}</td>
                         <td class="text-end">
                             {% if item.debt > 0 %}
-                            <span class="text-danger fw-bold fs-6">-{{ item.debt|floatformat:0 }} сум</span>
+                            <span class="text-danger fw-bold fs-6">-{{ item.debt|floatformat:0 }}</span>
                             {% elif item.debt < 0 %}
-                            <span class="text-success fw-bold fs-6">+{{ item.abs_debt|floatformat:0 }} сум</span>
+                            <span class="text-success fw-bold fs-6">+{{ item.abs_debt|floatformat:0 }}</span>
                             {% else %}
                             <span class="text-muted">0</span>
                             {% endif %}
@@ -78,24 +196,64 @@
     </div>
 </div>
 
+{% if summary %}
+{{ summary.total_paid|json_script:"chart-paid" }}
+{{ summary.total_debt|json_script:"chart-debt" }}
+{{ summary.total_expected|json_script:"chart-expected" }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paid = parseFloat(document.getElementById('chart-paid').textContent) || 0;
+        const debt = parseFloat(document.getElementById('chart-debt').textContent) || 0;
+        const expected = parseFloat(document.getElementById('chart-expected').textContent) || 0;
+        const overpaid = Math.max(0, paid - expected + debt);
+        
+        const ctx = document.getElementById('debtChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Оплачено', 'Долг', 'Переплата'],
+                datasets: [{
+                    data: [Math.max(0, paid - overpaid), debt, overpaid],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(244, 63, 94, 0.8)',
+                        'rgba(59, 130, 246, 0.8)'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '72%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 16,
+                            font: {
+                                family: "'Plus Jakarta Sans', sans-serif",
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+</script>
+{% endif %}
+
 <style>
-    .table-danger-light {
-        background-color: rgba(239, 68, 68, 0.03);
-    }
-    .table-danger-light:hover {
-        background-color: rgba(239, 68, 68, 0.06) !important;
-    }
-    .table-success-light {
-        background-color: rgba(16, 185, 129, 0.03);
-    }
-    .table-success-light:hover {
-        background-color: rgba(16, 185, 129, 0.06) !important;
-    }
-    .badge-custom {
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.65rem;
-        letter-spacing: 0.5px;
-    }
+    .table-danger-light { background-color: rgba(239, 68, 68, 0.03); }
+    .table-danger-light:hover { background-color: rgba(239, 68, 68, 0.06) !important; }
+    .table-success-light { background-color: rgba(16, 185, 129, 0.03); }
+    .table-success-light:hover { background-color: rgba(16, 185, 129, 0.06) !important; }
 </style>
 {% endblock %}

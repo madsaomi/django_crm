@@ -1,50 +1,70 @@
 {% extends 'base.html' %}
 {% block title %}Учителя{% endblock %}
 {% block content %}
-<div class="page-header d-flex justify-content-between align-items-center pt-3 pb-3 mb-4 border-bottom">
-    <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">Учителя</h1>
-    <a href="{% url 'teachers:create' %}" class="btn btn-primary bg-gradient border-0 fw-medium shadow-sm">
-        <i class="bi bi-plus-lg me-1"></i> Добавить учителя
-    </a>
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <div class="icon-pill-colored pill-amber">
+            <i data-lucide="user-check"></i>
+        </div>
+        <div>
+            <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">Преподаватели</h1>
+            <p class="text-muted small mb-0">Управление педагогическим составом</p>
+        </div>
+    </div>
+    <button hx-get="{% url 'teachers:create' %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary bg-gradient border-0 fw-bold shadow-sm rounded-pill px-4 d-flex align-items-center gap-2">
+        <i data-lucide="plus" style="width: 18px; height: 18px;"></i> Добавить учителя
+    </button>
 </div>
 
-<div class="card border-0 shadow-sm rounded-4 mb-4" style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);">
+<div class="card border-0 shadow-sm mb-4 glass-panel" style="border-radius: 20px;">
     <div class="card-body p-4">
         {% if teachers %}
         <div class="table-responsive overflow-visible">
-            <table class="table table-hover align-middle border-top mb-0">
-                <thead class="table-light">
+            <table class="table table-custom table-hover align-middle mb-0">
+                <thead>
                     <tr>
-                        <th class="border-0 text-muted small text-uppercase tracking-wider">ФИО</th>
-                        <th class="border-0 text-muted small text-uppercase tracking-wider">Телефон</th>
-                        <th class="border-0 text-muted small text-uppercase tracking-wider">Специализация</th>
-                        <th class="border-0 text-muted small text-uppercase tracking-wider text-end">Действия</th>
+                        <th class="border-0">ФИО</th>
+                        <th class="border-0">Телефон</th>
+                        <th class="border-0">Специализация</th>
+                        <th class="border-0 text-end">Действия</th>
                     </tr>
                 </thead>
-                <tbody class="border-top-0">
+                <tbody>
                     {% for teacher in teachers %}
-                    <tr style="transition: all 0.2s;">
+                    <tr>
                         <td>
-                            <div class="d-flex align-items-center">
-                                <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center me-3 fw-bold" style="width: 40px; height: 40px; font-size: 0.9rem;">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-pill-colored pill-amber" style="width: 40px; height: 40px; font-size: 0.9rem; font-weight: 800;">
                                     {{ teacher.name|slice:":1" }}
                                 </div>
-                                <a href="{% url 'teachers:detail' teacher.pk %}" class="text-decoration-none fw-semibold text-dark text-hover-primary">
+                                <a href="{% url 'teachers:detail' teacher.pk %}" class="text-decoration-none fw-bold text-dark fs-6 d-block">
                                     {{ teacher.name }}
                                 </a>
                             </div>
                         </td>
-                        <td class="text-secondary">{{ teacher.phone|default:"—" }}</td>
-                        <td><span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill fw-medium">{{ teacher.specialization|default:"—" }}</span></td>
+                        <td>
+                            <div class="modern-data-item">
+                                <div class="icon-pill-colored sm pill-indigo">
+                                    <i data-lucide="phone"></i>
+                                </div>
+                                <span class="modern-data-value">{{ teacher.phone|default:"—" }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-active py-1 px-3" style="font-size: 0.75rem;">
+                                {{ teacher.specialization|default:"Не указана" }}
+                            </span>
+                        </td>
                         <td class="text-end">
-                            <div class="btn-group btn-group-sm">
-                                <a href="{% url 'teachers:edit' teacher.pk %}" class="btn btn-light text-secondary border-0 shadow-sm" title="Изменить"><i class="bi bi-pencil"></i></a>
+                            <div class="action-buttons justify-content-end">
+                                <a href="{% url 'teachers:detail' teacher.pk %}" class="action-btn" title="Профиль"><i data-lucide="user"></i></a>
+                                <button hx-get="{% url 'teachers:edit' teacher.pk %}" hx-target="#modals-here" hx-swap="innerHTML" class="action-btn" title="Изменить"><i data-lucide="edit-3"></i></button>
                                 <form action="{% url 'managers:toggle_status' %}" method="post" class="d-inline">
                                     {% csrf_token %}
                                     <input type="hidden" name="entity_type" value="teacher">
                                     <input type="hidden" name="entity_id" value="{{ teacher.id }}">
                                     <input type="hidden" name="make_active" value="false">
-                                    <button type="submit" class="btn btn-light text-danger border-0 shadow-sm ms-1" onclick="return confirm('Отправить в архив?')" title="В архив"><i class="bi bi-archive"></i></button>
+                                    <button type="submit" class="action-btn danger" onclick="return confirm('Отправить в архив?')" title="В архив"><i data-lucide="archive"></i></button>
                                 </form>
                             </div>
                         </td>
@@ -54,19 +74,25 @@
             </table>
         </div>
         {% else %}
-        <div class="text-center py-5">
-            <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 rounded-circle mb-3 text-warning" style="width: 80px; height: 80px; font-size: 2rem;">
-                <i class="bi bi-person-workspace"></i>
+        <div class="empty-state text-center py-5">
+            <div class="icon-pill-colored pill-amber mx-auto mb-3" style="width: 80px; height: 80px;">
+                <i data-lucide="user-plus" style="width: 40px; height: 40px;"></i>
             </div>
-            <h5 class="fw-bold text-dark mb-1">Учителей пока нет</h5>
-            <p class="text-secondary mb-4">Начните работу, добавив первого преподавателя в систему.</p>
-            <a href="{% url 'teachers:create' %}" class="btn btn-primary bg-gradient shadow-sm px-4 rounded-pill fw-medium">
-                <i class="bi bi-plus-lg me-1"></i> Добавить учителя
-            </a>
+            <h4 class="fw-bold text-dark mt-4">Преподавателей нет</h4>
+            <p class="text-secondary mb-4">Добавьте своего первого преподавателя в систему.</p>
+            <button hx-get="{% url 'teachers:create' %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary bg-gradient btn-lg rounded-pill px-5 fw-bold shadow-sm">
+                <i data-lucide="plus" class="me-2"></i> Добавить учителя
+            </button>
         </div>
         {% endif %}
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
 
 <style>
     .text-hover-primary { transition: color 0.15s ease-in-out; }

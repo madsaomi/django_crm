@@ -8,7 +8,7 @@ class StudentForm(forms.ModelForm):
         fields = ['name', 'phone', 'manager', 'is_active']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ФИО ученика'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+998 XX XXX XX XX'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control mask-phone', 'placeholder': '+998 XX XXX XX XX'}),
             'manager': forms.Select(attrs={'class': 'form-select'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }

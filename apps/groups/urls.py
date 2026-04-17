@@ -16,5 +16,5 @@ urlpatterns = [
     path('<int:pk>/delete/', views.GroupDeleteView.as_view(), name='delete'),
     path('<int:pk>/add-student/', views.AddStudentToGroupView.as_view(), name='add_student'),
     path('<int:pk>/remove-student/<int:enrollment_id>/', views.RemoveStudentFromGroupView.as_view(), name='remove_student'),
-    path('rooms/', views.RoomOccupancyView.as_view(), name='rooms'),
+    path('rooms/', views.RoomOccupancyView.as_view(), name='room_occupancy'),
 ]

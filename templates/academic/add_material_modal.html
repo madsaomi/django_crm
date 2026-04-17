@@ -1,0 +1,36 @@
+{% load static %}
+<div class="modal fade" tabindex="-1" id="addMaterialModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-plus text-primary me-2"></i>Добавить материал</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="{% url 'academic:add_material' group.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="mb-3">
+              <label class="form-label small fw-semibold text-muted mb-1">Название</label>
+              {{ form.title }}
+          </div>
+          <div class="mb-3">
+              <label class="form-label small fw-semibold text-muted mb-1">Тип материала</label>
+              {{ form.material_type }}
+          </div>
+          <div class="mb-3">
+              <label class="form-label small fw-semibold text-muted mb-1">Файл</label>
+              {{ form.file }}
+          </div>
+          <div class="mb-3">
+              <label class="form-label small fw-semibold text-muted mb-1">Ссылка</label>
+              {{ form.url }}
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" data-bs-dismiss="modal">Отмена</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">Добавить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

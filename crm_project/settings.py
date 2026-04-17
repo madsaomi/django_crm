@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'apps.payments',
     'apps.attendance',
     'apps.kpi',
+    'apps.academic',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'crm_project.middleware.CustomErrorMiddleware',
 ]
 
 ROOT_URLCONF = 'crm_project.urls'

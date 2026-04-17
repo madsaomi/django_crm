@@ -1,0 +1,197 @@
+{% load i18n %}
+{# HTMX Partial: Journal Table Body (standalone, no base template) #}
+
+{% if selected_group %}
+<!-- Group Stats Summary -->
+{% if group_stats %}
+<div class="stats-mini-row mb-4">
+    <div class="stats-mini-card">
+        <div class="stats-mini-value">{{ group_stats.total_students }}</div>
+        <div class="stats-mini-label">Учеников</div>
+    </div>
+    <div class="stats-mini-card">
+        <div class="stats-mini-value">{{ group_stats.total_lessons }}</div>
+        <div class="stats-mini-label">Занятий</div>
+    </div>
+    <div class="stats-mini-card">
+        <div class="stats-mini-value text-success">{{ group_stats.group_rate }}%</div>
+        <div class="stats-mini-label">Посещаемость</div>
+    </div>
+    <div class="stats-mini-card">
+        <div class="stats-mini-value text-danger">{{ group_stats.debtors_count }}</div>
+        <div class="stats-mini-label">Должников</div>
+    </div>
+</div>
+{% endif %}
+
+<div class="card border-0 shadow-sm mb-4 glass-panel no-hover overflow-hidden" style="border-radius: 20px;">
+    <div class="card-header border-bottom p-4" style="background: var(--bg-card);">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">{{ selected_group.name }}</h4>
+                <div class="d-flex align-items-center gap-2 mt-1">
+                    <span class="badge bg-light text-secondary border rounded-pill">{{ dates|length }} занятий в периоде</span>
+                    {% if selected_group.teacher %}
+                    <span class="text-muted small d-flex align-items-center gap-1">
+                        <i data-lucide="user" style="width: 14px; height: 14px;"></i> {{ selected_group.teacher.name }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <div class="d-flex align-items-center gap-2 small text-muted border-end pe-3">
+                    <div class="status-indicator active" style="width: 8px; height: 8px;"></div> Был
+                </div>
+                <div class="d-flex align-items-center gap-2 small text-muted ps-1">
+                    <div class="status-indicator inactive" style="width: 8px; height: 8px;"></div> Отсутствовал
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body p-0">
+        <div class="table-responsive" style="max-height: 70vh;">
+            {% if matrix %}
+            <table class="table table-hover align-middle m-0 text-center journal-table">
+                <thead class="sticky-top shadow-sm" style="z-index: 10; background: var(--bg-card);">
+                    <tr>
+                        <th class="text-start px-4 sticky-col-first" style="min-width: 220px; background: var(--bg-card);">Ученик</th>
+                        <th style="min-width: 80px; border-right: 1px solid var(--border);">% посещ.</th>
+                        <th style="min-width: 100px; border-right: 1px solid var(--border);">Подписка</th>
+                        <th style="min-width: 110px; border-right: 2px solid var(--border);">Баланс</th>
+                        {% for d in dates %}
+                        <th class="journal-date-col">
+                            <a href="{% url 'attendance:mark' %}?group={{ selected_group.pk }}&date={{ d|date:'Y-m-d' }}" class="text-decoration-none d-block" style="color: var(--text-primary);">
+                                <div class="small fw-normal text-muted" style="font-size:0.65rem;">{{ d|date:"D" }}</div>
+                                <div class="fw-bold fs-6">{{ d|date:"d.m" }}</div>
+                            </a>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in matrix %}
+                    <tr>
+                        <td class="text-start px-4 sticky-col-first" style="background: var(--bg-card);">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="icon-pill-colored sm pill-indigo" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                                    {{ row.student.name|slice:":1" }}
+                                </div>
+                                <div>
+                                    <a href="{% url 'students:detail' row.student.pk %}" class="text-decoration-none fw-bold d-block" style="color: var(--text-primary); font-size: 0.85rem;">
+                                        {{ row.student.name }}
+                                    </a>
+                                    {% if row.stats.absent_streak > 2 %}
+                                    <span class="text-danger" style="font-size: 0.6rem; font-weight: 700;">🔴 {{ row.stats.absent_streak }} пропусков подряд</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <!-- Attendance Rate -->
+                        <td style="border-right: 1px solid var(--border);">
+                            <div class="circular-progress mx-auto" style="--progress: {{ row.stats.rate }}; --progress-color: {% if row.stats.rate >= 80 %}var(--success){% elif row.stats.rate >= 50 %}var(--warning){% else %}var(--danger){% endif %}; width: 36px; height: 36px;">
+                                <span class="progress-value" style="font-size: 0.6rem;">{{ row.stats.rate|floatformat:0 }}%</span>
+                            </div>
+                        </td>
+                        <!-- Subscription Countdown -->
+                        <td style="border-right: 1px solid var(--border);">
+                            <span class="countdown-badge {{ row.subscription.status }}">
+                                {% if row.subscription.status == 'expired' %}
+                                    <i data-lucide="alert-circle" style="width: 10px; height: 10px;"></i> Истёк
+                                {% elif row.subscription.status == 'warning' %}
+                                    <i data-lucide="clock" style="width: 10px; height: 10px;"></i> {{ row.subscription.remaining_days }}д
+                                {% else %}
+                                    <i data-lucide="check" style="width: 10px; height: 10px;"></i> {{ row.subscription.remaining_days }}д
+                                {% endif %}
+                            </span>
+                        </td>
+                        <!-- Debt -->
+                        <td class="align-middle px-3" style="border-right: 2px solid var(--border);">
+                            {% if row.debt > 0 %}
+                                <span class="badge bg-danger bg-opacity-10 text-danger border-0 w-100" style="font-size:0.7rem;">Долг: {{ row.debt|floatformat:0 }}</span>
+                            {% elif row.debt < 0 %}
+                                <span class="badge bg-info bg-opacity-10 text-info border-0 w-100" style="font-size:0.7rem;">Аванс: {{ row.debt|floatformat:0|cut:"-" }}</span>
+                            {% else %}
+                                <span class="badge bg-success bg-opacity-10 text-success border-0 w-100" style="font-size:0.7rem;">Оплачено</span>
+                            {% endif %}
+                        </td>
+                        {% for item in row.attendances %}
+                        <td class="attendance-cell p-0" 
+                            onclick="openAttendanceModal('{{ row.student.id }}', '{{ row.student.name }}', '{{ item.date|date:'Y-m-d' }}', '{% if item.record %}{{ item.record.status }}{% endif %}', '{% if item.record %}{{ item.record.comment|escapejs }}{% endif %}')"
+                            id="cell-{{ row.student.id }}-{{ item.date|date:'Y-m-d' }}">
+                            
+                            <div class="d-flex flex-column align-items-center justify-content-center" style="height: 56px;">
+                                {% if item.record %}
+                                    {% if item.record.status == 'PRESENT' %}
+                                        <div class="status-indicator active" style="width: 14px; height: 14px; border-radius: 4px;"></div>
+                                        {% if item.record.comment %}
+                                            <div class="comment-dot" title="{{ item.record.comment }}"></div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="status-indicator inactive" style="width: 14px; height: 14px; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 8px; color: #fff; font-weight: 900;">Н</span>
+                                        </div>
+                                        {% if item.record.comment %}
+                                            <div class="comment-dot" title="{{ item.record.comment }}"></div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% else %}
+                                    <span class="text-muted opacity-25" style="font-size: 10px;">—</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                    <!-- Footer: Group Totals -->
+                    {% if group_stats %}
+                    <tr style="background: var(--glass-bg); font-weight: 700; border-top: 2px solid var(--border);">
+                        <td class="text-start px-4 sticky-col-first" style="background: var(--glass-bg);">
+                            <span class="text-muted small text-uppercase">Итого ({{ group_stats.total_students }} уч.)</span>
+                        </td>
+                        <td style="border-right: 1px solid var(--border);">
+                            <span class="fw-bold {% if group_stats.group_rate >= 80 %}text-success{% elif group_stats.group_rate >= 50 %}text-warning{% else %}text-danger{% endif %}" style="font-size: 0.8rem;">{{ group_stats.group_rate }}%</span>
+                        </td>
+                        <td style="border-right: 1px solid var(--border);">—</td>
+                        <td style="border-right: 2px solid var(--border);">
+                            {% if group_stats.debtors_count > 0 %}
+                            <span class="text-danger small fw-bold">{{ group_stats.debtors_count }} долж.</span>
+                            {% else %}
+                            <span class="text-success small fw-bold">✓</span>
+                            {% endif %}
+                        </td>
+                        {% for d in dates %}
+                        <td class="text-muted small">—</td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="text-center py-5">
+                <div class="icon-pill-colored pill-slate mx-auto mb-3" style="width: 64px; height: 64px;">
+                    <i data-lucide="users" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h5 class="text-secondary fw-bold">В этой группе пока нет учеников</h5>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% elif not selected_group_id %}
+<div class="card border-0 shadow-sm glass-panel no-hover my-5" style="border-radius: 20px;">
+    <div class="card-body py-5 text-center">
+        <div class="icon-pill-colored pill-indigo mx-auto mb-4" style="width: 80px; height: 80px;">
+            <i data-lucide="book-open" style="width: 40px; height: 40px;"></i>
+        </div>
+        <h3 class="fw-bold">Выберите учебную группу</h3>
+        <p class="text-secondary mx-auto mb-0" style="max-width: 500px;">
+            Укажите группу и расчётный месяц в фильтре выше, чтобы открыть академический журнал.
+        </p>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>

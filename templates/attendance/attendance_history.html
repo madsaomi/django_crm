@@ -1,189 +1,147 @@
 {% extends 'base.html' %}
 {% block title %}Журнал посещаемости и успеваемости{% endblock %}
 {% block content %}
-<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-    <h1 class="page-title m-0"><i class="bi bi-journal-bookmark-fill me-2 text-primary"></i> Журнал группы</h1>
-    <a href="{% url 'attendance:mark' %}{% if selected_group %}?group={{ selected_group.pk }}{% endif %}" class="btn btn-success bg-gradient shadow-sm rounded-pill px-4 fw-medium">
-        <i class="bi bi-clipboard-check me-1"></i> Отметить посещаемость
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <div class="icon-pill-colored pill-indigo">
+            <i data-lucide="book-open"></i>
+        </div>
+        <div>
+            <h1 class="page-title fw-bold m-0" style="font-size: 1.5rem;">Академический журнал</h1>
+            <p class="text-muted small mb-0">Учет посещаемости, подписки и финансового баланса</p>
+        </div>
+    </div>
+    <a href="{% url 'attendance:mark' %}{% if selected_group %}?group={{ selected_group.pk }}{% endif %}" class="btn btn-primary bg-gradient border-0 fw-bold shadow-sm rounded-pill px-4 d-flex align-items-center gap-2">
+        <i data-lucide="check-square" style="width: 18px; height: 18px;"></i> Отметить посещаемость
     </a>
 </div>
 
-<div class="content-card mb-4 border-0 shadow-sm mt-3">
-    <div class="card-body-custom p-3" style="background-color: #f8f9fa; border-radius: 12px;">
-        <form method="get" class="d-flex gap-3 flex-wrap align-items-end">
-            <div>
-                <label class="form-label fw-bold text-secondary mb-1" style="font-size:.8rem; text-transform: uppercase;">Группа</label>
-                <select name="group" class="form-select border-0 shadow-sm" style="min-width:250px; font-weight: 500;">
+<div class="card border-0 shadow-sm mb-4 glass-panel" style="border-radius: 20px;">
+    <div class="card-body p-4">
+        <form hx-get="{% url 'attendance:history' %}" 
+              hx-target="#journal-body" 
+              hx-swap="innerHTML"
+              hx-indicator="#loading-bar"
+              class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label class="modern-data-label ms-1">Учебная группа</label>
+                <select name="group" class="form-select border shadow-none" style="border-radius: 12px; height: 48px;">
                     <option value="">— Выберите группу —</option>
                     {% for group in groups %}
                     <option value="{{ group.pk }}" {% if selected_group_id == group.pk %}selected{% endif %}>{{ group.name }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div>
-                <label class="form-label fw-bold text-secondary mb-1" style="font-size:.8rem; text-transform: uppercase;">Месяц</label>
-                <input type="month" name="month" class="form-control border-0 shadow-sm fw-medium" value="{{ selected_month }}">
+            <div class="col-md-4">
+                <label class="modern-data-label ms-1">Расчётный месяц</label>
+                <input type="month" name="month" class="form-control border shadow-none" style="border-radius: 12px; height: 48px;" value="{{ selected_month }}">
             </div>
-            <button type="submit" class="btn btn-primary shadow-sm px-4 fw-bold"><i class="bi bi-search me-1"></i> Показать журнал</button>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-outline-primary w-100 fw-bold d-flex align-items-center justify-content-center gap-2" style="border-radius: 12px; height: 48px;">
+                    <i data-lucide="eye" style="width: 18px; height: 18px;"></i> Показать
+                </button>
+            </div>
         </form>
     </div>
 </div>
 
-{% if selected_group %}
-<div class="content-card border-0 shadow-sm overflow-hidden" style="border-radius: 12px;">
-    <div class="card-header-custom bg-white border-bottom p-4">
-        <h4 class="mb-0 fw-bold" style="color: #2b3452;">
-            {{ selected_group.name }} 
-            <span class="badge bg-light text-secondary border ms-2 fw-normal" style="font-size: 0.9rem;">
-                {{ dates|length }} занятий
-            </span>
-        </h4>
-        {% if selected_group.teacher %}
-        <p class="text-muted small mb-0 mt-1"><i class="bi bi-person me-1"></i> Преподаватель: {{ selected_group.teacher.name }}</p>
-        {% endif %}
-    </div>
-    
-    <div class="card-body-custom p-0" style="overflow-x: auto;">
-        {% if matrix %}
-        <table class="table table-bordered table-hover mb-0 align-middle text-center" style="min-width: 800px; font-size: 0.95rem;">
-            <thead class="bg-light">
-                <tr>
-                    <th class="text-start px-4" style="width: 250px; position: sticky; left: 0; background: #f8f9fa; z-index: 1;">Ученик</th>
-                    <th style="min-width: 120px; background: #f8f9fa; border-right: 2px solid #eaeaea;"><i class="bi bi-calendar-event me-1 text-muted"></i>Начало</th>
-                    <th style="min-width: 130px; background: #f8f9fa; border-right: 2px solid #eaeaea;"><i class="bi bi-hourglass-split me-1 text-muted"></i>Остаток</th>
-                    {% for d in dates %}
-                    <th style="width: 50px; padding: 12px 5px;">
-                        <a href="{% url 'attendance:mark' %}?group={{ selected_group.pk }}&date={{ d|date:'Y-m-d' }}" class="text-decoration-none text-dark d-block custom-header-link" title="Отметить всю группу">
-                            <div class="small fw-normal text-muted" style="font-size:0.75rem;">{{ d|date:"D" }}</div>
-                            <div class="fw-bold">{{ d|date:"d.m" }}</div>
-                        </a>
-                    </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in matrix %}
-                <tr>
-                    <td class="text-start px-4 fw-medium text-dark" style="position: sticky; left: 0; background: #fff; z-index: 1;">
-                        <a href="{% url 'students:detail' row.student.pk %}" class="text-decoration-none text-dark">{{ row.student.name }}</a>
-                    </td>
-                    <td class="text-muted small align-middle fw-medium" style="background: #fafafa; border-right: 2px solid #eaeaea;">
-                        {{ row.enrolled_date|date:"d.m.Y" }}
-                    </td>
-                    <td class="align-middle" style="background: #fafafa; border-right: 2px solid #eaeaea;">
-                        {% if row.days_left > 14 %}
-                            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1" style="font-size:0.75rem;"><i class="bi bi-calendar-check me-1"></i>{{ row.days_left }} дн.</span>
-                        {% elif row.days_left > 0 %}
-                            <span class="badge bg-warning bg-opacity-10 text-warning fw-bold px-2 py-1" style="font-size:0.75rem;"><i class="bi bi-exclamation-triangle me-1"></i>{{ row.days_left }} дн.</span>
-                        {% else %}
-                            <span class="badge bg-secondary bg-opacity-10 text-secondary fw-bold px-2 py-1" style="font-size:0.75rem;"><i class="bi bi-check-all me-1"></i>Окончил</span>
-                        {% endif %}
-                    </td>
-                    {% for item in row.attendances %}
-                    <td style="padding: 10px 5px; cursor: pointer; transition: background 0.2s;" 
-                        class="attendance-cell toggle-cell"
-                        onclick="openAttendanceModal('{{ row.student.id }}', '{{ row.student.name }}', '{{ item.date|date:'Y-m-d' }}', '{% if item.record %}{{ item.record.status }}{% endif %}', '{% if item.record %}{{ item.record.comment|escapejs }}{% endif %}')"
-                        id="cell-{{ row.student.id }}-{{ item.date|date:'Y-m-d' }}">
-                        
-                        <div class="cell-content">
-                            {% if item.record %}
-                                {% if item.record.status == 'PRESENT' %}
-                                    <span class="badge bg-light text-success p-2 fw-bold border border-success border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;"><i class="bi bi-check2"></i></span>
-                                    {% if item.record.comment %}
-                                        <div class="small text-muted mt-1" style="font-size: 0.7rem;" title="{{ item.record.comment }}"><i class="bi bi-chat-text"></i></div>
-                                    {% endif %}
-                                {% else %}
-                                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold p-2 border border-danger border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;">Н</span>
-                                    {% if item.record.comment %}
-                                        <div class="small text-muted mt-1" style="font-size: 0.7rem;" title="{{ item.record.comment }}"><i class="bi bi-chat-text"></i></div>
-                                    {% endif %}
-                                {% endif %}
-                            {% else %}
-                                <span class="text-black-50 small" style="opacity: 0.4;">—</span>
-                            {% endif %}
-                        </div>
-                    </td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <div class="text-center py-5">
-            <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3" style="width: 80px; height: 80px;">
-                <i class="bi bi-person-x text-secondary" style="font-size: 2rem;"></i>
-            </div>
-            <h5 class="text-secondary fw-semibold">В этой группе пока нет учеников</h5>
-        </div>
-        {% endif %}
-    </div>
+<!-- Journal Body (HTMX target) -->
+<div id="journal-body">
+    {% include 'attendance/partials/journal_table.html' %}
 </div>
-{% elif not selected_group_id %}
-<div class="text-center py-5 mt-4">
-    <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3" style="width: 80px; height: 80px;">
-        <i class="bi bi-journal-album text-secondary" style="font-size: 2rem;"></i>
-    </div>
-    <h4 class="text-secondary fw-bold">Выберите группу</h4>
-    <p class="text-muted">Укажите группу и расчётный месяц, чтобы увидеть успеваемость и посещаемость учеников в формате журнала.</p>
-</div>
-{% endif %}
 
 <style>
-    /* Styling to make sticky column shadow distinct */
-    .table td:first-child, .table th:first-child {
-        border-right: 2px solid #eaeaea;
+    .journal-table th, .journal-table td {
+        padding: 12px 8px;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.9rem;
     }
-    .toggle-cell:hover {
-        background-color: #f1f3f5 !important;
+    .journal-date-col {
+        width: 60px;
+        min-width: 60px;
+        border-right: 1px solid rgba(0,0,0,0.03);
     }
-    .custom-header-link:hover {
-        text-decoration: underline !important;
-        color: #0d6efd !important;
+    .sticky-col-first {
+        position: sticky;
+        left: 0;
+        z-index: 5;
+        border-right: 2px solid var(--border) !important;
+    }
+    .attendance-cell {
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .attendance-cell:hover {
+        background: rgba(99, 102, 241, 0.03);
+    }
+    .comment-dot {
+        width: 4px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 50%;
+        margin-top: 4px;
     }
 </style>
 
 <!-- Modal for updating attendance -->
-<div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="attendanceModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content border-0 shadow">
-      <div class="modal-header border-bottom-0 pb-0">
-        <h5 class="modal-title fw-bold" id="attendanceModalLabel">Отметка</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p class="mb-3 text-muted small" id="modalStudentInfo"></p>
-        
-        <input type="hidden" id="modalStudentId">
-        <input type="hidden" id="modalDate">
-        
-        <div class="d-flex justify-content-center gap-2 mb-3">
-            <input type="radio" class="btn-check" name="modalStatus" id="modalStatusPresent" value="PRESENT" autocomplete="off">
-            <label class="btn btn-outline-success rounded-pill px-3 py-2 fw-semibold w-50" for="modalStatusPresent">
-                <i class="bi bi-check-circle-fill me-1"></i> Был
-            </label>
-            
-            <input type="radio" class="btn-check" name="modalStatus" id="modalStatusAbsent" value="ABSENT" autocomplete="off">
-            <label class="btn btn-outline-danger rounded-pill px-3 py-2 fw-semibold w-50" for="modalStatusAbsent">
-                <i class="bi bi-x-circle-fill me-1"></i> Не был
-            </label>
-        </div>
+<div class="modal fade" id="attendanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 24px; overflow: hidden;">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold m-0">Отметка</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="d-flex align-items-center gap-3 mb-4 p-3 rounded-4" style="background: var(--glass-bg);">
+                    <div class="icon-pill-colored sm pill-indigo" id="modalStudentAvatar">?</div>
+                    <div>
+                        <div class="fw-bold small" id="modalStudentName">...</div>
+                        <div class="text-muted" style="font-size: 0.7rem;" id="modalDateInfo">...</div>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="modalStudentId">
+                <input type="hidden" id="modalDate">
+                
+                <div class="d-flex justify-content-center gap-3 mb-4">
+                    <div class="flex-grow-1">
+                        <input type="radio" class="btn-check" name="modalStatus" id="modalStatusPresent" value="PRESENT" autocomplete="off">
+                        <label class="btn btn-outline-success border shadow-none rounded-4 p-3 w-100 d-flex flex-column align-items-center gap-2 journal-btn-status" for="modalStatusPresent">
+                            <i data-lucide="check-circle" style="width: 24px; height: 24px;"></i>
+                            <span class="fw-bold small">Был</span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex-grow-1">
+                        <input type="radio" class="btn-check" name="modalStatus" id="modalStatusAbsent" value="ABSENT" autocomplete="off">
+                        <label class="btn btn-outline-danger border shadow-none rounded-4 p-3 w-100 d-flex flex-column align-items-center gap-2 journal-btn-status" for="modalStatusAbsent">
+                            <i data-lucide="x-circle" style="width: 24px; height: 24px;"></i>
+                            <span class="fw-bold small">Нет</span>
+                        </label>
+                    </div>
+                </div>
 
-        <div id="modalCommentWrapper" style="display: none;">
-            <label class="form-label small fw-semibold text-muted mb-1">Причина / Комментарий</label>
-            <input type="text" class="form-control rounded-3 bg-light border-0 py-2" id="modalComment" placeholder="Заболел, забыл и т.д.">
+                <div id="modalCommentWrapper" style="display: none;">
+                    <label class="modern-data-label mb-2">Причина / Комментарий</label>
+                    <textarea class="form-control border-0 rounded-4 px-3 py-2" id="modalComment" rows="2" style="font-size: 0.85rem; background: var(--glass-bg);"></textarea>
+                </div>
+                
+                <button type="button" class="btn btn-primary w-100 rounded-pill fw-bold py-3 mt-4" onclick="saveAttendance()">
+                    Сохранить изменения
+                </button>
+            </div>
         </div>
-        
-      </div>
-      <div class="modal-footer border-top-0 pt-0">
-        <button type="button" class="btn btn-primary w-100 rounded-pill fw-bold" onclick="saveAttendance()">Сохранить</button>
-      </div>
     </div>
-  </div>
 </div>
 
 <script>
     const groupId = "{{ selected_group.pk|default:'' }}";
     
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+
     document.querySelectorAll('input[name="modalStatus"]').forEach(radio => {
         radio.addEventListener('change', function() {
             if (this.value === 'ABSENT') {
@@ -198,10 +156,12 @@
     function openAttendanceModal(studentId, studentName, dateStr, currentStatus, currentComment) {
         document.getElementById('modalStudentId').value = studentId;
         document.getElementById('modalDate').value = dateStr;
+        document.getElementById('modalStudentName').innerText = studentName;
+        document.getElementById('modalStudentAvatar').innerText = studentName.charAt(0);
         
         const dateParts = dateStr.split('-');
-        const formattedDate = `${dateParts[2]}.${dateParts[1]}`;
-        document.getElementById('modalStudentInfo').innerHTML = `<b>${studentName}</b> &bull; ${formattedDate}`;
+        const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+        document.getElementById('modalDateInfo').innerText = formattedDate;
         
         document.getElementById('modalComment').value = currentComment || '';
         
@@ -212,7 +172,6 @@
             document.getElementById('modalStatusAbsent').checked = true;
             document.getElementById('modalCommentWrapper').style.display = 'block';
         } else {
-            // Uncheck both
             document.getElementById('modalStatusPresent').checked = false;
             document.getElementById('modalStatusAbsent').checked = false;
             document.getElementById('modalCommentWrapper').style.display = 'none';
@@ -226,12 +185,13 @@
         const studentId = document.getElementById('modalStudentId').value;
         const date = document.getElementById('modalDate').value;
         const comment = document.getElementById('modalComment').value;
-        
         const statusEl = document.querySelector('input[name="modalStatus"]:checked');
+        
         if (!statusEl) {
-            alert('Пожалуйста, выберите статус!');
+            alert('Выберите статус!');
             return;
         }
+        
         const status = statusEl.value;
         
         fetch("{% url 'attendance:toggle_api' %}", {
@@ -251,30 +211,28 @@
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                const modal = bootstrap.Modal.getInstance(document.getElementById('attendanceModal'));
+                const modalEl = document.getElementById('attendanceModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
                 modal.hide();
                 
-                // Update cell UI
                 const cell = document.getElementById(`cell-${studentId}-${date}`);
-                let commentIcon = data.comment ? `<div class="small text-muted mt-1" style="font-size: 0.7rem;" title="${data.comment}"><i class="bi bi-chat-text"></i></div>` : '';
+                let commentHtml = data.comment ? `<div class="comment-dot" title="${data.comment}"></div>` : '';
                 
                 if (data.attendance_status === 'PRESENT') {
-                    cell.querySelector('.cell-content').innerHTML = `
-                        <span class="badge bg-light text-success p-2 fw-bold border border-success border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;"><i class="bi bi-check2"></i></span>
-                        ${commentIcon}
+                    cell.querySelector('div').innerHTML = `
+                        <div class="status-indicator active" style="width: 14px; height: 14px; border-radius: 4px;"></div>
+                        ${commentHtml}
                     `;
                 } else {
-                    cell.querySelector('.cell-content').innerHTML = `
-                        <span class="badge bg-danger bg-opacity-10 text-danger fw-bold p-2 border border-danger border-opacity-25" style="border-radius:50%; width:28px; height:28px; line-height:14px;">Н</span>
-                        ${commentIcon}
+                    cell.querySelector('div').innerHTML = `
+                        <div class="status-indicator inactive" style="width: 14px; height: 14px; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 8px; color: #fff; font-weight: 900;">Н</span>
+                        </div>
+                        ${commentHtml}
                     `;
                 }
                 
-                // update onClick params
-                cell.setAttribute('onclick', `openAttendanceModal('${studentId}', '${cell.closest('tr').children[0].innerText.trim()}', '${date}', '${data.attendance_status}', '${data.comment.replace(/'/g, "\\'")}')`);
-                
-            } else {
-                alert('Ошибка: ' + data.message);
+                cell.setAttribute('onclick', `openAttendanceModal('${studentId}', '${data.student_name.replace(/'/g, "\\'")}', '${date}', '${data.attendance_status}', '${data.comment.replace(/'/g, "\\'")}')`);
             }
         });
     }

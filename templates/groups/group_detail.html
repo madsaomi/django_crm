@@ -1,118 +1,312 @@
 {% extends 'base.html' %}
-{% block title %}{{ group.name }}{% endblock %}
+{% block title %}{{ group.name }} — Карточка группы{% endblock %}
 {% block content %}
-<div class="page-header">
-    <h1 class="page-title">{{ group.name }}</h1>
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <a href="{% url 'groups:list' %}" class="btn btn-outline-secondary btn-sm rounded-pill p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+        </a>
+        <div class="icon-pill-colored pill-indigo">
+            <i data-lucide="layers"></i>
+        </div>
+        <div>
+            <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">{{ group.name }}</h1>
+            <p class="text-muted small mb-0">{{ group.get_course_type_display }} • {{ group.room|default:"Кабинет не указан" }}</p>
+        </div>
+    </div>
     <div class="d-flex gap-2">
-        <a href="{% url 'groups:edit' group.pk %}" class="btn-outline-custom"><i class="bi bi-pencil"></i> Изменить</a>
+        <button hx-get="{% url 'groups:edit' group.pk %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary bg-gradient border-0 fw-bold shadow-sm rounded-pill px-4 d-flex align-items-center gap-2">
+            <i data-lucide="edit-3" style="width: 18px; height: 18px;"></i> Изменить
+        </button>
         <form action="{% url 'managers:toggle_status' %}" method="post" class="d-inline">
             {% csrf_token %}
             <input type="hidden" name="entity_type" value="group">
             <input type="hidden" name="entity_id" value="{{ group.id }}">
             <input type="hidden" name="make_active" value="false">
-            <button type="submit" class="btn-outline-custom text-danger border-danger" onclick="return confirm('Отправить группу в архив?')"><i class="bi bi-archive-fill"></i> В архив</button>
+            <button type="submit" class="btn btn-outline-danger border shadow-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-2" onclick="return confirm('Отправить группу в архив?')">
+                <i data-lucide="archive" style="width: 16px; height: 16px;"></i> В архив
+            </button>
         </form>
-        <a href="{% url 'groups:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> Назад</a>
     </div>
 </div>
 
+<!-- Stats Overlay Grid -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
-        <div class="stat-card info">
-            <div class="stat-label">Тип курса</div>
-            <div class="stat-value" style="font-size:1rem;margin-top:4px">{{ group.get_course_type_display }}</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="stat-card primary">
-            <div class="stat-label">Учитель</div>
-            <div class="stat-value" style="font-size:1rem;margin-top:4px">{{ group.teacher.name|default:"Не назначен" }}</div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="stat-card success">
-            <div class="stat-label">Учеников</div>
-            <div class="stat-value">{{ group.students_count }}/{{ group.max_students }}</div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="stat-card warning">
-            <div class="stat-label">Оплата/мес</div>
-            <div class="stat-value" style="font-size:1.1rem;margin-top:4px">{{ group.monthly_fee|floatformat:0 }}</div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="stat-card">
-            <div class="stat-label">Кабинет</div>
-            <div class="stat-value" style="font-size:1.3rem;margin-top:4px">{{ group.room|default:"—" }}</div>
-        </div>
-    </div>
-</div>
-<div class="row g-4 mb-4">
-    <div class="col-md-4">
-        <div class="stat-card">
-            <div class="stat-label">Расписание</div>
-            <div class="stat-value" style="font-size:1.1rem;margin-top:4px">
-                {{ group.get_schedule_type_display }} <br>
-                {{ group.time_slot|default:"Время не указано" }}
+        <div class="stat-card info h-100 p-4">
+            <div class="icon-pill-colored pill-blue mb-3">
+                <i data-lucide="user"></i>
             </div>
+            <div class="stat-value" style="font-size: 1.1rem; line-height: 1.2;">{{ group.teacher.name|default:"Не назначен" }}</div>
+            <div class="stat-label">Преподаватель</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card primary h-100 p-4">
+            <div class="icon-pill-colored pill-indigo mb-3">
+                <i data-lucide="users"></i>
+            </div>
+            <div class="stat-value" style="font-size: 1.5rem;">{{ group.students_count }} / {{ group.max_students }}</div>
+            <div class="stat-label">Наполняемость</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card success h-100 p-4">
+            <div class="icon-pill-colored pill-emerald mb-3">
+                <i data-lucide="calendar"></i>
+            </div>
+            <div class="stat-value" style="font-size: 1rem; line-height: 1.2;">
+                {{ group.get_schedule_type_display }}<br>
+                <small class="fw-medium text-secondary">{{ group.time_slot|default:"Время не указано" }}</small>
+            </div>
+            <div class="stat-label">Расписание</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card warning h-100 p-4">
+            <div class="icon-pill-colored pill-amber mb-3">
+                <i data-lucide="credit-card"></i>
+            </div>
+            <div class="stat-value" style="font-size: 1.25rem;">{{ group.monthly_fee|floatformat:0 }}</div>
+            <div class="stat-label">Стоимость (мес)</div>
         </div>
     </div>
 </div>
 
 <div class="row g-4">
     <div class="col-lg-8">
-        <div class="content-card">
-            <div class="card-header-custom">
-                <h5><i class="bi bi-people"></i> Ученики группы</h5>
+        <div class="content-card glass-panel no-hover h-100">
+            <div class="card-header-custom border-bottom p-4">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2">
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="users"></i>
+                    </div>
+                    Ученики группы
+                </h5>
             </div>
-            <div class="card-body-custom">
+            <div class="card-body-custom p-0">
                 {% if enrollments %}
-                <table class="table-custom">
-                    <thead><tr><th>#</th><th>ФИО</th><th>Телефон</th><th>Дата записи</th><th></th></tr></thead>
-                    <tbody>
-                        {% for enrollment in enrollments %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'students:detail' enrollment.student.pk %}" class="text-decoration-none fw-semibold">{{ enrollment.student.name }}</a></td>
-                            <td>{{ enrollment.student.phone|default:"—" }}</td>
-                            <td>{{ enrollment.enrolled_date|date:"d.m.Y" }}</td>
-                            <td>
-                                <form method="post" action="{% url 'groups:remove_student' group.pk enrollment.pk %}" style="display:inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="action-btn danger" title="Удалить из группы" onclick="return confirm('Удалить ученика из группы?')">
-                                        <i class="bi bi-x-lg"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive overflow-visible">
+                    <table class="table table-custom table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="border-0 px-4">Ученик</th>
+                                <th class="border-0">Контакты</th>
+                                <th class="border-0">Запись</th>
+                                <th class="border-0 text-end px-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in enrollments %}
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td class="px-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="icon-pill-colored sm pill-indigo" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                                            {{ enrollment.student.name|slice:":1" }}
+                                        </div>
+                                        <a href="{% url 'students:detail' enrollment.student.pk %}" class="text-decoration-none fw-bold text-dark text-hover-primary">
+                                            {{ enrollment.student.name }}
+                                        </a>
+                                    </div>
+                                </td>
+                                <td><small class="text-secondary fw-medium">{{ enrollment.student.phone|default:"—" }}</small></td>
+                                <td><small class="text-muted">{{ enrollment.enrolled_date|date:"d.m.Y" }}</small></td>
+                                <td class="px-4 text-end">
+                                    <form method="post" action="{% url 'groups:remove_student' group.pk enrollment.pk %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="action-btn danger" title="Исключить из группы" onclick="return confirm('Исключить ученика?')">
+                                            <i data-lucide="user-minus"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
-                <div class="empty-state"><i class="bi bi-people"></i><p>В группе нет учеников</p></div>
+                <div class="empty-state py-5 text-center">
+                    <div class="icon-pill-colored pill-slate mx-auto mb-3" style="width: 64px; height: 64px; opacity: 0.5;">
+                        <i data-lucide="users" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <p class="text-muted">В этой группе пока нет учеников</p>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div class="content-card">
-            <div class="card-header-custom">
-                <h5><i class="bi bi-person-plus"></i> Добавить ученика</h5>
+    <div class="col-lg-4 d-flex flex-column gap-4">
+        <!-- Add Student Quick Tool -->
+        <div class="content-card glass-panel no-hover" style="border-bottom: 4px solid var(--success);">
+            <div class="card-header-custom border-bottom p-4">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2 text-success">
+                    <i data-lucide="user-plus" style="width: 20px; height: 20px;"></i> Зачислить
+                </h5>
             </div>
-            <div class="card-body-custom p-3">
+            <div class="card-body-custom p-4">
                 {% if group.is_full %}
-                <div class="alert alert-warning m-0"><i class="bi bi-exclamation-triangle"></i> Группа заполнена!</div>
+                <div class="alert alert-warning border-0 rounded-4 d-flex align-items-center gap-3" style="background: rgba(245, 158, 11, 0.1); color: #d97706;">
+                    <i data-lucide="alert-triangle" style="width: 24px; height: 24px; flex-shrink: 0;"></i>
+                    <div class="small fw-bold">Группа заполнена! Увеличьте лимит, чтобы добавить учеников.</div>
+                </div>
                 {% else %}
                 <form method="post" action="{% url 'groups:add_student' group.pk %}">
                     {% csrf_token %}
-                    {{ add_student_form.student }}
-                    <button type="submit" class="btn-success-custom w-100 mt-2"><i class="bi bi-plus-lg"></i> Добавить</button>
+                    <div class="mb-3">
+                        <label class="modern-data-label ms-1">Выберите ученика</label>
+                        {{ add_student_form.student }}
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2 py-2">
+                        <i data-lucide="user-plus" style="width: 18px; height: 18px;"></i> Зачислить в группу
+                    </button>
                 </form>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Quick Stats / Room Info -->
+        <div class="content-card glass-panel no-hover p-4 d-flex align-items-center gap-3">
+            <div class="icon-pill-colored pill-rose" style="width: 50px; height: 50px; border-radius: 14px;">
+                <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+                <div class="text-muted small fw-bold text-uppercase tracking-wider" style="font-size: 0.65rem;">Локация</div>
+                <div class="fw-bold text-dark fs-5">{{ group.room|default:"Не указана" }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Section: Materials & Academic -->
+<div class="row g-4 mt-1">
+    <div class="col-lg-6">
+        <div class="content-card glass-panel no-hover h-100">
+            <div class="card-header-custom border-bottom p-4 d-flex justify-content-between align-items-center">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2 text-primary">
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    Материалы курса
+                </h5>
+                <button hx-get="{% url 'academic:add_material' group.pk %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-outline-primary btn-sm rounded-pill fw-bold px-3 border shadow-none">
+                    <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Добавить
+                </button>
+            </div>
+            <div class="card-body-custom p-0">
+                {% if group.materials.exists %}
+                    <div class="list-group list-group-flush">
+                        {% for mat in group.materials.all %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center p-4 border-bottom bg-transparent">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-pill-colored sm {% if mat.material_type == 'FILE' %}pill-blue{% else %}pill-indigo{% endif %}" style="width: 44px; height: 44px; border-radius: 12px;">
+                                    <i data-lucide="{% if mat.material_type == 'FILE' %}file-text{% else %}link{% endif %}"></i>
+                                </div>
+                                <div>
+                                    <h6 class="m-0 fw-bold text-dark" style="font-size: 0.95rem;">{{ mat.title }}</h6>
+                                    <small class="text-muted">{{ mat.created_at|date:"d.m.Y" }}</small>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                {% if mat.material_type == 'FILE' and mat.file %}
+                                    <a href="{{ mat.file.url }}" target="_blank" class="btn btn-light btn-sm rounded-pill px-3 fw-bold border text-primary">
+                                        <i data-lucide="download" style="width: 14px; height: 14px;" class="me-1"></i> Скачать
+                                    </a>
+                                {% elif mat.url %}
+                                    <a href="{{ mat.url }}" target="_blank" class="btn btn-light btn-sm rounded-pill px-3 fw-bold border text-indigo">
+                                        <i data-lucide="external-link" style="width: 14px; height: 14px;" class="me-1"></i> Открыть
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state py-5 text-center">
+                        <i data-lucide="folder-open" class="opacity-25 mb-2" style="width: 40px; height: 40px;"></i>
+                        <p class="text-muted">Материалов пока нет</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="content-card glass-panel no-hover h-100">
+            <div class="card-header-custom border-bottom p-4 d-flex justify-content-between align-items-center">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2 text-success">
+                    <div class="icon-pill-colored sm pill-emerald">
+                        <i data-lucide="award"></i>
+                    </div>
+                    Срезы и Тесты
+                </h5>
+                <button hx-get="{% url 'academic:conduct_test' group.pk %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-outline-success btn-sm rounded-pill fw-bold px-3 border shadow-none">
+                    <i data-lucide="play" style="width: 14px; height: 14px;"></i> Провести
+                </button>
+            </div>
+            <div class="card-body-custom p-0">
+                {% if group.tests.exists %}
+                    <div class="list-group list-group-flush">
+                        {% for test in group.tests.all %}
+                        <div class="list-group-item p-4 border-bottom bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="m-0 fw-bold text-dark">{{ test.title }}</h6>
+                                    <small class="text-muted d-flex align-items-center gap-1 mt-1">
+                                        <i data-lucide="calendar" style="width: 12px; height: 12px;"></i> {{ test.date|date:"d.m.Y" }}
+                                    </small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-light text-secondary border rounded-pill px-3 py-1">Макс: {{ test.max_score }}</span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for res in test.results.all|slice:":8" %}
+                                <div class="badge-result {% if res.percentage >= 80 %}success{% elif res.percentage >= 50 %}warning{% else %}danger{% endif %}" title="{{ res.student.name }}: {{ res.score }} ({{ res.percentage }}%)">
+                                    {{ res.score }}
+                                </div>
+                                {% endfor %}
+                                {% if test.results.count > 8 %}
+                                <div class="badge-result secondary" title="Еще {{ test.results.count|add:'-8' }} результатов">+{{ test.results.count|add:"-8" }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state py-5 text-center">
+                        <i data-lucide="clipboard-check" class="opacity-25 mb-2" style="width: 40px; height: 40px;"></i>
+                        <p class="text-muted">Проведенных тестов пока нет</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
+
+<style>
+    .badge-result {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .badge-result.success { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
+    .badge-result.warning { background: rgba(245, 158, 11, 0.1); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.2); }
+    .badge-result.danger { background: rgba(244, 63, 94, 0.1); color: #e11d48; border: 1px solid rgba(244, 63, 94, 0.2); }
+    .badge-result.secondary { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+    .badge-result:hover { transform: scale(1.1); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+</style>
 {% endblock %}

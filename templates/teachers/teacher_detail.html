@@ -2,118 +2,176 @@
 {% block title %}Профиль учителя: {{ teacher.name }}{% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
     <div class="d-flex align-items-center gap-3">
-        <a href="{% url 'teachers:list' %}" class="btn-outline-custom"><i class="bi bi-arrow-left"></i> К списку</a>
-        <h1 class="page-title mb-0">Профиль учителя</h1>
+        <a href="{% url 'teachers:list' %}" class="btn btn-outline-secondary btn-sm rounded-pill p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+        </a>
+        <div class="icon-pill-colored pill-amber">
+            <i data-lucide="user"></i>
+        </div>
+        <div>
+            <h1 class="page-title fw-bold m-0" style="color: #2b3452; font-size: 1.5rem;">Профиль преподавателя</h1>
+            <p class="text-muted small mb-0">{{ teacher.name }}</p>
+        </div>
     </div>
     <div class="action-buttons">
-        <a href="{% url 'teachers:edit' teacher.pk %}" class="btn-primary-custom"><i class="bi bi-pencil"></i> Редактировать</a>
+        <button hx-get="{% url 'teachers:edit' teacher.pk %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary bg-gradient border-0 fw-bold shadow-sm rounded-pill px-4 d-flex align-items-center gap-2">
+            <i data-lucide="edit-3" style="width: 18px; height: 18px;"></i> Редактировать
+        </button>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- Left Column: Profile Info -->
+    <!-- Left Column: Profile Card -->
     <div class="col-lg-4">
-        <div class="content-card glass-panel h-100 p-4 text-center">
-            <div class="mb-4">
-                <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white" style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), #818cf8); font-size: 2.5rem;">
-                    <i class="bi bi-person-workspace"></i>
+        <div class="content-card glass-panel no-hover h-100">
+            <div class="card-body p-4 text-center">
+                <div class="mb-4 position-relative d-inline-block">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white shadow-lg mx-auto" 
+                         style="width: 120px; height: 120px; background: linear-gradient(135deg, #f59e0b, #d97706); font-size: 3rem; font-weight: 800;">
+                        {{ teacher.name|slice:":1" }}
+                    </div>
                 </div>
-            </div>
-            <h3 class="fw-bold mb-1">{{ teacher.name }}</h3>
-            <p class="text-secondary mb-3">{{ teacher.specialization|default:"Специализация не указана" }}</p>
-            
-            <div class="d-flex justify-content-center gap-2 mb-4">
-                {% if teacher.is_active %}
-                <span class="badge-custom badge-active"><i class="bi bi-check-circle"></i> Активен</span>
-                {% else %}
-                <span class="badge-custom badge-inactive"><i class="bi bi-x-circle"></i> Неактивен</span>
-                {% endif %}
-            </div>
+                
+                <h3 class="fw-bold text-dark mb-1">{{ teacher.name }}</h3>
+                <p class="badge badge-active mb-3 px-3">{{ teacher.specialization|default:"Преподаватель" }}</p>
+                
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                    {% if teacher.is_active %}
+                    <span class="badge badge-active px-3 py-1 rounded-pill d-flex align-items-center gap-1">
+                        <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i> Активен
+                    </span>
+                    {% else %}
+                    <span class="badge badge-warning px-3 py-1 rounded-pill d-flex align-items-center gap-1">
+                        <i data-lucide="archive" style="width: 14px; height: 14px;"></i> В архиве
+                    </span>
+                    {% endif %}
+                </div>
 
-            <hr class="opacity-25">
-
-            <div class="text-start mt-4">
-                <div class="mb-3">
-                    <small class="text-secondary d-block">Телефон</small>
-                    <span class="fw-medium"><i class="bi bi-telephone text-primary me-2"></i>{{ teacher.phone|default:"Не указан" }}</span>
+                <div class="text-start border-top pt-4">
+                    <div class="mb-3 d-flex align-items-center gap-3">
+                        <div class="icon-pill-colored sm pill-indigo">
+                            <i data-lucide="phone"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block" style="font-size: 0.7rem;">Телефон</small>
+                            <span class="fw-bold text-dark">{{ teacher.phone|default:"Не указан" }}</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex align-items-center gap-3">
+                        <div class="icon-pill-colored sm pill-slate">
+                            <i data-lucide="calendar"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block" style="font-size: 0.7rem;">Дата регистрации</small>
+                            <span class="fw-bold text-dark">{{ teacher.created_at|date:"d M Y" }}</span>
+                        </div>
+                    </div>
+                    {% if teacher.user %}
+                    <div class="mb-3 d-flex align-items-center gap-3">
+                        <div class="icon-pill-colored sm pill-blue">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block" style="font-size: 0.7rem;">Аккаунт системы</small>
+                            <span class="fw-bold text-dark">{{ teacher.user.username }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="mb-3">
-                    <small class="text-secondary d-block">Зарегистрирован</small>
-                    <span class="fw-medium"><i class="bi bi-calendar3 text-primary me-2"></i>{{ teacher.created_at|date:"d.m.Y" }}</span>
-                </div>
-                {% if teacher.user %}
-                <div class="mb-3">
-                    <small class="text-secondary d-block">Пользователь системы</small>
-                    <span class="fw-medium"><i class="bi bi-person-check text-primary me-2"></i>Да ({{ teacher.user.username }})</span>
-                </div>
-                {% endif %}
             </div>
         </div>
     </div>
 
-    <!-- Right Column: Stats & Data -->
+    <!-- Right Column: Stats & Groups -->
     <div class="col-lg-8">
-        <!-- Quick Stats -->
-        <div class="row g-3 mb-4">
+        <div class="row g-4 mb-4">
             <div class="col-md-6">
-                <div class="stat-card">
-                    <div class="stat-icon primary">
-                        <i class="bi bi-collection"></i>
+                <div class="stat-card primary p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="icon-pill-colored pill-indigo">
+                            <i data-lucide="layers"></i>
+                        </div>
+                        <div class="stat-label mb-0">Активных групп</div>
                     </div>
                     <div class="stat-value">{{ groups.count }}</div>
-                    <div class="stat-label">Активных групп</div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="stat-card success">
-                    <div class="stat-icon success">
-                        <i class="bi bi-journal-check"></i>
+                <div class="stat-card success p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="icon-pill-colored pill-emerald">
+                            <i data-lucide="check-square"></i>
+                        </div>
+                        <div class="stat-label mb-0">Записей журнала</div>
                     </div>
                     <div class="stat-value">{{ recent_attendance.count }}</div>
-                    <div class="stat-label">Недавних записей журнала</div>
                 </div>
             </div>
         </div>
 
-        <!-- Groups List -->
-        <div class="content-card glass-panel mb-4">
-            <div class="card-header-custom">
-                <h5><i class="bi bi-collection text-primary"></i> Группы учителя</h5>
+        <!-- Groups Table -->
+        <div class="content-card glass-panel no-hover">
+            <div class="card-header-custom border-bottom p-4">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2">
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    Группы преподавателя
+                </h5>
             </div>
-            <div class="card-body-custom">
+            <div class="card-body-custom p-0">
                 {% if groups %}
-                <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>Тип</th>
-                            <th>Учеников</th>
-                            <th>Дни</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for group in groups %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'groups:detail' group.pk %}" class="fw-medium text-decoration-none">{{ group.name }}</a>
-                            </td>
-                            <td>{{ group.get_course_type_display }}</td>
-                            <td><span class="badge-custom badge-course">{{ group.students_count }}</span></td>
-                            <td>{{ group.get_schedule_type_display }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive overflow-visible">
+                    <table class="table table-custom table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="border-0 px-4">Название</th>
+                                <th class="border-0">Курс</th>
+                                <th class="border-0">Учеников</th>
+                                <th class="border-0">Расписание</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for group in groups %}
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td class="px-4">
+                                    <a href="{% url 'groups:detail' group.pk %}" class="text-decoration-none fw-bold text-dark text-hover-primary">
+                                        {{ group.name }}
+                                    </a>
+                                </td>
+                                <td><span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2 py-1" style="font-size: 0.7rem;">{{ group.get_course_type_display }}</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress" style="width: 40px; height: 4px; background: #f1f5f9;">
+                                            <div class="progress-bar bg-success" style="width: {% widthratio group.students_count group.max_students 100 %}%;"></div>
+                                        </div>
+                                        <small class="fw-bold text-muted">{{ group.students_count }}</small>
+                                    </div>
+                                </td>
+                                <td><small class="fw-bold text-secondary">{{ group.get_schedule_type_display }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
-                <div class="empty-state p-5">
-                    <i class="bi bi-inbox text-secondary"></i>
-                    <p class="mt-2 text-secondary">Учитель пока не ведет группы</p>
+                <div class="empty-state py-5 text-center">
+                    <div class="icon-pill-colored pill-slate mx-auto mb-3" style="width: 64px; height: 64px; opacity: 0.5;">
+                        <i data-lucide="layers" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <p class="text-muted">Преподаватель пока не ведет группы</p>
                 </div>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
 {% endblock %}

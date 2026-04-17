@@ -68,6 +68,9 @@ class GroupDetailView(LoginRequiredMixin, DetailView):
             recent_log.append({'date': d, 'present': present, 'absent': absent})
         context['recent_attendance'] = recent_log
         
+        context['materials'] = self.object.materials.all()
+        context['progress_tests'] = self.object.tests.all().prefetch_related('results__student')
+        
         return context
 
 
@@ -79,6 +82,26 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('groups:detail', kwargs={'pk': self.object.pk})
 
+    def render_to_response(self, context, **response_kwargs):
+        if 'HX-Request' in self.request.headers:
+            context['modal_title'] = 'Создать группу'
+            return super().render_to_response(context, **response_kwargs)
+        return super().render_to_response(context, **response_kwargs)
+
+    def get_template_names(self):
+        if 'HX-Request' in self.request.headers:
+            return ['includes/modal_form.html']
+        return [self.template_name]
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if 'HX-Request' in self.request.headers:
+            from django.http import HttpResponse
+            res = HttpResponse()
+            res['HX-Refresh'] = 'true'
+            return res
+        return response
+
 
 class GroupUpdateView(LoginRequiredMixin, UpdateView):
     model = Group
@@ -87,6 +110,26 @@ class GroupUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('groups:detail', kwargs={'pk': self.object.pk})
+
+    def render_to_response(self, context, **response_kwargs):
+        if 'HX-Request' in self.request.headers:
+            context['modal_title'] = 'Редактировать группу'
+            return super().render_to_response(context, **response_kwargs)
+        return super().render_to_response(context, **response_kwargs)
+
+    def get_template_names(self):
+        if 'HX-Request' in self.request.headers:
+            return ['includes/modal_form.html']
+        return [self.template_name]
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if 'HX-Request' in self.request.headers:
+            from django.http import HttpResponse
+            res = HttpResponse()
+            res['HX-Refresh'] = 'true'
+            return res
+        return response
 
 
 class GroupDeleteView(LoginRequiredMixin, DeleteView):

@@ -85,9 +85,11 @@ class AttendanceMarkView(LoginRequiredMixin, View):
 
 
 class AttendanceHistoryView(LoginRequiredMixin, View):
-    """Журнал посещаемости и успеваемости."""
+    """Журнал посещаемости и успеваемости (оптимизированный с Service Layer)."""
     
     def get(self, request):
+        from .services import get_group_attendance_matrix
+        
         groups = Group.objects.filter(is_active=True).select_related('teacher')
         group_id = request.GET.get('group')
         month_str = request.GET.get('month', timezone.now().strftime('%Y-%m'))
@@ -100,9 +102,9 @@ class AttendanceHistoryView(LoginRequiredMixin, View):
         selected_group = None
         matrix = []
         dates = []
+        group_stats = None
 
         if group_id:
-            # Handle invalid integer gracefully
             try:
                 selected_group = get_object_or_404(Group, pk=group_id)
             except (ValueError, TypeError):
@@ -110,69 +112,26 @@ class AttendanceHistoryView(LoginRequiredMixin, View):
                 group_id = None
 
         if selected_group:
-            num_days = calendar.monthrange(year, month)[1]
-            all_dates_in_month = [timezone.datetime(year, month, d).date() for d in range(1, num_days + 1)]
-            
-            attendances = Attendance.objects.filter(
-                group=selected_group, 
-                date__year=year, 
-                date__month=month
-            )
-            
-            records_by_student_date = {}
-            active_dates_set = set()
-            for a in attendances:
-                records_by_student_date[(a.student_id, a.date)] = a
-                active_dates_set.add(a.date)
-                
-            for d in all_dates_in_month:
-                weekday = d.weekday()
-                if selected_group.schedule_type == 'ODD' and weekday in [0, 2, 4]:
-                    active_dates_set.add(d)
-                elif selected_group.schedule_type == 'EVEN' and weekday in [1, 3, 5]:
-                    active_dates_set.add(d)
-                    
-            dates = sorted(list(active_dates_set))
-            
-            enrollments = Enrollment.objects.filter(
-                group=selected_group,
-                is_active=True
-            ).select_related('student')
-            
-            for enrollment in enrollments:
-                student = enrollment.student
-                
-                # Protect against None enrolled_date
-                if not enrollment.enrolled_date:
-                    days_left = 0
-                else:
-                    try:
-                        end_date = enrollment.enrolled_date + timedelta(days=(selected_group.duration_months or 3) * 30)
-                        days_left = (end_date - timezone.now().date()).days
-                    except Exception:
-                        days_left = 0
-                
-                student_data = {
-                    'student': student,
-                    'enrolled_date': enrollment.enrolled_date,
-                    'days_left': days_left,
-                    'attendances': []
-                }
-                for d in dates:
-                    student_data['attendances'].append({
-                        'date': d,
-                        'record': records_by_student_date.get((student.id, d))
-                    })
-                matrix.append(student_data)
-                
-        return render(request, 'attendance/attendance_history.html', {
+            result = get_group_attendance_matrix(selected_group, year, month)
+            dates = result['dates']
+            matrix = result['matrix']
+            group_stats = result['group_stats']
+
+        context = {
             'groups': groups,
             'selected_group_id': int(group_id) if (group_id and str(group_id).isdigit()) else None,
             'selected_group': selected_group,
             'selected_month': month_str,
             'matrix': matrix,
             'dates': dates,
-        })
+            'group_stats': group_stats,
+        }
+        
+        # HTMX partial rendering — return just the table
+        if request.headers.get('HX-Request'):
+            return render(request, 'attendance/partials/journal_table.html', context)
+        
+        return render(request, 'attendance/attendance_history.html', context)
 
 class AttendanceToggleAPIView(LoginRequiredMixin, View):
     """API для интерактивного переключения посещаемости (для AJAX из матрицы)."""

@@ -16,11 +16,16 @@ class GroupForm(forms.ModelForm):
             'time_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: 14:00 - 15:30', 'list': 'time_slot_list'}),
             'room': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Номер кабинета', 'list': 'room_list'}),
             'color': forms.Select(attrs={'class': 'form-select'}),
-            'monthly_fee': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например: 500000'}),
+            'monthly_fee': forms.TextInput(attrs={'class': 'form-control mask-money', 'placeholder': 'Например: 500000'}),
             'max_students': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например: 12'}),
             'duration_months': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Например: 6'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+    def clean_monthly_fee(self):
+        fee = str(self.cleaned_data.get('monthly_fee', ''))
+        fee = fee.replace(' ', '').replace(',', '.')
+        return fee
 
 
 class EnrollmentForm(forms.ModelForm):

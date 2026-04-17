@@ -1,0 +1,61 @@
+{% load static %}
+<div class="modal fade" tabindex="-1" id="conductTestModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-ui-checks text-success me-2"></i>Провести срез (Тест)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="{% url 'academic:conduct_test' group.id %}">
+        {% csrf_token %}
+        <div class="modal-body p-4">
+          <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted mb-1">Название теста</label>
+                  {{ form.title }}
+              </div>
+              <div class="col-md-3">
+                  <label class="form-label small fw-semibold text-muted mb-1">Дата</label>
+                  {{ form.date }}
+              </div>
+              <div class="col-md-3">
+                  <label class="form-label small fw-semibold text-muted mb-1">Макс. балл</label>
+                  {{ form.max_score }}
+              </div>
+          </div>
+          
+          <h6 class="fw-bold mb-3 border-bottom pb-2">Оценки учеников</h6>
+          {% if students %}
+          <div class="table-responsive" style="max-height: 40vh; overflow-y: auto;">
+              <table class="table align-middle">
+                  <thead class="bg-light" style="position: sticky; top: 0; z-index: 1;">
+                      <tr>
+                          <th>Ученик</th>
+                          <th style="width: 150px;">Оценка</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for student in students %}
+                      <tr>
+                          <td class="fw-medium">{{ student.name }}</td>
+                          <td>
+                              <input type="number" name="score_{{ student.id }}" class="form-control form-control-sm" min="0" required placeholder="0">
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          {% else %}
+          <div class="alert alert-warning py-2 mb-0"><i class="bi bi-info-circle me-1"></i>В группе нет учеников.</div>
+          {% endif %}
+          
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" data-bs-dismiss="modal">Отмена</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm" {% if not students %}disabled{% endif %}>Сохранить результаты</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -6,18 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#6366f1">
     <link rel="manifest" href="{% static 'manifest.json' %}">
-    <title>{% block title %}EduCRM{% endblock %} — Учебный центр</title>
+    <title>{% block title %}Stanford{% endblock %} — Учебный центр</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Page Transitions */
+        .page-entry-animate {
+            animation: pageEntry 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .page-exit-animate {
+            animation: pageExit 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes pageEntry {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes pageExit {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(20px) scale(0.96); }
+        }
+    </style>
     <script>
         const storedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-bs-theme', storedTheme);
     </script>
 </head>
 <body class="bg-body-custom">
+    <!-- Global HTMX Loading Bar -->
+    <div id="loading-bar" class="htmx-indicator"></div>
     
     <!-- Animated Subtle Background Elements -->
     <div class="main-bg-orb orb-1"></div>
@@ -29,6 +49,16 @@
         <div class="loader-spinner"></div>
     </div>
     
+    <script>
+        // Global HTMX Config for loading indicator
+        document.body.addEventListener('htmx:beforeRequest', function(evt) {
+            document.getElementById('loading-bar').classList.add('htmx-request');
+        });
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            document.getElementById('loading-bar').classList.remove('htmx-request');
+        });
+    </script>
+    
     <!-- App Container -->
     <div class="app-container">
         <!-- Sidebar -->
@@ -38,57 +68,93 @@
                     <div class="brand-icon" style="width:32px;height:32px;font-size:1.2rem;">
                         <i class="bi bi-mortarboard-fill"></i>
                     </div>
-                    <span class="sidebar-brand-text">EduCRM</span>
+                    <span class="sidebar-brand-text">Stanford</span>
                 </a>
             </div>
             
             <div class="sidebar-menu">
                 <a href="{% url 'dashboard' %}" class="sidebar-link {% if request.path == '/' or '/dashboard/' in request.path %}active{% endif %}">
-                    <i class="bi bi-grid-1x2-fill"></i> Дашборд
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="layout-dashboard"></i>
+                    </div>
+                    <span>Дашборд</span>
                 </a>
                 
                 {% if request.user.is_superuser or request.user.manager or request.user.teacher %}
                 <div class="sidebar-heading">Учебный процесс</div>
                 <a href="{% url 'groups:list' %}" class="sidebar-link {% if '/groups/' in request.path and 'schedule' not in request.path %}active{% endif %}">
-                    <i class="bi bi-collection-fill"></i> Группы
+                    <div class="icon-pill-colored sm pill-blue">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <span>Группы</span>
                 </a>
                 <a href="{% url 'groups:schedule' %}" class="sidebar-link {% if '/groups/schedule' in request.path %}active{% endif %}">
-                    <i class="bi bi-calendar3"></i> Расписание
+                    <div class="icon-pill-colored sm pill-emerald">
+                        <i data-lucide="calendar"></i>
+                    </div>
+                    <span>Расписание</span>
                 </a>
-                <a href="{% url 'groups:rooms' %}" class="sidebar-link {% if '/groups/rooms' in request.path %}active{% endif %}">
-                    <i class="bi bi-door-open-fill"></i> Кабинеты
+                <a href="{% url 'groups:room_occupancy' %}" class="sidebar-link {% if '/groups/rooms' in request.path %}active{% endif %}">
+                    <div class="icon-pill-colored sm pill-amber">
+                        <i data-lucide="map"></i>
+                    </div>
+                    <span>Кабинеты</span>
                 </a>
                 <a href="{% url 'attendance:mark' %}" class="sidebar-link {% if '/attendance/' in request.path %}active{% endif %}">
-                    <i class="bi bi-clipboard-check-fill"></i> Журнал
+                    <div class="icon-pill-colored sm pill-rose">
+                        <i data-lucide="clipboard-check"></i>
+                    </div>
+                    <span>Журнал</span>
                 </a>
                 {% endif %}
 
                 {% if request.user.is_superuser or request.user.manager %}
                 <div class="sidebar-heading">Менеджмент</div>
                 <a href="{% url 'students:list' %}" class="sidebar-link {% if '/students/' in request.path %}active{% endif %}">
-                    <i class="bi bi-people-fill"></i> Ученики
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="user-plus"></i>
+                    </div>
+                    <span>Ученики</span>
                 </a>
                 <a href="{% url 'managers:recruit' %}" class="sidebar-link {% if '/managers/recruit' in request.path %}active{% endif %}">
-                    <i class="bi bi-person-plus-fill"></i> Рекрутинг
+                    <div class="icon-pill-colored sm pill-blue">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <span>Рекрутинг</span>
                 </a>
                 <a href="{% url 'payments:list' %}" class="sidebar-link {% if '/payments/' in request.path and 'finance' not in request.path %}active{% endif %}">
-                    <i class="bi bi-cash-stack"></i> Платежи
+                    <div class="icon-pill-colored sm pill-emerald">
+                        <i data-lucide="credit-card"></i>
+                    </div>
+                    <span>Платежи</span>
                 </a>
                 <a href="{% url 'payments:finance' %}" class="sidebar-link {% if '/payments/finance' in request.path %}active{% endif %}">
-                    <i class="bi bi-wallet2"></i> Фин. реестр
+                    <div class="icon-pill-colored sm pill-amber">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <span>Фин. реестр</span>
                 </a>
                 {% endif %}
 
                 {% if request.user.is_superuser %}
                 <div class="sidebar-heading">Админ панель</div>
                 <a href="{% url 'teachers:list' %}" class="sidebar-link {% if '/teachers/' in request.path %}active{% endif %}">
-                    <i class="bi bi-person-workspace"></i> Преподаватели
+                    <div class="icon-pill-colored sm pill-rose">
+                        <i data-lucide="graduation-cap"></i>
+                    </div>
+                    <span>Преподаватели</span>
                 </a>
                 <a href="{% url 'managers:list' %}" class="sidebar-link {% if '/managers/' in request.path and 'recruit' not in request.path %}active{% endif %}">
-                    <i class="bi bi-person-badge-fill"></i> Менеджеры
+                    <div class="icon-pill-colored sm pill-slate">
+                        <i data-lucide="hard-hat"></i>
+                    </div>
+                    <span>Менеджеры</span>
                 </a>
                 <a href="{% url 'kpi:manager_kpi' %}" class="sidebar-link {% if '/kpi/' in request.path %}active{% endif %}">
-                    <i class="bi bi-bar-chart-line-fill"></i> Аналитика KPI
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <span>Аналитика KPI</span>
                 </a>
                 {% endif %}
             </div>
@@ -134,7 +200,7 @@
             </header>
 
             <!-- Main Content App -->
-            <div class="main-content-fluid flex-grow-1 position-relative p-2 p-lg-4">
+            <div class="main-content-fluid flex-grow-1 position-relative p-2 p-lg-4 page-entry-animate">
         <!-- Page Content -->
         <div class="container-fluid px-lg-5 px-3 py-4">
             {% block content %}{% endblock %}
@@ -202,6 +268,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/imask"></script>
     <script>
         // Spotlight Search Logic
         const spotlightOverlay = document.getElementById('spotlightOverlay');
@@ -324,11 +391,68 @@
             window.dispatchEvent(new Event('themeChanged'));
         });
 
-        // HTMX Modal auto-show
+        // HTMX Modal Lifecycle & Global Enhancements
+        let activeModal = null;
+        
+        function initGlobalPlugins() {
+            // IMask phone
+            document.querySelectorAll('.mask-phone').forEach(el => {
+                if (!el.maskInstance) {
+                    el.maskInstance = IMask(el, {
+                        mask: '+{998} (00) 000-00-00',
+                        lazy: false
+                    });
+                }
+            });
+            // IMask money
+            document.querySelectorAll('.mask-money').forEach(el => {
+                if (!el.maskInstance) {
+                    el.maskInstance = IMask(el, {
+                        mask: Number,
+                        scale: 0,
+                        signed: false,
+                        thousandsSeparator: ' ',
+                        padFractionalZeros: false,
+                        normalizeZeros: true,
+                        radix: '.',
+                        mapToRadix: [',']
+                    });
+                }
+            });
+        }
+
+        // Initialize on first load
+        document.addEventListener('DOMContentLoaded', initGlobalPlugins);
+
+        // HTMX Hooks
         document.body.addEventListener('htmx:afterSwap', function(evt) {
+            // Re-init plugins for new content
+            initGlobalPlugins();
+            
+            // Auto-show modal if it was swapped into our target
             if (evt.detail.target.id === 'modals-here') {
-                var modal = new bootstrap.Modal(document.getElementById('genericModal'));
-                modal.show();
+                const modalEl = document.getElementById('genericModal');
+                if (modalEl) {
+                    activeModal = new bootstrap.Modal(modalEl);
+                    activeModal.show();
+                    // Initialize forms in modal
+                    initGlobalPlugins();
+                }
+            }
+        });
+        
+        // Listen for custom trigger to close modal (sent by Django views on success)
+        document.body.addEventListener('closeModal', function(evt) {
+            if (activeModal) {
+                activeModal.hide();
+                setTimeout(() => {
+                    document.getElementById('modals-here').innerHTML = '';
+                    const modalBackdrops = document.querySelectorAll('.modal-backdrop');
+                    modalBackdrops.forEach(backdrop => backdrop.remove());
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                }, 300);
             }
         });
 
@@ -357,18 +481,20 @@
                 const url = new URL(el.href);
                 if (url.origin === window.location.origin) {
                     e.preventDefault();
-                    // Modern specific skeleton behavior
+                    // Trigger dynamic page exit animation
                     const mainContent = document.querySelector('.main-content-fluid');
                     if (mainContent) {
-                        mainContent.classList.add('skeleton');
+                        mainContent.classList.remove('page-entry-animate');
+                        mainContent.classList.add('page-exit-animate');
                     }
-                    setTimeout(() => window.location.href = el.href, 150);
+                    setTimeout(() => window.location.href = el.href, 250);
                 }
             }
         });
 
         // Toasts Auto-Dismiss Logic
         document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
             const toasts = document.querySelectorAll('.toast-custom');
             toasts.forEach((toast, index) => {
                 // Stagger entrance delays
@@ -381,6 +507,33 @@
                     }, 400); // Wait for out animation
                 }, 4000 + (index * 500));
             });
+        });
+
+        // Add Bootstrap form styling to any naked Django form inputs
+        function styleDjangoForms(root) {
+            if (!root) root = document;
+            // Inputs and Textareas
+            root.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not(.form-control), textarea:not(.form-control)').forEach(el => {
+                el.classList.add('form-control');
+                el.classList.add('shadow-none');
+            });
+            // Selects
+            root.querySelectorAll('select:not(.form-select)').forEach(el => {
+                el.classList.add('form-select');
+                el.classList.add('shadow-none');
+            });
+            // Checkboxes
+            root.querySelectorAll('input[type="checkbox"]:not(.form-check-input)').forEach(el => {
+                el.classList.add('form-check-input');
+            });
+        }
+        
+        // Style initial forms on load
+        document.addEventListener('DOMContentLoaded', () => styleDjangoForms(document));
+        
+        // Style HTMX injected forms (like modals)
+        document.body.addEventListener('htmx:afterSwap', (evt) => {
+            styleDjangoForms(evt.detail.target);
         });
     </script>
     {% block extra_js %}{% endblock %}

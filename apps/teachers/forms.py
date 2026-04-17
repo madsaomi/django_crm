@@ -8,6 +8,6 @@ class TeacherForm(forms.ModelForm):
         fields = ['name', 'phone', 'specialization']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ФИО учителя'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+998 XX XXX XX XX'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control mask-phone', 'placeholder': '+998 XX XXX XX XX'}),
             'specialization': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: General English', 'list': 'teacher_spec_list'}),
         }

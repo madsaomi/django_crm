@@ -68,7 +68,7 @@ class StudentCreateView(LoginRequiredMixin, CreateView):
 
     def get_template_names(self):
         if 'HX-Request' in self.request.headers:
-            return ['components/modal_form.html']
+            return ['includes/modal_form.html']
         return [self.template_name]
 
     def form_valid(self, form):
@@ -86,6 +86,26 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
     form_class = StudentForm
     template_name = 'students/student_form.html'
     success_url = reverse_lazy('students:list')
+
+    def render_to_response(self, context, **response_kwargs):
+        if 'HX-Request' in self.request.headers:
+            context['modal_title'] = 'Редактировать ученика'
+            return super().render_to_response(context, **response_kwargs)
+        return super().render_to_response(context, **response_kwargs)
+
+    def get_template_names(self):
+        if 'HX-Request' in self.request.headers:
+            return ['includes/modal_form.html']
+        return [self.template_name]
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if 'HX-Request' in self.request.headers:
+            from django.http import HttpResponse
+            res = HttpResponse()
+            res['HX-Refresh'] = 'true'
+            return res
+        return response
 
 
 class StudentDeleteView(LoginRequiredMixin, DeleteView):

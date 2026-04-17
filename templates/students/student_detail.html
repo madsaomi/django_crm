@@ -1,233 +1,286 @@
 {% extends 'base.html' %}
-
-{% block title %}{{ student.name }}{% endblock %}
-
+{% block title %}{{ student.name }} — Карточка{% endblock %}
 {% block content %}
-<style>
-    .hero-card {
-        background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-        border-radius: 16px;
-        color: #fff;
-        padding: 30px;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
-    }
-    .hero-card::before {
-        content: '';
-        position: absolute;
-        top: -50%; left: -50%; width: 200%; height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-        pointer-events: none;
-    }
-    .hero-avatar {
-        width: 80px; height: 80px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.2);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 2rem; font-weight: bold;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border: 2px solid rgba(255,255,255,0.5);
-    }
-    
-    .pulse-danger {
-        animation: pulseDanger 2s infinite;
-    }
-    @keyframes pulseDanger {
-        0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-        70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-
-    .timeline {
-        position: relative;
-        padding-left: 30px;
-        margin: 0;
-    }
-    .timeline::before {
-        content: '';
-        position: absolute;
-        left: 11px; top: 0; bottom: 0;
-        width: 2px; background: #e2e8f0;
-    }
-    .timeline-item {
-        position: relative;
-        margin-bottom: 24px;
-    }
-    .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-dot {
-        position: absolute;
-        left: -25px; top: 3px;
-        width: 14px; height: 14px;
-        border-radius: 50%;
-        background: #10b981;
-        border: 2px solid #fff;
-        box-shadow: 0 0 0 3px #d1fae5;
-    }
-</style>
-
-<!-- Profile Hero -->
-<div class="hero-card mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-    <div class="d-flex align-items-center gap-4" style="position: relative; z-index: 1;">
-        <div class="hero-avatar">
-            {{ student.name.0|default:"U" }}
-        </div>
-        <div>
-            <h1 class="m-0 fw-bold" style="font-size: 2rem; letter-spacing: -0.03em;">{{ student.name }}</h1>
-            <div class="mt-2 d-flex flex-wrap gap-3 text-white-50 small fw-medium">
-                <span><i class="bi bi-telephone-fill text-white"></i> {{ student.phone|default:"Нет номера" }}</span>
-                <span><i class="bi bi-person-badge text-white"></i> Менеджер: {{ student.manager.name|default:"—" }}</span>
-            </div>
-        </div>
-    </div>
-    <div class="d-flex gap-2" style="position: relative; z-index: 1;">
-        <a href="{% url 'students:edit' student.pk %}" class="btn btn-light rounded-pill px-4 py-2 fw-bold shadow-sm text-primary transition-all">
-            <i class="bi bi-pencil me-1"></i> Изменить
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-2">
+        <a href="{% url 'students:list' %}" class="btn btn-outline-secondary btn-sm rounded-pill p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
         </a>
+        <h5 class="m-0 fw-bold text-muted" style="font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;">Карточка ученика</h5>
+    </div>
+    <div class="d-flex gap-2">
+        <button hx-get="{% url 'students:edit' student.pk %}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-2">
+            <i data-lucide="edit-3" style="width: 16px; height: 16px;"></i> Изменить
+        </button>
+        {% if student.is_active %}
         <form action="{% url 'managers:toggle_status' %}" method="post" class="d-inline">
             {% csrf_token %}
             <input type="hidden" name="entity_type" value="student">
             <input type="hidden" name="entity_id" value="{{ student.id }}">
             <input type="hidden" name="make_active" value="false">
-            <button type="submit" class="btn btn-danger rounded-pill px-4 py-2 fw-bold shadow-sm transition-all" onclick="return confirm('Отправить ученика в архив?')">
-                <i class="bi bi-archive-fill me-1"></i> В архив
+            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-2" onclick="return confirm('Отправить ученика в архив?')">
+                <i data-lucide="archive" style="width: 16px; height: 16px;"></i> В архив
             </button>
         </form>
+        {% else %}
+        <form action="{% url 'managers:toggle_status' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="entity_type" value="student">
+            <input type="hidden" name="entity_id" value="{{ student.id }}">
+            <input type="hidden" name="make_active" value="true">
+            <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-2">
+                <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i> Восстановить
+            </button>
+        </form>
+        {% endif %}
     </div>
 </div>
 
-<!-- Info Cards -->
-<div class="row g-4 mb-4">
-    <div class="col-md-6">
-        <div class="stat-card {% if debt_info.debt > 0 %}danger pulse-danger border-danger border-opacity-50{% else %}success{% endif %} h-100">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="stat-label">Текущий Долг</div>
-                    <div class="stat-value text-{% if debt_info.debt > 0 %}danger{% else %}success{% endif %}" style="font-size:1.8rem; margin-top:4px">
-                        {{ debt_info.debt|floatformat:0 }} сум
+<!-- Profile Hero Section -->
+<div class="card border-0 shadow-lg mb-4 overflow-hidden" style="border-radius: 24px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+    <div class="card-body p-4 p-lg-5 position-relative">
+        <!-- Abstract Background Orbs -->
+        <div class="position-absolute" style="top: -20px; right: -20px; width: 150px; height: 150px; background: var(--primary); filter: blur(80px); opacity: 0.2; pointer-events: none;"></div>
+        <div class="position-absolute" style="bottom: -20px; left: 20%; width: 120px; height: 120px; background: #ec4899; filter: blur(70px); opacity: 0.15; pointer-events: none;"></div>
+        
+        <div class="row align-items-center position-relative" style="z-index: 2;">
+            <div class="col-lg-auto text-center text-lg-start mb-4 mb-lg-0">
+                <div class="icon-pill-colored pill-indigo mx-auto mx-lg-0" style="width: 100px; height: 100px; border-radius: 28px; font-size: 2.5rem; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1);">
+                    <span class="text-white fw-bold">{{ student.name|slice:":1" }}</span>
+                </div>
+            </div>
+            <div class="col-lg text-center text-lg-start">
+                <div class="d-flex flex-column flex-lg-row align-items-center gap-3 mb-2">
+                    <h1 class="m-0 text-white fw-bold" style="font-size: 2.25rem; letter-spacing: -0.03em;">{{ student.name }}</h1>
+                    {% if student.is_active %}
+                    <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-25 rounded-pill px-3 py-2 fw-bold" style="font-size: 0.75rem;">
+                        <i data-lucide="check" class="me-1" style="width: 12px; height: 12px;"></i> Активен
+                    </span>
+                    {% else %}
+                    <span class="badge bg-secondary bg-opacity-20 text-secondary border border-secondary border-opacity-25 rounded-pill px-3 py-2 fw-bold" style="font-size: 0.75rem;">
+                        <i data-lucide="archive" class="me-1" style="width: 12px; height: 12px;"></i> В архиве
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-4 mt-3">
+                    <div class="d-flex align-items-center gap-2 text-white-50">
+                        <div class="icon-pill-colored sm pill-blue" style="width: 28px; height: 28px; background: rgba(255,255,255,0.1);">
+                            <i data-lucide="phone" class="text-white"></i>
+                        </div>
+                        <span class="fw-medium">{{ student.phone|default:"Нет телефона" }}</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 text-white-50">
+                        <div class="icon-pill-colored sm pill-indigo" style="width: 28px; height: 28px; background: rgba(255,255,255,0.1);">
+                            <i data-lucide="user-check" class="text-white"></i>
+                        </div>
+                        <span class="fw-medium">Менеджер: {{ student.manager.name|default:"—" }}</span>
                     </div>
                 </div>
-                <div class="stat-icon {% if debt_info.debt > 0 %}danger{% else %}success{% endif %}">
-                    <i class="bi bi-exclamation-octagon"></i>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="stat-card warning h-100">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <div class="stat-label">Оплачено всего</div>
-                    <div class="stat-value" style="font-size:1.8rem; margin-top:4px">{{ debt_info.paid|floatformat:0 }} сум</div>
+            <div class="col-lg-auto mt-4 mt-lg-0">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3" style="background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="text-end">
+                        <div class="text-white-50 small text-uppercase tracking-wider fw-bold" style="font-size: 0.65rem;">Баланс</div>
+                        <div class="text-white fw-bold fs-4">{% if debt_info.debt > 0 %}-{% endif %}{{ debt_info.debt|floatformat:0 }} сум</div>
+                    </div>
+                    <div class="icon-pill-colored {% if debt_info.debt > 0 %}pill-rose{% else %}pill-emerald{% endif %}" style="width: 44px; height: 44px; border-radius: 12px;">
+                        <i data-lucide="{% if debt_info.debt > 0 %}alert-circle{% else %}check-circle-2{% endif %}"></i>
+                    </div>
                 </div>
-                <div class="stat-icon warning"><i class="bi bi-wallet2"></i></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Layout: Left (Groups) / Right (Unified Timeline) -->
 <div class="row g-4">
+    <!-- Left Column: Enrollments & Finance Summary -->
     <div class="col-lg-5 d-flex flex-column gap-4">
         
+        <!-- Stats Cards Grid -->
+        <div class="row g-3">
+            <div class="col-6">
+                <div class="stat-card success h-100 p-4">
+                    <div class="icon-pill-colored pill-emerald mb-3">
+                        <i data-lucide="wallet"></i>
+                    </div>
+                    <div class="stat-value" style="font-size: 1.25rem;">{{ debt_info.paid|floatformat:0 }}</div>
+                    <div class="stat-label">Оплачено</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="stat-card warning h-100 p-4">
+                    <div class="icon-pill-colored pill-amber mb-3">
+                        <i data-lucide="calendar-check"></i>
+                    </div>
+                    <div class="stat-value" style="font-size: 1.25rem;">{{ total_attendance|default:"0" }}</div>
+                    <div class="stat-label">Посещений</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Active Groups -->
-        <div class="content-card">
-            <div class="card-header-custom border-bottom bg-light bg-opacity-25 d-flex justify-content-between align-items-center p-4">
-                <h5 class="fw-bold m-0"><i class="bi bi-collection text-primary me-2"></i> Активные группы</h5>
+        <div class="content-card glass-panel no-hover">
+            <div class="card-header-custom border-bottom p-4">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2">
+                    <div class="icon-pill-colored sm pill-indigo">
+                        <i data-lucide="layers"></i>
+                    </div>
+                    Активные группы
+                </h5>
             </div>
             <div class="card-body-custom p-0">
                 {% if active_enrollments %}
-                <div class="list-group list-group-flush border-0">
+                <div class="list-group list-group-flush">
                     {% for enrollment in active_enrollments %}
-                    <div class="list-group-item border-0 border-bottom p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="{% url 'groups:detail' enrollment.group.pk %}" class="fw-bold text-dark text-decoration-none fs-5">
-                                {{ enrollment.group.name }}
-                            </a>
-                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold">{{ enrollment.group.monthly_fee|floatformat:0 }}</span>
+                    <div class="list-group-item p-4 border-bottom bg-transparent" style="transition: background 0.2s;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <a href="{% url 'groups:detail' enrollment.group.pk %}" class="fw-bold text-dark text-decoration-none fs-5 d-block">
+                                    {{ enrollment.group.name }}
+                                </a>
+                                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill mt-1" style="font-size: 0.7rem;">{{ enrollment.group.get_course_type_display }}</span>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-bold text-indigo fs-5">{{ enrollment.group.monthly_fee|floatformat:0 }} <small>сум</small></div>
+                                <div class="text-muted small">/ месяц</div>
+                            </div>
                         </div>
-                        <div class="text-secondary small fw-medium mt-1 mb-2"><i class="bi bi-person"></i> Учитель: {{ enrollment.group.teacher.name|default:"—" }}</div>
-                        <div class="d-flex justify-content-between align-items-end mt-3">
-                            <span class="small text-muted"><i class="bi bi-calendar3"></i> С {{ enrollment.enrolled_date|date:"d M Y" }}</span>
-                            <div class="circular-progress shadow-sm" style="width:36px; height:36px; --progress: 40; --progress-color: var(--warning);">
-                                <span class="progress-value" style="font-size: 0.6rem;"><i class="bi bi-fire"></i></span>
+                        <div class="d-flex align-items-center gap-3 mt-3">
+                            <div class="modern-data-item">
+                                <div class="icon-pill-colored sm pill-amber">
+                                    <i data-lucide="user"></i>
+                                </div>
+                                <div class="modern-data-wrapper">
+                                    <div class="modern-data-label">Учитель</div>
+                                    <div class="modern-data-value">{{ enrollment.group.teacher.name|default:"—" }}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
                 {% else %}
-                <div class="empty-state py-5"><i class="bi bi-folder-x fs-2 opacity-25"></i><p>Не записан в группы</p></div>
+                <div class="empty-state py-5 text-center">
+                    <i data-lucide="folder-x" class="opacity-25 mb-2" style="width: 40px; height: 40px;"></i>
+                    <p class="text-muted">Не записан в группы</p>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
 
-    <!-- Unified Activity Timeline -->
+    <!-- Right Column: Timeline Activity -->
     <div class="col-lg-7">
-        <div class="content-card h-100">
-            <div class="card-header-custom border-bottom bg-light bg-opacity-25 p-4 d-flex justify-content-between align-items-center">
-                <h5 class="fw-bold m-0"><i class="bi bi-activity text-success me-2"></i> История активности</h5>
-                <a href="{% url 'payments:create' %}?student={{ student.id }}" class="btn btn-primary btn-sm rounded-pill fw-medium px-3 shadow-sm">
-                    <i class="bi bi-plus-lg me-1"></i> Оплата
-                </a>
+        <div class="content-card glass-panel h-100 no-hover">
+            <div class="card-header-custom border-bottom p-4 d-flex justify-content-between align-items-center">
+                <h5 class="m-0 fw-bold d-flex align-items-center gap-2">
+                    <div class="icon-pill-colored sm pill-emerald">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    История активности
+                </h5>
+                <button hx-get="{% url 'payments:create' %}?student={{ student.id }}" hx-target="#modals-here" hx-swap="innerHTML" class="btn btn-primary btn-sm rounded-pill fw-bold px-4 shadow-sm border-0 d-flex align-items-center gap-2">
+                    <i data-lucide="plus" style="width: 16px; height: 16px;"></i> Оплата
+                </button>
             </div>
             <div class="card-body p-4">
                 {% if activities %}
-                <div class="timeline mt-2 ms-2">
+                <div class="activity-timeline-modern ps-3 mt-2">
                     {% for act in activities %}
-                    <div class="timeline-item mb-4 pb-2">
-                        {% if act.type == 'payment' %}
-                            <div class="timeline-dot" style="background: var(--warning); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);"></div>
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <div class="fw-bold fs-6 text-dark d-flex align-items-center gap-2">
-                                    <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 border border-warning border-opacity-25"><i class="bi bi-cash"></i> Оплата</span>
-                                    <span>+{{ act.obj.amount|floatformat:0 }} сум</span>
-                                </div>
-                                <span class="small text-muted fw-medium">{{ act.date|date:"d.m.Y H:i" }}</span>
-                            </div>
-                            <p class="small text-secondary mb-0">Принял: {{ act.obj.manager.name }}</p>
-                            {% if act.obj.comment %}
-                            <div class="bg-light p-2 rounded small text-secondary mt-2 border bg-opacity-50"><i class="bi bi-chat-left-text text-muted me-1"></i> {{ act.obj.comment }}</div>
+                    <div class="timeline-item-new position-relative pb-4 ps-4 border-start" style="border-left: 2px solid var(--border) !important;">
+                        <!-- Custom Timeline Dot -->
+                        <div class="position-absolute" style="left: -11px; top: 0;">
+                            {% if act.type == 'payment' %}
+                            <div class="icon-pill-colored sm pill-amber shadow-sm" style="width: 20px; height: 20px; border: 2px solid var(--bg-card);"><i data-lucide="dollar-sign" style="width: 10px; height: 10px;"></i></div>
+                            {% elif act.type == 'attendance' %}
+                            <div class="icon-pill-colored sm {% if act.obj.status == 'PRESENT' %}pill-emerald{% else %}pill-rose{% endif %} shadow-sm" style="width: 20px; height: 20px; border: 2px solid var(--bg-card);"><i data-lucide="{% if act.obj.status == 'PRESENT' %}check{% else %}x{% endif %}" style="width: 10px; height: 10px;"></i></div>
+                            {% elif act.type == 'enrollment' %}
+                            <div class="icon-pill-colored sm pill-indigo shadow-sm" style="width: 20px; height: 20px; border: 2px solid var(--bg-card);"><i data-lucide="plus" style="width: 10px; height: 10px;"></i></div>
                             {% endif %}
-                            
-                        {% elif act.type == 'attendance' %}
-                            <div class="timeline-dot" style="background: {% if act.obj.status == 'PRESENT' %}var(--success){% else %}var(--danger){% endif %}; box-shadow: 0 0 0 3px {% if act.obj.status == 'PRESENT' %}rgba(16, 185, 129, 0.2){% else %}rgba(244, 63, 94, 0.2){% endif %};"></div>
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <div class="fw-bold fs-6 text-dark d-flex align-items-center gap-2">
-                                    {% if act.obj.status == 'PRESENT' %}
-                                        <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 border border-success border-opacity-25"><i class="bi bi-check2-circle"></i> Был</span>
-                                    {% else %}
-                                        <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1 border border-danger border-opacity-25"><i class="bi bi-x-circle"></i> Пропуск</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <div>
+                                {% if act.type == 'payment' %}
+                                <span class="text-muted small fw-medium text-uppercase tracking-widest" style="font-size: 0.65rem;">{{ act.date|date:"d M Y, H:i" }}</span>
+                                {% else %}
+                                <span class="text-muted small fw-medium text-uppercase tracking-widest" style="font-size: 0.65rem;">{{ act.date|date:"d M Y" }}</span>
+                                {% endif %}
+                                <h6 class="m-0 fw-bold mt-1">
+                                    {% if act.type == 'payment' %}
+                                    Поступление оплаты: <span class="text-success">{{ act.obj.amount|floatformat:0 }} сум</span>
+                                    {% elif act.type == 'attendance' %}
+                                    {% if act.obj.status == 'PRESENT' %}Посетил занятие{% else %}Пропустил занятие{% endif %}
+                                    {% elif act.type == 'enrollment' %}
+                                    Зачислен в группу
                                     {% endif %}
-                                    <span class="small fw-semibold text-secondary">{{ act.obj.group.name }}</span>
-                                </div>
-                                <span class="small text-muted fw-medium">{{ act.date|date:"d M" }}</span>
+                                </h6>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 text-secondary small">
+                            {% if act.type == 'payment' %}
+                            <div class="d-flex align-items-center gap-2">
+                                <i data-lucide="user-check" style="width: 12px; height: 12px;"></i> Принял: {{ act.obj.manager.name }}
                             </div>
                             {% if act.obj.comment %}
-                            <div class="bg-light p-2 rounded small text-danger mt-2 border border-danger border-opacity-10"><i class="bi bi-quote text-danger ms-1"></i> {{ act.obj.comment }}</div>
+                            <div class="bg-light p-2 rounded mt-2 border-start border-4 border-amber border-opacity-50 fst-italic">“{{ act.obj.comment }}”</div>
                             {% endif %}
                             
-                        {% elif act.type == 'enrollment' %}
-                            <div class="timeline-dot" style="background: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);"></div>
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <div class="fw-bold fs-6 text-dark d-flex align-items-center gap-2">
-                                    <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 border border-primary border-opacity-25"><i class="bi bi-bookmark-plus"></i> Зачисление</span>
-                                    <span>{{ act.obj.group.name }}</span>
-                                </div>
-                                <span class="small text-muted fw-medium">{{ act.date|date:"d.m.Y" }}</span>
+                            {% elif act.type == 'attendance' %}
+                            <div class="d-flex align-items-center gap-2">
+                                <i data-lucide="layers" style="width: 12px; height: 12px;"></i> Группа: {{ act.obj.group.name }}
                             </div>
-                            <p class="small text-secondary mb-0">Курс: {{ act.obj.group.get_course_type_display }}</p>
-                        {% endif %}
+                            {% if act.obj.comment %}
+                            <div class="bg-light p-2 rounded mt-2 border-start border-4 border-rose border-opacity-50">Причина: {{ act.obj.comment }}</div>
+                            {% endif %}
+                            
+                            {% elif act.type == 'enrollment' %}
+                            <div class="d-flex align-items-center gap-2">
+                                <i data-lucide="layers" style="width: 12px; height: 12px;"></i> Группа: {{ act.obj.group.name }}
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
                     {% endfor %}
+                    <div class="text-center mt-3">
+                        <button class="btn btn-light btn-sm rounded-pill px-4 text-muted fw-bold border shadow-none" style="font-size: 0.75rem;">Показать еще</button>
+                    </div>
                 </div>
                 {% else %}
-                <div class="empty-state py-5"><i class="bi bi-inbox fs-1 opacity-25"></i><p>Активности еще нет</p></div>
+                <div class="empty-state py-5 text-center">
+                    <i data-lucide="activity" class="opacity-25 mb-2" style="width: 40px; height: 40px;"></i>
+                    <p class="text-muted">Активности пока не зафиксировано</p>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
+
+<style>
+    .no-hover:hover {
+        transform: none !important;
+        box-shadow: var(--glass-shadow) !important;
+        border-color: var(--glass-border) !important;
+    }
+    
+    .timeline-item-new:last-child {
+        border-start: none !important;
+        margin-left: 2px; /* Align to the last dot */
+    }
+    
+    .timeline-item-new:last-child::before {
+        content: '';
+        position: absolute;
+        left: -2px; top: 0; height: 4px; width: 2px;
+        background: var(--border);
+    }
+</style>
 {% endblock %}
