@@ -15,11 +15,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-only-key-change-i
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# ALLOWED_HOSTS for local and Vercel
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,.vercel.app').split(',')
+# ALLOWED_HOSTS for local and Railway
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,*,.up.railway.app').split(',')
 CSRF_TRUSTED_ORIGINS = [
     origin.strip() for origin in
-    os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
+    os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,https://*.up.railway.app').split(',')
 ]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -73,11 +73,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crm_project.wsgi.application'
 
 # Database — SQLite3
-# Special handling for Vercel: use /tmp/db.sqlite3 for a writable ephemeral DB
-if os.environ.get('VERCEL'):
-    DATABASE_PATH = '/tmp/db.sqlite3'
-else:
-    DATABASE_PATH = BASE_DIR / 'db.sqlite3'
+# Эфемерная БД, которая будет сбрасываться и загружаться из JSON при каждом деплое/рестарте (для демо)
+DATABASE_PATH = BASE_DIR / 'db.sqlite3'
 
 DATABASES = {
     'default': {
@@ -115,6 +112,10 @@ if not DEBUG:
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+# Media files
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
