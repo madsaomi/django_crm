@@ -73,10 +73,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crm_project.wsgi.application'
 
 # Database — SQLite3
+# Special handling for Vercel (absolute path as string)
+if os.environ.get('VERCEL'):
+    DATABASE_PATH = str(BASE_DIR / 'db.sqlite3')
+else:
+    DATABASE_PATH = BASE_DIR / 'db.sqlite3'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATABASE_PATH,
     }
 }
 
