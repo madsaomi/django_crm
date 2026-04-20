@@ -73,9 +73,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crm_project.wsgi.application'
 
 # Database — SQLite3
-# Special handling for Vercel (absolute path as string)
+# Special handling for Vercel: use /tmp/db.sqlite3 for a writable ephemeral DB
 if os.environ.get('VERCEL'):
-    DATABASE_PATH = str(BASE_DIR / 'db.sqlite3')
+    DATABASE_PATH = '/tmp/db.sqlite3'
 else:
     DATABASE_PATH = BASE_DIR / 'db.sqlite3'
 
