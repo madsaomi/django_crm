@@ -15,7 +15,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-only-key-change-i
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# ALLOWED_HOSTS for local and Vercel
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,.vercel.app').split(',')
 CSRF_TRUSTED_ORIGINS = [
     origin.strip() for origin in
     os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')

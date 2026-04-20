@@ -101,7 +101,7 @@
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px; width: 60px; border-radius: 3px; background: #f1f5f9;">
                                     <div class="progress-bar {% if pct|add:0 > 90 %}bg-danger{% elif pct|add:0 > 60 %}bg-warning{% else %}bg-success{% endif %}" 
-                                         role="progressbar" style="width: {{ pct }}%;" aria-valuenow="{{ pct }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                         role="progressbar" style="--width: {{ pct|default:0 }}%; width: var(--width);" aria-valuenow="{{ pct|default:0 }}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="fw-bold small {% if pct|add:0 > 90 %}text-danger{% else %}text-muted{% endif %}">{{ group.students_count }}/{{ group.max_students }}</span>
                             </div>

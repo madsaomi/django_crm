@@ -351,7 +351,7 @@ body {
 }
 
 .table-custom tbody tr:last-child td {
-    /* No special handling needed now */
+    padding-bottom: 20px;
 }
 
 /* ===== BADGES ===== */

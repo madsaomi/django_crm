@@ -117,8 +117,8 @@
                         </td>
                         {% for item in row.attendances %}
                         <td class="attendance-cell p-0" 
-                            onclick="openAttendanceModal('{{ row.student.id }}', '{{ row.student.name }}', '{{ item.date|date:'Y-m-d' }}', '{% if item.record %}{{ item.record.status }}{% endif %}', '{% if item.record %}{{ item.record.comment|escapejs }}{% endif %}')"
-                            id="cell-{{ row.student.id }}-{{ item.date|date:'Y-m-d' }}">
+                            onclick="openAttendanceModal('{{ row.student.id }}', '{{ row.student.name }}', '{{ item.date|date:"Y-m-d" }}', '{% if item.record %}{{ item.record.status }}{% endif %}', '{% if item.record %}{{ item.record.comment|escapejs }}{% endif %}')"
+                            id="cell-{{ row.student.id }}-{{ item.date|date:"Y-m-d" }}">
                             
                             <div class="d-flex flex-column align-items-center justify-content-center" style="height: 56px;">
                                 {% if item.record %}

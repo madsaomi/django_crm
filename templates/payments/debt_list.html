@@ -116,7 +116,7 @@
                             <!-- Debt severity bar -->
                             <div class="capacity-bar mt-1" style="height: 4px; width: 80px; margin-left: auto;">
                                 {% widthratio item.debt item.expected 100 as debt_pct %}
-                                <div class="capacity-fill {% if debt_pct|add:0 > 80 %}high{% elif debt_pct|add:0 > 40 %}medium{% else %}low{% endif %}" style="width: {{ debt_pct }}%;"></div>
+                                <div class="capacity-fill {% if debt_pct|add:0 > 80 %}high{% elif debt_pct|add:0 > 40 %}medium{% else %}low{% endif %}" style="--width: {{ debt_pct|default:0 }}%; width: var(--width);"></div>
                             </div>
                         </td>
                     </tr>

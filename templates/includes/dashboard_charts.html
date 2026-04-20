@@ -154,7 +154,7 @@
                         </div>
                         {% widthratio item.students_count item.group.max_students 100 as percent %}
                         <div class="capacity-bar" style="height: 6px;">
-                            <div class="capacity-fill {% if percent|add:0 > 90 %}high{% elif percent|add:0 > 60 %}medium{% else %}low{% endif %}" style="width: {{ percent }}%;"></div>
+                            <div class="capacity-fill {% if percent|add:0 > 90 %}high{% elif percent|add:0 > 60 %}medium{% else %}low{% endif %}" style="--width: {{ percent|default:0 }}%; width: var(--width);"></div>
                         </div>
                     </div>
                     {% endfor %}

@@ -145,7 +145,8 @@
                                 <td>
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="progress" style="width: 40px; height: 4px; background: #f1f5f9;">
-                                            <div class="progress-bar bg-success" style="width: {% widthratio group.students_count group.max_students 100 %}%;"></div>
+                                            {% widthratio group.students_count group.max_students 100 as teacher_pct %}
+                                            <div class="progress-bar bg-success" style="--width: {{ teacher_pct|default:0 }}%; width: var(--width);"></div>
                                         </div>
                                         <small class="fw-bold text-muted">{{ group.students_count }}</small>
                                     </div>
